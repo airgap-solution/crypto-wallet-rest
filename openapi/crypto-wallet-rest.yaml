@@ -1,0 +1,152 @@
+openapi: 3.1.0
+info:
+  title: Crypto Wallet REST API
+  version: 1.0.0
+  description: >
+    REST API for air-gapped crypto wallets.
+    Supports multiple cryptocurrencies, future-proof.
+
+paths:
+  /balance:
+    get:
+      summary: Get balance for an address
+      parameters:
+        - name: crypto
+          in: query
+          required: true
+          schema:
+            type: string
+            description: The cryptocurrency symbol (BTC, ETH, etc.)
+        - name: address
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Balance response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  crypto:
+                    type: string
+                  address:
+                    type: string
+                  balance:
+                    type: string
+                    description: Balance in smallest unit (satoshis, wei, etc.)
+
+  /transactions:
+    get:
+      summary: Get transaction history for an address
+      parameters:
+        - name: crypto
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Transaction history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    txid:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: date-time
+                    amount:
+                      type: string
+                    direction:
+                      type: string
+                      enum: [in, out]
+
+  /unsigned-tx:
+    get:
+      summary: Generate an unsigned transaction
+      parameters:
+        - name: crypto
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: amount
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Unsigned transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  crypto:
+                    type: string
+                  from:
+                    type: string
+                  to:
+                    type: string
+                  amount:
+                    type: string
+                  unsignedTx:
+                    type: string
+                    description: Base64 / hex encoded unsigned transaction or PSBT
+
+  /broadcast:
+    post:
+      summary: Broadcast signed transaction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                crypto:
+                  type: string
+                  description: The cryptocurrency symbol
+                signedTx:
+                  type: string
+                  description: Base64 / hex encoded signed transaction
+      responses:
+        "200":
+          description: Transaction broadcast result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  crypto:
+                    type: string
+                  txid:
+                    type: string
+                  status:
+                    type: string
+                    enum: [success, failure]
+                  message:
+                    type: string
