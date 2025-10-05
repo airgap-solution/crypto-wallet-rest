@@ -19,7 +19,9 @@ func main() {
 
 	providerAdapter := provider.NewAdapter()
 	servicer := service.New(providerAdapter)
-	if err := internal.ListenAndServe(conf, servicer); err != nil {
+
+	srv := internal.Assemble(conf, servicer)
+	if err := srv.ListenAndServe(); err != nil {
 		log.Fatalln(err)
 	}
 }

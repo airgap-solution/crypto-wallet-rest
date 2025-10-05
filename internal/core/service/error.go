@@ -1,9 +1,16 @@
 package service
 
-import cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+import (
+	"net/http"
+
+	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+)
+
+type Error struct {
+	Message string `json:"message"`
+}
 
 func handleError(err error) (cryptowalletrest.ImplResponse, error) {
-	code := 200
-
-	return cryptowalletrest.Response(code, err), nil
+	code := http.StatusNotImplemented
+	return cryptowalletrest.Response(code, Error{Message: err.Error()}), nil
 }
