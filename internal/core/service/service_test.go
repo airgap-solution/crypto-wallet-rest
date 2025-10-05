@@ -1,8 +1,6 @@
 package service_test
 
 import (
-	"context"
-	"errors"
 	"fmt"
 	"net/http"
 	"testing"
@@ -16,6 +14,7 @@ import (
 )
 
 func TestNew(t *testing.T) {
+	t.Parallel()
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 	mockProvider := internalportsmocks.NewMockProvider(ctrl)
@@ -24,6 +23,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestBalanceGet(t *testing.T) {
+	t.Parallel()
 	symbol := "BTC"
 	address := "address"
 	balance := 1.23456
@@ -51,14 +51,15 @@ func TestBalanceGet(t *testing.T) {
 		{
 			name: "provider returns error",
 			setupMocks: func(mockProvider *internalportsmocks.MockProvider) {
-				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, assert.AnError)
 			},
-			expectedResponseBody: service.Error{Message: "provider error"},
+			expectedResponseBody: service.Error{Message: assert.AnError.Error()},
 			expectedResponseCode: http.StatusNotImplemented,
 			expectedError:        nil,
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
@@ -66,9 +67,8 @@ func TestBalanceGet(t *testing.T) {
 			tc.setupMocks(mockProvider)
 
 			svc := service.New(mockProvider)
-			ctx := context.Background()
 
-			resp, err := svc.BalanceGet(ctx, symbol, address)
+			resp, err := svc.BalanceGet(t.Context(), symbol, address)
 
 			if tc.expectedError != nil {
 				require.ErrorIs(t, err, tc.expectedError)
@@ -83,43 +83,43 @@ func TestBalanceGet(t *testing.T) {
 }
 
 func TestTransactionsGet(t *testing.T) {
+	t.Parallel()
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
 	mockProvider := internalportsmocks.NewMockProvider(ctrl)
 	svc := service.New(mockProvider)
-	ctx := context.Background()
 
-	resp, err := svc.TransactionsGet(ctx, "BTC", "address")
+	resp, err := svc.TransactionsGet(t.Context(), "BTC", "address")
 
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 }
 
 func TestUnsignedTxGet(t *testing.T) {
+	t.Parallel()
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
 	mockProvider := internalportsmocks.NewMockProvider(ctrl)
 	svc := service.New(mockProvider)
-	ctx := context.Background()
 
-	resp, err := svc.UnsignedTxGet(ctx, "BTC", "from", "to", "amount")
+	resp, err := svc.UnsignedTxGet(t.Context(), "BTC", "from", "to", "amount")
 
 	require.NoError(t, err)
 	require.NotNil(t, resp)
 }
 
 func TestBroadcastPost(t *testing.T) {
+	t.Parallel()
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
 	mockProvider := internalportsmocks.NewMockProvider(ctrl)
 	svc := service.New(mockProvider)
-	ctx := context.Background()
 
 	req := cryptowalletrest.BroadcastPostRequest{}
-	resp, err := svc.BroadcastPost(ctx, req)
+	resp, err := svc.BroadcastPost(t.Context(), req)
 
 	require.NoError(t, err)
 	require.NotNil(t, resp)

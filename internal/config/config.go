@@ -20,5 +20,6 @@ func DefaultConfig() Config {
 
 	cfg.TLSConfig.CertificatePath = "/etc/letsencrypt/live/restartfu.com/fullchain.pem"
 	cfg.TLSConfig.PrivateKeyPath = "/etc/letsencrypt/live/restartfu.com/privkey.pem"
+
 	return cfg
 }

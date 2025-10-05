@@ -12,5 +12,6 @@ type Error struct {
 
 func handleError(err error) (cryptowalletrest.ImplResponse, error) {
 	code := http.StatusNotImplemented
+
 	return cryptowalletrest.Response(code, Error{Message: err.Error()}), nil
 }
