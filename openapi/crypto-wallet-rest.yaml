@@ -35,8 +35,7 @@ paths:
                   address:
                     type: string
                   balance:
-                    type: string
-                    description: Balance in smallest unit (satoshis, wei, etc.)
+                    type: double
 
   /transactions:
     get:

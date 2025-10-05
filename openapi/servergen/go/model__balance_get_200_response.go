@@ -19,8 +19,7 @@ type BalanceGet200Response struct {
 
 	Address string `json:"address,omitempty"`
 
-	// Balance in smallest unit (satoshis, wei, etc.)
-	Balance string `json:"balance,omitempty"`
+	Balance float64 `json:"balance,omitempty"`
 }
 
 // AssertBalanceGet200ResponseRequired checks if the required fields are not zero-ed
