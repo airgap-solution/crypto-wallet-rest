@@ -21,8 +21,7 @@ var _ MappedNullable = &BalanceGet200Response{}
 type BalanceGet200Response struct {
 	Crypto *string `json:"crypto,omitempty"`
 	Address *string `json:"address,omitempty"`
-	// Balance in smallest unit (satoshis, wei, etc.)
-	Balance *string `json:"balance,omitempty"`
+	Balance *float64 `json:"balance,omitempty"`
 }
 
 // NewBalanceGet200Response instantiates a new BalanceGet200Response object
@@ -107,9 +106,9 @@ func (o *BalanceGet200Response) SetAddress(v string) {
 }
 
 // GetBalance returns the Balance field value if set, zero value otherwise.
-func (o *BalanceGet200Response) GetBalance() string {
+func (o *BalanceGet200Response) GetBalance() float64 {
 	if o == nil || IsNil(o.Balance) {
-		var ret string
+		var ret float64
 		return ret
 	}
 	return *o.Balance
@@ -117,7 +116,7 @@ func (o *BalanceGet200Response) GetBalance() string {
 
 // GetBalanceOk returns a tuple with the Balance field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BalanceGet200Response) GetBalanceOk() (*string, bool) {
+func (o *BalanceGet200Response) GetBalanceOk() (*float64, bool) {
 	if o == nil || IsNil(o.Balance) {
 		return nil, false
 	}
@@ -133,8 +132,8 @@ func (o *BalanceGet200Response) HasBalance() bool {
 	return false
 }
 
-// SetBalance gets a reference to the given string and assigns it to the Balance field.
-func (o *BalanceGet200Response) SetBalance(v string) {
+// SetBalance gets a reference to the given float64 and assigns it to the Balance field.
+func (o *BalanceGet200Response) SetBalance(v float64) {
 	o.Balance = &v
 }
 

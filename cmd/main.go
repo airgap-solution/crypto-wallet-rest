@@ -5,17 +5,21 @@ import (
 	"os"
 
 	"github.com/airgap-solution/crypto-wallet-rest/internal"
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
 	"github.com/restartfu/gophig"
 )
 
 func main() {
-	conf, err := loadConfig("./config")
+	conf, err := loadConfig("./config.toml")
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	if err := internal.ListenAndServe(conf, nil); err != nil {
+	providerAdapter := provider.NewAdapter()
+	servicer := service.New(providerAdapter)
+	if err := internal.ListenAndServe(conf, servicer); err != nil {
 		log.Fatalln(err)
 	}
 }
