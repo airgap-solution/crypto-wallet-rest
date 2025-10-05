@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -28,14 +29,14 @@ func main() {
 
 func loadConfig(configPath string) (config.Config, error) {
 	defaultConfig := config.DefaultConfig()
-	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, os.ModePerm)
 	conf, err := g.LoadConf()
 	if err != nil {
 		if os.IsNotExist(err) {
 			err = g.SaveConf(defaultConfig)
-			return defaultConfig, err
+			return defaultConfig, fmt.Errorf("could not save default config: %w", err)
 		}
-		return config.Config{}, err
+		return config.Config{}, fmt.Errorf("could not load config: %w", err)
 	}
 	return conf, nil
 }

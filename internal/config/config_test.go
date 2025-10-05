@@ -8,6 +8,7 @@ import (
 )
 
 func TestDefaultConfig(t *testing.T) {
+	t.Parallel()
 	cfg := config.DefaultConfig()
 
 	assert.Equal(t, ":8399", cfg.ListenAddr)
