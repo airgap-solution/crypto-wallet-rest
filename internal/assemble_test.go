@@ -11,6 +11,7 @@ import (
 )
 
 func TestAssemble(t *testing.T) {
+	t.Parallel()
 	cfg := config.Config{
 		ListenAddr: ":8080",
 	}

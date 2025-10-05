@@ -1,0 +1,1873 @@
+Script started on 2025-10-05 00:20:10-04:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="148" LINES="12"]
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m cleargit pushcommit -am "ci: add GitHub Actions workflow for tests"^C[?2004l[?2004h[?2004l
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint
+[?2004l[1;34mRunning golangci-lint...[0m
+[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1minternal/assemble.go:14[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1minternal/assemble_test.go:15[22m:9: [31mconfig.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig[0m (exhaustruct)
+	cfg := config.Config{
+	       [33m^[0m
+[1minternal/core/service/error_test.go:13[22m:13: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")"[0m (err113)
+	testErr := errors.New("test error message")
+	           [33m^[0m
+[1minternal/core/service/service_test.go:55[22m:67: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")"[0m (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              [33m^[0m
+[1minternal/core/service/service_test.go:121[22m:9: [31mcryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx[0m (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       [33m^[0m
+[1minternal/core/service/error_test.go:12[22m:1: [31mFunction TestHandleError missing the call to method parallel[0m (paralleltest)
+func TestHandleError(t *testing.T) {
+[33m^[0m
+[1minternal/core/service/service_test.go:32[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:26[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/config/config.go:15[22m:9: [31mconfig.Config is missing field TLSConfig[0m (exhaustruct)
+	cfg := Config{
+	       [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/core/service/service.go:32[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:35[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:38[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1;32m✅ No lint issues found[0m
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clkear
+[?2004lbash: clkear: command not found
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clkear^C[?2004l[?2004h[?2004l
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear[1@k[C[C[Cmake lint
+[?2004l[1;34mRunning golangci-lint...[0m
+[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1minternal/assemble.go:14[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:38[22m:3: [31mreturn with no blank line before[0m (nlreturn)
+		return config.Config{}, err
+		[33m^[0m
+[1minternal/assemble_test.go:15[22m:9: [31mconfig.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig[0m (exhaustruct)
+	cfg := config.Config{
+	       [33m^[0m
+[1minternal/config/config.go:15[22m:9: [31mconfig.Config is missing field TLSConfig[0m (exhaustruct)
+	cfg := Config{
+	       [33m^[0m
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/core/service/service.go:32[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:35[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:38[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/error_test.go:13[22m:13: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")"[0m (err113)
+	testErr := errors.New("test error message")
+	           [33m^[0m
+[1minternal/core/service/service_test.go:55[22m:67: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")"[0m (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              [33m^[0m
+[1minternal/core/service/service_test.go:121[22m:9: [31mcryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx[0m (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       [33m^[0m
+[1minternal/core/service/error_test.go:12[22m:1: [31mFunction TestHandleError missing the call to method parallel[0m (paralleltest)
+func TestHandleError(t *testing.T) {
+[33m^[0m
+[1minternal/core/service/service_test.go:32[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:26[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+
+[1;31m❌ Lint found 70 issue(s)[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[1;34mRunning golangci-lint...[0m
+[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/core/service/error_test.go:13[22m:13: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")"[0m (err113)
+	testErr := errors.New("test error message")
+	           [33m^[0m
+[1minternal/core/service/service_test.go:55[22m:67: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")"[0m (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              [33m^[0m
+[1minternal/core/service/service_test.go:121[22m:9: [31mcryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx[0m (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       [33m^[0m
+[1minternal/core/service/error_test.go:12[22m:1: [31mFunction TestHandleError missing the call to method parallel[0m (paralleltest)
+func TestHandleError(t *testing.T) {
+[33m^[0m
+[1minternal/core/service/service_test.go:32[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:26[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:38[22m:3: [31mreturn with no blank line before[0m (nlreturn)
+		return config.Config{}, err
+		[33m^[0m
+[1mcmd/main.go:36[22m:4: [31mreturn with no blank line before[0m (nlreturn)
+			return defaultConfig, err
+			[33m^[0m
+[1minternal/assemble_test.go:15[22m:9: [31mconfig.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig[0m (exhaustruct)
+	cfg := config.Config{
+	       [33m^[0m
+[1minternal/core/service/service.go:32[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:35[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:38[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/config/config.go:15[22m:9: [31mconfig.Config is missing field TLSConfig[0m (exhaustruct)
+	cfg := Config{
+	       [33m^[0m
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1;32m✅ No lint issues found[0m
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[1;34mRunning golangci-lint...[0m
+[1;32m✅ No lint issues found[0m
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004lRunning golangci-lint...
+level=warning msg="The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting."
+internal/adapters/provider/adapter.go:8:30: unused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _ (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             ^
+internal/adapters/provider/adapter.go:7:1: File is not properly formatted (gofumpt)
+}
+^
+internal/adapters/provider/adapter_test.go:23:2: float-compare: use require.InEpsilon (or InDelta) (testifylint)
+	require.Equal(t, 0.0, balance)
+	^
+cmd/main.go:31:1: File is not properly formatted (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+^
+cmd/main.go:40:2: return with no blank line before (nlreturn)
+	return conf, nil
+	^
+cmd/main.go:38:3: return with no blank line before (nlreturn)
+		return config.Config{}, err
+		^
+cmd/main.go:36:4: return with no blank line before (nlreturn)
+			return defaultConfig, err
+			^
+internal/assemble_test.go:15:9: config.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig (exhaustruct)
+	cfg := config.Config{
+	       ^
+internal/core/service/service.go:32:9: cryptowalletrest.ImplResponse is missing fields Code, Body (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       ^
+internal/core/service/service.go:35:9: cryptowalletrest.ImplResponse is missing fields Code, Body (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       ^
+internal/core/service/service.go:38:9: cryptowalletrest.ImplResponse is missing fields Code, Body (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       ^
+internal/core/service/export_test.go:3:5: HandleError is a global variable (gochecknoglobals)
+var HandleError = handleError
+    ^
+internal/core/service/service.go:30:1: File is not properly formatted (gofumpt)
+}
+^
+internal/core/service/service.go:37:1: The line is 127 characters long, which exceeds the maximum of 120 characters. (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+^
+internal/core/service/service.go:25:35: Magic number: 200, in <argument> detected (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 ^
+internal/core/service/error_test.go:13:13: do not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")" (err113)
+	testErr := errors.New("test error message")
+	           ^
+internal/core/service/service_test.go:55:67: do not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")" (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              ^
+internal/core/service/service_test.go:121:9: cryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       ^
+internal/core/service/error_test.go:12:1: Function TestHandleError missing the call to method parallel (paralleltest)
+func TestHandleError(t *testing.T) {
+^
+internal/core/service/service_test.go:32:2: Range statement for test TestBalanceGet missing the call to method parallel in test Run (paralleltest)
+	for _, tc := range []struct {
+	^
+internal/core/service/service_test.go:26:6: TestBalanceGet's subtests should call t.Parallel (tparallel)
+func TestBalanceGet(t *testing.T) {
+     ^
+internal/config/config.go:15:9: config.Config is missing field TLSConfig (exhaustruct)
+	cfg := Config{
+	       ^
+internal/assemble.go:13:10: G112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        ^
+❌ Lint found 36 issue(s)
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004lRunning golangci-lint...
+level=warning msg="The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting."
+internal/config/config.go:15:9: config.Config is missing field TLSConfig (exhaustruct)
+	cfg := Config{
+	       ^
+internal/config/config.go:23:2: return with no blank line before (nlreturn)
+	return cfg
+	^
+internal/assemble.go:13:10: G112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        ^
+internal/assemble.go:14:2: return with no blank line before (nlreturn)
+	return srv
+	^
+internal/assemble_test.go:15:9: config.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig (exhaustruct)
+	cfg := config.Config{
+	       ^
+internal/adapters/provider/adapter.go:8:30: unused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _ (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             ^
+internal/adapters/provider/adapter.go:7:1: File is not properly formatted (gofumpt)
+}
+^
+cmd/main.go:31:1: File is not properly formatted (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+^
+cmd/main.go:40:2: return with no blank line before (nlreturn)
+	return conf, nil
+	^
+internal/adapters/provider/adapter_test.go:23:2: float-compare: use require.InEpsilon (or InDelta) (testifylint)
+	require.Equal(t, 0.0, balance)
+	^
+internal/core/service/service.go:32:9: cryptowalletrest.ImplResponse is missing fields Code, Body (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       ^
+internal/core/service/service.go:35:9: cryptowalletrest.ImplResponse is missing fields Code, Body (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       ^
+internal/core/service/service.go:38:9: cryptowalletrest.ImplResponse is missing fields Code, Body (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       ^
+internal/core/service/export_test.go:3:5: HandleError is a global variable (gochecknoglobals)
+var HandleError = handleError
+    ^
+internal/core/service/service.go:30:1: File is not properly formatted (gofumpt)
+}
+^
+internal/core/service/service.go:37:1: The line is 127 characters long, which exceeds the maximum of 120 characters. (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+^
+internal/core/service/service.go:25:35: Magic number: 200, in <argument> detected (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 ^
+internal/core/service/error_test.go:13:13: do not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")" (err113)
+	testErr := errors.New("test error message")
+	           ^
+internal/core/service/service_test.go:55:67: do not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")" (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              ^
+internal/core/service/service_test.go:121:9: cryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       ^
+internal/core/service/error_test.go:12:1: Function TestHandleError missing the call to method parallel (paralleltest)
+func TestHandleError(t *testing.T) {
+^
+internal/core/service/service_test.go:32:2: Range statement for test TestBalanceGet missing the call to method parallel in test Run (paralleltest)
+	for _, tc := range []struct {
+	^
+internal/core/service/service_test.go:26:6: TestBalanceGet's subtests should call t.Parallel (tparallel)
+func TestBalanceGet(t *testing.T) {
+     ^
+❌ Lint found 36 issue(s)
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [7mFORCE_COLOR=1 golangci-lint run --enable-all --out-format=colored-line-number[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CFORCE_COLOR=1 golangci-lint run --enable-all --out-format=colored-line-number
+[A
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/config/config.go:15[22m:9: [31mconfig.Config is missing field TLSConfig[0m (exhaustruct)
+	cfg := Config{
+	       [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1minternal/assemble.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/config' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
+	[33m^[0m
+[1minternal/assemble.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go' is not allowed from list 'Main'[0m (depguard)
+	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+	[33m^[0m
+[1minternal/assemble.go:14[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal"
+	[33m^[0m
+[1mcmd/main.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
+	[33m^[0m
+[1mcmd/main.go:9[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/config' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
+	[33m^[0m
+[1mcmd/main.go:10[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/core/service' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	[33m^[0m
+[1mcmd/main.go:11[22m:2: [31mimport 'github.com/restartfu/gophig' is not allowed from list 'Main'[0m (depguard)
+	"github.com/restartfu/gophig"
+	[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:33[22m:2: [31monly one cuddle assignment allowed before if statement[0m (wsl)
+	if err != nil {
+	[33m^[0m
+[1minternal/core/service/error.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go' is not allowed from list 'Main'[0m (depguard)
+	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+	[33m^[0m
+[1minternal/core/service/service.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/ports' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
+	[33m^[0m
+[1minternal/core/service/service.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go' is not allowed from list 'Main'[0m (depguard)
+	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+	[33m^[0m
+[1minternal/core/service/service.go:32[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:35[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:38[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:33[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/assemble_test.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal"
+	[33m^[0m
+[1minternal/assemble_test.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
+	[33m^[0m
+[1minternal/assemble_test.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/config' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
+	[33m^[0m
+[1minternal/assemble_test.go:9[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/core/service' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	[33m^[0m
+[1minternal/assemble_test.go:10[22m:2: [31mimport 'github.com/stretchr/testify/require' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/require"
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:7[22m:2: [31mimport 'github.com/stretchr/testify/require' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/require"
+	[33m^[0m
+[1minternal/config/config_test.go:7[22m:2: [31mimport 'github.com/stretchr/testify/assert' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/assert"
+	[33m^[0m
+[1minternal/core/service/error_test.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/core/service' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	[33m^[0m
+[1minternal/core/service/error_test.go:9[22m:2: [31mimport 'github.com/stretchr/testify/require' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/require"
+	[33m^[0m
+[1minternal/core/service/service_test.go:10[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/mocks/internalports' is not allowed from list 'Main'[0m (depguard)
+	internalportsmocks "github.com/airgap-solution/crypto-wallet-rest/mocks/internalports"
+	[33m^[0m
+[1minternal/core/service/service_test.go:12[22m:2: [31mimport 'github.com/stretchr/testify/assert' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/assert"
+	[33m^[0m
+[1minternal/core/service/service_test.go:14[22m:2: [31mimport 'go.uber.org/mock/gomock' is not allowed from list 'Main'[0m (depguard)
+	"go.uber.org/mock/gomock"
+	[33m^[0m
+[1minternal/core/service/error_test.go:13[22m:13: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")"[0m (err113)
+	testErr := errors.New("test error message")
+	           [33m^[0m
+[1minternal/core/service/service_test.go:55[22m:67: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")"[0m (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              [33m^[0m
+[1minternal/assemble_test.go:15[22m:9: [31mconfig.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig[0m (exhaustruct)
+	cfg := config.Config{
+	       [33m^[0m
+[1minternal/core/service/service_test.go:121[22m:9: [31mcryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx[0m (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       [33m^[0m
+[1minternal/core/service/error_test.go:12[22m:1: [31mFunction TestHandleError missing the call to method parallel[0m (paralleltest)
+func TestHandleError(t *testing.T) {
+[33m^[0m
+[1minternal/core/service/service_test.go:32[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/core/service/service_test.go:26[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/adapters/provider/adapter_test.go:12[22m:2: [31massignments should only be cuddled with other assignments[0m (wsl)
+	adapter := provider.NewAdapter()
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:18[22m:2: [31massignments should only be cuddled with other assignments[0m (wsl)
+	adapter := provider.NewAdapter()
+	[33m^[0m
+[1minternal/config/config_test.go:12[22m:2: [31massignments should only be cuddled with other assignments[0m (wsl)
+	cfg := config.DefaultConfig()
+	[33m^[0m
+[1minternal/core/service/service_test.go:20[22m:2: [31monly one cuddle assignment allowed before defer statement[0m (wsl)
+	defer ctrl.Finish()
+	[33m^[0m
+[1minternal/core/service/service_test.go:88[22m:2: [31monly one cuddle assignment allowed before defer statement[0m (wsl)
+	defer ctrl.Finish()
+	[33m^[0m
+[1minternal/core/service/service_test.go:102[22m:2: [31monly one cuddle assignment allowed before defer statement[0m (wsl)
+	defer ctrl.Finish()
+	[33m^[0m
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear[72@FORCE_COLOR=1 golangci-lint run --enable-all --out-format=colored-line-numbe[C
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/config/config.go:15[22m:9: [31mconfig.Config is missing field TLSConfig[0m (exhaustruct)
+	cfg := Config{
+	       [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1mcmd/main.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal"
+	[33m^[0m
+[1mcmd/main.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
+	[33m^[0m
+[1mcmd/main.go:9[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/config' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
+	[33m^[0m
+[1mcmd/main.go:10[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/core/service' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	[33m^[0m
+[1mcmd/main.go:11[22m:2: [31mimport 'github.com/restartfu/gophig' is not allowed from list 'Main'[0m (depguard)
+	"github.com/restartfu/gophig"
+	[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:38[22m:3: [31mreturn with no blank line before[0m (nlreturn)
+		return config.Config{}, err
+		[33m^[0m
+[1mcmd/main.go:33[22m:2: [31monly one cuddle assignment allowed before if statement[0m (wsl)
+	if err != nil {
+	[33m^[0m
+[1minternal/assemble_test.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal"
+	[33m^[0m
+[1minternal/assemble_test.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
+	[33m^[0m
+[1minternal/assemble_test.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/config' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
+	[33m^[0m
+[1minternal/assemble_test.go:9[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/core/service' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	[33m^[0m
+[1minternal/assemble_test.go:10[22m:2: [31mimport 'github.com/stretchr/testify/require' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/require"
+	[33m^[0m
+[1minternal/assemble_test.go:15[22m:9: [31mconfig.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig[0m (exhaustruct)
+	cfg := config.Config{
+	       [33m^[0m
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1minternal/assemble.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/config' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
+	[33m^[0m
+[1minternal/assemble.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go' is not allowed from list 'Main'[0m (depguard)
+	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:7[22m:2: [31mimport 'github.com/stretchr/testify/require' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/require"
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:12[22m:2: [31massignments should only be cuddled with other assignments[0m (wsl)
+	adapter := provider.NewAdapter()
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:18[22m:2: [31massignments should only be cuddled with other assignments[0m (wsl)
+	adapter := provider.NewAdapter()
+	[33m^[0m
+[1minternal/config/config_test.go:7[22m:2: [31mimport 'github.com/stretchr/testify/assert' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/assert"
+	[33m^[0m
+[1minternal/config/config_test.go:12[22m:2: [31massignments should only be cuddled with other assignments[0m (wsl)
+	cfg := config.DefaultConfig()
+	[33m^[0m
+[1minternal/core/service/error.go:6[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go' is not allowed from list 'Main'[0m (depguard)
+	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+	[33m^[0m
+[1minternal/core/service/service.go:7[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/ports' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
+	[33m^[0m
+[1minternal/core/service/service.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go' is not allowed from list 'Main'[0m (depguard)
+	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
+	[33m^[0m
+[1minternal/core/service/service.go:32[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:35[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:38[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/error_test.go:8[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/internal/core/service' is not allowed from list 'Main'[0m (depguard)
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	[33m^[0m
+[1minternal/core/service/error_test.go:9[22m:2: [31mimport 'github.com/stretchr/testify/require' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/require"
+	[33m^[0m
+[1minternal/core/service/service_test.go:10[22m:2: [31mimport 'github.com/airgap-solution/crypto-wallet-rest/mocks/internalports' is not allowed from list 'Main'[0m (depguard)
+	internalportsmocks "github.com/airgap-solution/crypto-wallet-rest/mocks/internalports"
+	[33m^[0m
+[1minternal/core/service/service_test.go:12[22m:2: [31mimport 'github.com/stretchr/testify/assert' is not allowed from list 'Main'[0m (depguard)
+	"github.com/stretchr/testify/assert"
+	[33m^[0m
+[1minternal/core/service/service_test.go:14[22m:2: [31mimport 'go.uber.org/mock/gomock' is not allowed from list 'Main'[0m (depguard)
+	"go.uber.org/mock/gomock"
+	[33m^[0m
+[1minternal/core/service/error_test.go:13[22m:13: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")"[0m (err113)
+	testErr := errors.New("test error message")
+	           [33m^[0m
+[1minternal/core/service/service_test.go:55[22m:67: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")"[0m (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              [33m^[0m
+[1minternal/core/service/service_test.go:121[22m:9: [31mcryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx[0m (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       [33m^[0m
+[1minternal/core/service/error_test.go:12[22m:1: [31mFunction TestHandleError missing the call to method parallel[0m (paralleltest)
+func TestHandleError(t *testing.T) {
+[33m^[0m
+[1minternal/core/service/service_test.go:32[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:26[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/core/service/service_test.go:20[22m:2: [31monly one cuddle assignment allowed before defer statement[0m (wsl)
+	defer ctrl.Finish()
+	[33m^[0m
+[1minternal/core/service/service_test.go:88[22m:2: [31monly one cuddle assignment allowed before defer statement[0m (wsl)
+	defer ctrl.Finish()
+	[33m^[0m
+[1minternal/core/service/service_test.go:102[22m:2: [31monly one cuddle assignment allowed before defer statement[0m (wsl)
+	defer ctrl.Finish()
+	[33m^[0m
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m FORCE_COLOR=1 golangci-lint run --enable-all --out-format=colored-line-number[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[K[72@FORCE_COLOR=1 golangci-lint run --enable-all --out-format=colored-line-numbe[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmake lint[K
+[?2004lRunning golangci-lint...
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m uuc^C[?2004l[?2004h[?2004l
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/core/service/error_test.go:13[22m:13: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"test error message\")"[0m (err113)
+	testErr := errors.New("test error message")
+	           [33m^[0m
+[1minternal/core/service/service_test.go:55[22m:67: [31mdo not define dynamic errors, use wrapped static errors instead: "errors.New(\"provider error\")"[0m (err113)
+				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, errors.New("provider error"))
+				                                                              [33m^[0m
+[1minternal/core/service/service_test.go:121[22m:9: [31mcryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx[0m (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       [33m^[0m
+[1minternal/core/service/error_test.go:12[22m:1: [31mFunction TestHandleError missing the call to method parallel[0m (paralleltest)
+func TestHandleError(t *testing.T) {
+[33m^[0m
+[1minternal/core/service/service_test.go:32[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:26[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1minternal/assemble.go:14[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:32[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:35[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:38[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:33[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/error.go:15[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cryptowalletrest.Response(code, Error{Message: err.Error()}), nil
+	[33m^[0m
+[1minternal/config/config.go:15[22m:9: [31mconfig.Config is missing field TLSConfig[0m (exhaustruct)
+	cfg := Config{
+	       [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/assemble_test.go:15[22m:9: [31mconfig.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig[0m (exhaustruct)
+	cfg := config.Config{
+	       [33m^[0m
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/config/config.go:15[22m:9: [31mconfig.Config is missing field TLSConfig[0m (exhaustruct)
+	cfg := Config{
+	       [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:38[22m:3: [31mreturn with no blank line before[0m (nlreturn)
+		return config.Config{}, err
+		[33m^[0m
+[1minternal/assemble_test.go:15[22m:9: [31mconfig.Config is missing fields CMCRestAddr, TLSEnabled, TLSConfig[0m (exhaustruct)
+	cfg := config.Config{
+	       [33m^[0m
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1minternal/core/service/service.go:32[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:35[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/service.go:38[22m:9: [31mcryptowalletrest.ImplResponse is missing fields Code, Body[0m (exhaustruct)
+	return cryptowalletrest.ImplResponse{}, nil
+	       [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/service_test.go:120[22m:9: [31mcryptowalletrest.BroadcastPostRequest is missing fields Crypto, SignedTx[0m (exhaustruct)
+	req := cryptowalletrest.BroadcastPostRequest{}
+	       [33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/assemble.go:13[22m:10: [31mG112: Potential Slowloris Attack because ReadHeaderTimeout is not configured in the http.Server[0m (gosec)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router}
+	        [33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/assemble.go:14[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0.0, balance)
+	[33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:33[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:36[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/error.go:15[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cryptowalletrest.Response(code, Error{Message: err.Error()}), nil
+	[33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/assemble.go:14[22m:88: [31mMagic number: 10, in <assign> detected[0m (mnd)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router, ReadTimeout: time.Second * 10}
+	                                                                                      [33m^[0m
+[1minternal/assemble.go:15[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/assemble.go:14[22m:88: [31mMagic number: 10, in <assign> detected[0m (mnd)
+	srv := &http.Server{Addr: cfg.ListenAddr, Handler: router, ReadTimeout: time.Second * 10}
+	                                                                                      [33m^[0m
+[1minternal/assemble.go:15[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:38[22m:3: [31mreturn with no blank line before[0m (nlreturn)
+		return config.Config{}, err
+		[33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/core/service/export_test.go:3[22m:5: [31mHandleError is a global variable[0m (gochecknoglobals)
+var HandleError = handleError
+    [33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:33[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:36[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/error.go:15[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cryptowalletrest.Response(code, Error{Message: err.Error()}), nil
+	[33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/assemble.go:11[22m:5: [31mreadTimeout is a global variable[0m (gochecknoglobals)
+var readTimeout = time.Second * 10
+    [33m^[0m
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/adapters/provider/adapter.go:7[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1mcmd/main.go:31[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+[33m^[0m
+[1minternal/core/service/service.go:30[22m:1: [31mFile is not properly formatted[0m (gofumpt)
+}
+[33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/adapters/provider/adapter.go:8[22m:30: [31munused-parameter: parameter 'symbol' seems to be unused, consider removing or renaming it as _[0m (revive)
+func (a *Adapter) GetBalance(symbol, address string) (float64, error) {
+                             [33m^[0m
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/core/service/service.go:37[22m:1: [31mThe line is 127 characters long, which exceeds the maximum of 120 characters.[0m (lll)
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/error.go:15[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cryptowalletrest.Response(code, Error{Message: err.Error()}), nil
+	[33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/config/config.go:23[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cfg
+	[33m^[0m
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/core/service/error.go:15[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return cryptowalletrest.Response(code, Error{Message: err.Error()}), nil
+	[33m^[0m
+[1minternal/core/service/service_test.go:31[22m:2: [31mRange statement for test TestBalanceGet missing the call to method parallel in test Run[0m (paralleltest)
+	for _, tc := range []struct {
+	[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:6: [31mTestBalanceGet's subtests should call t.Parallel[0m (tparallel)
+func TestBalanceGet(t *testing.T) {
+     [33m^[0m
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:38[22m:3: [31mreturn with no blank line before[0m (nlreturn)
+		return config.Config{}, err
+		[33m^[0m
+[1minternal/core/service/service_test.go:25[22m:1: [31mFunction TestBalanceGet missing the call to method parallel[0m (paralleltest)
+func TestBalanceGet(t *testing.T) {
+[33m^[0m
+[1minternal/core/service/service_test.go:30[22m:6: [31mvariable name 'tc' is too short for the scope of its usage[0m (varnamelen)
+	for _, tc := range []struct {
+	    [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1mcmd/main.go:40[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return conf, nil
+	[33m^[0m
+[1mcmd/main.go:38[22m:3: [31mreturn with no blank line before[0m (nlreturn)
+		return config.Config{}, err
+		[33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/assemble.go:17[22m:2: [31mreturn with no blank line before[0m (nlreturn)
+	return srv
+	[33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+[1mcmd/main.go:36[22m:4: [31mreturn with no blank line before[0m (nlreturn)
+			return defaultConfig, err
+			[33m^[0m
+[1mcmd/main.go:39[22m:27: [31merror returned from external package is unwrapped: sig: func (*github.com/restartfu/gophig.Gophig[github.com/airgap-solution/crypto-wallet-rest/internal/config.Config]).SaveConf(v github.com/airgap-solution/crypto-wallet-rest/internal/config.Config) error[0m (wrapcheck)
+		return config.Config{}, err
+		                        [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1mcmd/main.go:31[22m:75: [31mMagic number: 0777, in <argument> detected[0m (mnd)
+	g := gophig.NewGophig[config.Config](configPath, gophig.TOMLMarshaler{}, 0777)
+	                                                                         [33m^[0m
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1mcmd/main.go:36[22m:26: [31merror returned from external package is unwrapped: sig: func (*github.com/restartfu/gophig.Gophig[github.com/airgap-solution/crypto-wallet-rest/internal/config.Config]).SaveConf(v github.com/airgap-solution/crypto-wallet-rest/internal/config.Config) error[0m (wrapcheck)
+			return defaultConfig, err
+			                      [33m^[0m
+[1mcmd/main.go:38[22m:27: [31merror returned from external package is unwrapped: sig: func (*github.com/restartfu/gophig.Gophig[github.com/airgap-solution/crypto-wallet-rest/internal/config.Config]).SaveConf(v github.com/airgap-solution/crypto-wallet-rest/internal/config.Config) error[0m (wrapcheck)
+		return config.Config{}, err
+		                        [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/core/service/service.go:25[22m:35: [31mMagic number: 200, in <argument> detected[0m (mnd)
+	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	                                 [33m^[0m
+[1mcmd/main.go:36[22m:26: [31merror returned from external package is unwrapped: sig: func (*github.com/restartfu/gophig.Gophig[github.com/airgap-solution/crypto-wallet-rest/internal/config.Config]).SaveConf(v github.com/airgap-solution/crypto-wallet-rest/internal/config.Config) error[0m (wrapcheck)
+			return defaultConfig, err
+			                      [33m^[0m
+[1mcmd/main.go:38[22m:27: [31merror returned from external package is unwrapped: sig: func (*github.com/restartfu/gophig.Gophig[github.com/airgap-solution/crypto-wallet-rest/internal/config.Config]).SaveConf(v github.com/airgap-solution/crypto-wallet-rest/internal/config.Config) error[0m (wrapcheck)
+		return config.Config{}, err
+		                        [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1mcmd/main.go:36[22m:26: [31merror returned from external package is unwrapped: sig: func (*github.com/restartfu/gophig.Gophig[github.com/airgap-solution/crypto-wallet-rest/internal/config.Config]).SaveConf(v github.com/airgap-solution/crypto-wallet-rest/internal/config.Config) error[0m (wrapcheck)
+			return defaultConfig, err
+			                      [33m^[0m
+[1mcmd/main.go:38[22m:27: [31merror returned from external package is unwrapped: sig: func (*github.com/restartfu/gophig.Gophig[github.com/airgap-solution/crypto-wallet-rest/internal/config.Config]).SaveConf(v github.com/airgap-solution/crypto-wallet-rest/internal/config.Config) error[0m (wrapcheck)
+		return config.Config{}, err
+		                        [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+	github.com/airgap-solution/crypto-wallet-rest/cmd		coverage: 0.0% of statements
+=== RUN   TestAssemble
+=== PAUSE TestAssemble
+=== CONT  TestAssemble
+--- PASS: TestAssemble (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal	0.004s	coverage: 100.0% of statements
+=== RUN   TestNewAdapter
+=== PAUSE TestNewAdapter
+=== RUN   TestGetBalance
+=== PAUSE TestGetBalance
+=== CONT  TestNewAdapter
+=== CONT  TestGetBalance
+--- PASS: TestNewAdapter (0.00s)
+=== NAME  TestGetBalance
+    adapter_test.go:23: 
+        	Error Trace:	/home/restart/projects/crypto-wallet-rest/internal/adapters/provider/adapter_test.go:23
+        	Error:      	expected value must have a value other than zero to calculate the relative error
+        	Test:       	TestGetBalance
+--- FAIL: TestGetBalance (0.00s)
+FAIL
+coverage: 100.0% of statements
+FAIL	github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider	0.004s
+=== RUN   TestDefaultConfig
+=== PAUSE TestDefaultConfig
+=== CONT  TestDefaultConfig
+--- PASS: TestDefaultConfig (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/config	0.003s	coverage: 100.0% of statements
+=== RUN   TestHandleError
+=== PAUSE TestHandleError
+=== RUN   TestNew
+=== PAUSE TestNew
+=== RUN   TestBalanceGet
+=== PAUSE TestBalanceGet
+=== RUN   TestTransactionsGet
+=== PAUSE TestTransactionsGet
+=== RUN   TestUnsignedTxGet
+=== PAUSE TestUnsignedTxGet
+=== RUN   TestBroadcastPost
+=== PAUSE TestBroadcastPost
+=== CONT  TestHandleError
+=== CONT  TestTransactionsGet
+--- PASS: TestTransactionsGet (0.00s)
+=== CONT  TestBroadcastPost
+--- PASS: TestBroadcastPost (0.00s)
+=== CONT  TestUnsignedTxGet
+=== NAME  TestHandleError
+    error_test.go:21: 
+        	Error Trace:	/home/restart/projects/crypto-wallet-rest/internal/core/service/error_test.go:21
+        	Error:      	Not equal: 
+=== CONT  TestBalanceGet
+--- PASS: TestUnsignedTxGet (0.00s)
+=== NAME  TestHandleError
+        	            	expected: "test error message"
+        	            	actual  : "assert.AnError general error for testing"
+        	            	
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-test error message
+        	            	+assert.AnError general error for testing
+        	Test:       	TestHandleError
+--- FAIL: TestHandleError (0.00s)
+=== CONT  TestNew
+--- PASS: TestNew (0.00s)
+=== RUN   TestBalanceGet/provider_returns_no_error
+=== PAUSE TestBalanceGet/provider_returns_no_error
+=== RUN   TestBalanceGet/provider_returns_error
+=== PAUSE TestBalanceGet/provider_returns_error
+=== CONT  TestBalanceGet/provider_returns_no_error
+=== CONT  TestBalanceGet/provider_returns_error
+--- PASS: TestBalanceGet (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_no_error (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_error (0.00s)
+FAIL
+coverage: 100.0% of statements
+FAIL	github.com/airgap-solution/crypto-wallet-rest/internal/core/service	0.008s
+?   	github.com/airgap-solution/crypto-wallet-rest/internal/ports	[no test files]
+	github.com/airgap-solution/crypto-wallet-rest/mocks/internalports		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiclientgengo		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiservergengo		coverage: 0.0% of statements
+FAIL
+
+Coverage by file:
+github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider/adapter.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/assemble.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/config/config.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/error.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/service.go: 100.0%
+
+Total coverage: 100.0%
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+	github.com/airgap-solution/crypto-wallet-rest/cmd		coverage: 0.0% of statements
+=== RUN   TestAssemble
+=== PAUSE TestAssemble
+=== CONT  TestAssemble
+--- PASS: TestAssemble (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal	(cached)	coverage: 100.0% of statements
+=== RUN   TestNewAdapter
+=== PAUSE TestNewAdapter
+=== RUN   TestGetBalance
+=== PAUSE TestGetBalance
+=== CONT  TestNewAdapter
+--- PASS: TestNewAdapter (0.00s)
+=== CONT  TestGetBalance
+    adapter_test.go:23: 
+        	Error Trace:	/home/restart/projects/crypto-wallet-rest/internal/adapters/provider/adapter_test.go:23
+        	Error:      	expected value must have a value other than zero to calculate the relative error
+        	Test:       	TestGetBalance
+--- FAIL: TestGetBalance (0.00s)
+FAIL
+coverage: 100.0% of statements
+FAIL	github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider	0.004s
+=== RUN   TestDefaultConfig
+=== PAUSE TestDefaultConfig
+=== CONT  TestDefaultConfig
+--- PASS: TestDefaultConfig (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/config	(cached)	coverage: 100.0% of statements
+=== RUN   TestHandleError
+=== PAUSE TestHandleError
+=== RUN   TestNew
+=== PAUSE TestNew
+=== RUN   TestBalanceGet
+=== PAUSE TestBalanceGet
+=== RUN   TestTransactionsGet
+=== PAUSE TestTransactionsGet
+=== RUN   TestUnsignedTxGet
+=== PAUSE TestUnsignedTxGet
+=== RUN   TestBroadcastPost
+=== PAUSE TestBroadcastPost
+=== CONT  TestHandleError
+=== CONT  TestTransactionsGet
+=== CONT  TestBalanceGet
+=== NAME  TestHandleError
+    error_test.go:21: 
+        	Error Trace:	/home/restart/projects/crypto-wallet-rest/internal/core/service/error_test.go:21
+        	Error:      	Not equal: 
+        	            	expected: *errors.errorString(&errors.errorString{s:"assert.AnError general error for testing"})
+        	            	actual  : string("assert.AnError general error for testing")
+        	Test:       	TestHandleError
+=== RUN   TestBalanceGet/provider_returns_no_error
+=== PAUSE TestBalanceGet/provider_returns_no_error
+=== RUN   TestBalanceGet/provider_returns_error
+=== PAUSE TestBalanceGet/provider_returns_error
+=== CONT  TestBalanceGet/provider_returns_no_error
+--- PASS: TestTransactionsGet (0.00s)
+=== CONT  TestBalanceGet/provider_returns_error
+--- FAIL: TestHandleError (0.00s)
+--- PASS: TestBalanceGet (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_no_error (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_error (0.00s)
+=== CONT  TestBroadcastPost
+--- PASS: TestBroadcastPost (0.00s)
+=== CONT  TestUnsignedTxGet
+--- PASS: TestUnsignedTxGet (0.00s)
+=== CONT  TestNew
+--- PASS: TestNew (0.00s)
+FAIL
+coverage: 100.0% of statements
+FAIL	github.com/airgap-solution/crypto-wallet-rest/internal/core/service	0.007s
+?   	github.com/airgap-solution/crypto-wallet-rest/internal/ports	[no test files]
+	github.com/airgap-solution/crypto-wallet-rest/mocks/internalports		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiclientgengo		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiservergengo		coverage: 0.0% of statements
+FAIL
+
+Coverage by file:
+github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider/adapter.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/assemble.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/config/config.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/error.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/service.go: 100.0%
+
+Total coverage: 100.0%
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+	github.com/airgap-solution/crypto-wallet-rest/cmd		coverage: 0.0% of statements
+=== RUN   TestAssemble
+=== PAUSE TestAssemble
+=== CONT  TestAssemble
+--- PASS: TestAssemble (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal	(cached)	coverage: 100.0% of statements
+=== RUN   TestNewAdapter
+=== PAUSE TestNewAdapter
+=== RUN   TestGetBalance
+=== PAUSE TestGetBalance
+=== CONT  TestNewAdapter
+--- PASS: TestNewAdapter (0.00s)
+=== CONT  TestGetBalance
+    adapter_test.go:23: 
+        	Error Trace:	/home/restart/projects/crypto-wallet-rest/internal/adapters/provider/adapter_test.go:23
+        	Error:      	expected value must have a value other than zero to calculate the relative error
+        	Test:       	TestGetBalance
+--- FAIL: TestGetBalance (0.00s)
+FAIL
+coverage: 100.0% of statements
+FAIL	github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider	0.004s
+=== RUN   TestDefaultConfig
+=== PAUSE TestDefaultConfig
+=== CONT  TestDefaultConfig
+--- PASS: TestDefaultConfig (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/config	(cached)	coverage: 100.0% of statements
+=== RUN   TestHandleError
+=== PAUSE TestHandleError
+=== RUN   TestNew
+=== PAUSE TestNew
+=== RUN   TestBalanceGet
+=== PAUSE TestBalanceGet
+=== RUN   TestTransactionsGet
+=== PAUSE TestTransactionsGet
+=== RUN   TestUnsignedTxGet
+=== PAUSE TestUnsignedTxGet
+=== RUN   TestBroadcastPost
+=== PAUSE TestBroadcastPost
+=== CONT  TestHandleError
+=== CONT  TestTransactionsGet
+--- PASS: TestHandleError (0.00s)
+=== CONT  TestNew
+--- PASS: TestNew (0.00s)
+=== CONT  TestBroadcastPost
+--- PASS: TestBroadcastPost (0.00s)
+=== CONT  TestUnsignedTxGet
+--- PASS: TestUnsignedTxGet (0.00s)
+=== CONT  TestBalanceGet
+--- PASS: TestTransactionsGet (0.00s)
+=== RUN   TestBalanceGet/provider_returns_no_error
+=== PAUSE TestBalanceGet/provider_returns_no_error
+=== RUN   TestBalanceGet/provider_returns_error
+=== PAUSE TestBalanceGet/provider_returns_error
+=== CONT  TestBalanceGet/provider_returns_no_error
+=== CONT  TestBalanceGet/provider_returns_error
+--- PASS: TestBalanceGet (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_no_error (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_error (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/core/service	0.007s	coverage: 100.0% of statements
+?   	github.com/airgap-solution/crypto-wallet-rest/internal/ports	[no test files]
+	github.com/airgap-solution/crypto-wallet-rest/mocks/internalports		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiclientgengo		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiservergengo		coverage: 0.0% of statements
+FAIL
+
+Coverage by file:
+github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider/adapter.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/assemble.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/config/config.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/error.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/service.go: 100.0%
+
+Total coverage: 100.0%
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [K[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/adapters/provider/adapter.go:9[22m:9: [31mMagic number: 1.2345, in <return> detected[0m (mnd)
+	return 1.2345, nil
+	       [33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clear
+[?2004l[H[2J[3J]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m clearmake lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+	github.com/airgap-solution/crypto-wallet-rest/cmd		coverage: 0.0% of statements
+=== RUN   TestAssemble
+=== PAUSE TestAssemble
+=== CONT  TestAssemble
+--- PASS: TestAssemble (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal	0.004s	coverage: 100.0% of statements
+=== RUN   TestNewAdapter
+=== PAUSE TestNewAdapter
+=== RUN   TestGetBalance
+=== PAUSE TestGetBalance
+=== CONT  TestNewAdapter
+--- PASS: TestNewAdapter (0.00s)
+=== CONT  TestGetBalance
+    adapter_test.go:23: 
+        	Error Trace:	/home/restart/projects/crypto-wallet-rest/internal/adapters/provider/adapter_test.go:23
+        	Error:      	expected value must have a value other than zero to calculate the relative error
+        	Test:       	TestGetBalance
+--- FAIL: TestGetBalance (0.00s)
+FAIL
+coverage: 100.0% of statements
+FAIL	github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider	0.003s
+=== RUN   TestDefaultConfig
+=== PAUSE TestDefaultConfig
+=== CONT  TestDefaultConfig
+--- PASS: TestDefaultConfig (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/config	(cached)	coverage: 100.0% of statements
+=== RUN   TestHandleError
+=== PAUSE TestHandleError
+=== RUN   TestNew
+=== PAUSE TestNew
+=== RUN   TestBalanceGet
+=== PAUSE TestBalanceGet
+=== RUN   TestTransactionsGet
+=== PAUSE TestTransactionsGet
+=== RUN   TestUnsignedTxGet
+=== PAUSE TestUnsignedTxGet
+=== RUN   TestBroadcastPost
+=== PAUSE TestBroadcastPost
+=== CONT  TestHandleError
+=== CONT  TestTransactionsGet
+--- PASS: TestHandleError (0.00s)
+=== CONT  TestNew
+--- PASS: TestNew (0.00s)
+=== CONT  TestBroadcastPost
+--- PASS: TestBroadcastPost (0.00s)
+=== CONT  TestUnsignedTxGet
+--- PASS: TestUnsignedTxGet (0.00s)
+=== CONT  TestBalanceGet
+--- PASS: TestTransactionsGet (0.00s)
+=== RUN   TestBalanceGet/provider_returns_no_error
+=== PAUSE TestBalanceGet/provider_returns_no_error
+=== RUN   TestBalanceGet/provider_returns_error
+=== PAUSE TestBalanceGet/provider_returns_error
+=== CONT  TestBalanceGet/provider_returns_no_error
+=== CONT  TestBalanceGet/provider_returns_error
+--- PASS: TestBalanceGet (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_no_error (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_error (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/core/service	(cached)	coverage: 100.0% of statements
+?   	github.com/airgap-solution/crypto-wallet-rest/internal/ports	[no test files]
+	github.com/airgap-solution/crypto-wallet-rest/mocks/internalports		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiclientgengo		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiservergengo		coverage: 0.0% of statements
+FAIL
+
+Coverage by file:
+github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider/adapter.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/assemble.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/config/config.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/error.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/service.go: 100.0%
+
+Total coverage: 100.0%
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+[1minternal/adapters/provider/adapter_test.go:23[22m:2: [31mfloat-compare: use require.InEpsilon (or InDelta)[0m (testifylint)
+	require.Equal(t, 0, balance)
+	[33m^[0m
+make: *** [.infra-common/common.mk:16: lint] Error 1
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+	github.com/airgap-solution/crypto-wallet-rest/cmd		coverage: 0.0% of statements
+=== RUN   TestAssemble
+=== PAUSE TestAssemble
+=== CONT  TestAssemble
+--- PASS: TestAssemble (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal	0.004s	coverage: 100.0% of statements
+=== RUN   TestNewAdapter
+=== PAUSE TestNewAdapter
+=== RUN   TestGetBalance
+=== PAUSE TestGetBalance
+=== CONT  TestNewAdapter
+=== CONT  TestGetBalance
+--- PASS: TestNewAdapter (0.00s)
+=== NAME  TestGetBalance
+    adapter_test.go:23: 
+        	Error Trace:	/home/restart/projects/crypto-wallet-rest/internal/adapters/provider/adapter_test.go:23
+        	Error:      	Not equal: 
+        	            	expected: int(0)
+        	            	actual  : float64(0)
+        	Test:       	TestGetBalance
+--- FAIL: TestGetBalance (0.00s)
+FAIL
+coverage: 100.0% of statements
+FAIL	github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider	0.004s
+=== RUN   TestDefaultConfig
+=== PAUSE TestDefaultConfig
+=== CONT  TestDefaultConfig
+--- PASS: TestDefaultConfig (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/config	(cached)	coverage: 100.0% of statements
+=== RUN   TestHandleError
+=== PAUSE TestHandleError
+=== RUN   TestNew
+=== PAUSE TestNew
+=== RUN   TestBalanceGet
+=== PAUSE TestBalanceGet
+=== RUN   TestTransactionsGet
+=== PAUSE TestTransactionsGet
+=== RUN   TestUnsignedTxGet
+=== PAUSE TestUnsignedTxGet
+=== RUN   TestBroadcastPost
+=== PAUSE TestBroadcastPost
+=== CONT  TestHandleError
+=== CONT  TestTransactionsGet
+--- PASS: TestHandleError (0.00s)
+=== CONT  TestNew
+--- PASS: TestNew (0.00s)
+=== CONT  TestBroadcastPost
+--- PASS: TestBroadcastPost (0.00s)
+=== CONT  TestUnsignedTxGet
+--- PASS: TestUnsignedTxGet (0.00s)
+=== CONT  TestBalanceGet
+--- PASS: TestTransactionsGet (0.00s)
+=== RUN   TestBalanceGet/provider_returns_no_error
+=== PAUSE TestBalanceGet/provider_returns_no_error
+=== RUN   TestBalanceGet/provider_returns_error
+=== PAUSE TestBalanceGet/provider_returns_error
+=== CONT  TestBalanceGet/provider_returns_no_error
+=== CONT  TestBalanceGet/provider_returns_error
+--- PASS: TestBalanceGet (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_no_error (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_error (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/core/service	(cached)	coverage: 100.0% of statements
+?   	github.com/airgap-solution/crypto-wallet-rest/internal/ports	[no test files]
+	github.com/airgap-solution/crypto-wallet-rest/mocks/internalports		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiclientgengo		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiservergengo		coverage: 0.0% of statements
+FAIL
+
+Coverage by file:
+github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider/adapter.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/assemble.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/config/config.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/error.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/service.go: 100.0%
+
+Total coverage: 100.0%
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+	github.com/airgap-solution/crypto-wallet-rest/cmd		coverage: 0.0% of statements
+=== RUN   TestAssemble
+=== PAUSE TestAssemble
+=== CONT  TestAssemble
+--- PASS: TestAssemble (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal	(cached)	coverage: 100.0% of statements
+=== RUN   TestNewAdapter
+=== PAUSE TestNewAdapter
+=== RUN   TestGetBalance
+=== PAUSE TestGetBalance
+=== CONT  TestNewAdapter
+--- PASS: TestNewAdapter (0.00s)
+=== CONT  TestGetBalance
+--- PASS: TestGetBalance (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider	0.003s	coverage: 100.0% of statements
+=== RUN   TestDefaultConfig
+=== PAUSE TestDefaultConfig
+=== CONT  TestDefaultConfig
+--- PASS: TestDefaultConfig (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/config	(cached)	coverage: 100.0% of statements
+=== RUN   TestHandleError
+=== PAUSE TestHandleError
+=== RUN   TestNew
+=== PAUSE TestNew
+=== RUN   TestBalanceGet
+=== PAUSE TestBalanceGet
+=== RUN   TestTransactionsGet
+=== PAUSE TestTransactionsGet
+=== RUN   TestUnsignedTxGet
+=== PAUSE TestUnsignedTxGet
+=== RUN   TestBroadcastPost
+=== PAUSE TestBroadcastPost
+=== CONT  TestHandleError
+=== CONT  TestTransactionsGet
+--- PASS: TestHandleError (0.00s)
+=== CONT  TestNew
+--- PASS: TestNew (0.00s)
+=== CONT  TestBroadcastPost
+--- PASS: TestBroadcastPost (0.00s)
+=== CONT  TestUnsignedTxGet
+--- PASS: TestUnsignedTxGet (0.00s)
+=== CONT  TestBalanceGet
+--- PASS: TestTransactionsGet (0.00s)
+=== RUN   TestBalanceGet/provider_returns_no_error
+=== PAUSE TestBalanceGet/provider_returns_no_error
+=== RUN   TestBalanceGet/provider_returns_error
+=== PAUSE TestBalanceGet/provider_returns_error
+=== CONT  TestBalanceGet/provider_returns_no_error
+=== CONT  TestBalanceGet/provider_returns_error
+--- PASS: TestBalanceGet (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_no_error (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_error (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/core/service	(cached)	coverage: 100.0% of statements
+?   	github.com/airgap-solution/crypto-wallet-rest/internal/ports	[no test files]
+	github.com/airgap-solution/crypto-wallet-rest/mocks/internalports		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiclientgengo		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiservergengo		coverage: 0.0% of statements
+
+Coverage by file:
+github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider/adapter.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/assemble.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/config/config.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/error.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/core/service/service.go: 100.0%
+
+Total coverage: 100.0%
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m ./scripts/sync-configs.sh 
+[?2004lUpdating infra-common...
+Syncing workflows...
+]0;restart@laptop crypto-wallet-rest[?2004h[38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m [38;5;214mre[38;5;208mst[38;5;202mart[0m [38;5;39m~/projects/crypto-wallet-rest[0m [38;5;220m➜[0m make lint tests
+[?2004l[33mWARN[0m The linter 'tenv' is deprecated (since v1.64.0) due to: Duplicate feature in another linter. Replaced by usetesting. 
+	github.com/airgap-solution/crypto-wallet-rest/cmd		coverage: 0.0% of statements
+=== RUN   TestAssemble
+=== PAUSE TestAssemble
+=== CONT  TestAssemble
+--- PASS: TestAssemble (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal	(cached)	coverage: 100.0% of statements
+=== RUN   TestNewAdapter
+=== PAUSE TestNewAdapter
+=== RUN   TestGetBalance
+=== PAUSE TestGetBalance
+=== CONT  TestNewAdapter
+--- PASS: TestNewAdapter (0.00s)
+=== CONT  TestGetBalance
+--- PASS: TestGetBalance (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider	(cached)	coverage: 100.0% of statements
+=== RUN   TestDefaultConfig
+=== PAUSE TestDefaultConfig
+=== CONT  TestDefaultConfig
+--- PASS: TestDefaultConfig (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/config	(cached)	coverage: 100.0% of statements
+=== RUN   TestHandleError
+=== PAUSE TestHandleError
+=== RUN   TestNew
+=== PAUSE TestNew
+=== RUN   TestBalanceGet
+=== PAUSE TestBalanceGet
+=== RUN   TestTransactionsGet
+=== PAUSE TestTransactionsGet
+=== RUN   TestUnsignedTxGet
+=== PAUSE TestUnsignedTxGet
+=== RUN   TestBroadcastPost
+=== PAUSE TestBroadcastPost
+=== CONT  TestHandleError
+=== CONT  TestTransactionsGet
+--- PASS: TestHandleError (0.00s)
+=== CONT  TestNew
+--- PASS: TestNew (0.00s)
+=== CONT  TestBroadcastPost
+--- PASS: TestBroadcastPost (0.00s)
+=== CONT  TestUnsignedTxGet
+--- PASS: TestUnsignedTxGet (0.00s)
+=== CONT  TestBalanceGet
+--- PASS: TestTransactionsGet (0.00s)
+=== RUN   TestBalanceGet/provider_returns_no_error
+=== PAUSE TestBalanceGet/provider_returns_no_error
+=== RUN   TestBalanceGet/provider_returns_error
+=== PAUSE TestBalanceGet/provider_returns_error
+=== CONT  TestBalanceGet/provider_returns_no_error
+=== CONT  TestBalanceGet/provider_returns_error
+--- PASS: TestBalanceGet (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_no_error (0.00s)
+    --- PASS: TestBalanceGet/provider_returns_error (0.00s)
+PASS
+coverage: 100.0% of statements
+ok  	github.com/airgap-solution/crypto-wallet-rest/internal/core/service	(cached)	coverage: 100.0% of statements
+?   	github.com/airgap-solution/crypto-wallet-rest/internal/ports	[no test files]
+	github.com/airgap-solution/crypto-wallet-rest/mocks/internalports		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiclientgengo		coverage: 0.0% of statements
+	github.com/airgap-solution/crypto-wallet-rest/mocks/openapiservergengo		coverage: 0.0% of statements
+
+Coverage by file:
+github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider/adapter.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/assemble.go: 100.0%
+github.com/airgap-solution/crypto-wallet-rest/internal/co

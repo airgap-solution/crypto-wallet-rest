@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
 	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
@@ -22,7 +23,7 @@ func (s Service) BalanceGet(_ context.Context, symbol string, address string) (c
 		return handleError(err)
 	}
 
-	return cryptowalletrest.Response(200, cryptowalletrest.BalanceGet200Response{
+	return cryptowalletrest.Response(http.StatusOK, cryptowalletrest.BalanceGet200Response{
 		Crypto:  symbol,
 		Address: address,
 		Balance: fmt.Sprintf("%.f", balance),
@@ -34,6 +35,7 @@ func (s Service) TransactionsGet(context.Context, string, string) (cryptowalletr
 func (s Service) UnsignedTxGet(context.Context, string, string, string, string) (cryptowalletrest.ImplResponse, error) {
 	return cryptowalletrest.ImplResponse{}, nil
 }
-func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (cryptowalletrest.ImplResponse, error) {
+func (s Service) BroadcastPost(context.Context, cryptowalletrest.BroadcastPostRequest) (
+	cryptowalletrest.ImplResponse, error) {
 	return cryptowalletrest.ImplResponse{}, nil
 }
