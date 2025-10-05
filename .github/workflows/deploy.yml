@@ -1,0 +1,59 @@
+name: Deploy to Dev
+
+on:
+  push:
+    branches:
+      - dev # only deploy on dev branch
+
+jobs:
+  deploy:
+    runs-on: archlinux
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      - name: Sync configs
+        run: ./scripts/sync-configs.sh
+
+      - name: Define variables
+        run: |
+          echo "APP_DIR=~/projects/${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+          echo "BIN_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+
+      - name: Backup current binary
+        run: |
+          cd "$APP_DIR"
+          if [ -f "$BIN_NAME" ]; then
+            cp "$BIN_NAME" "$BIN_NAME.bak"
+          fi
+
+      - name: Build new binary
+        run: |
+          cd "$APP_DIR"
+          if ! go build -o "$BIN_NAME" ./cmd; then
+            echo "Build failed, rolling back"
+            [ -f "$BIN_NAME.bak" ] && mv "$BIN_NAME.bak" "$BIN_NAME"
+            systemctl restart "$BIN_NAME.service" || echo "Rollback restart failed"
+            exit 1
+          fi
+
+      - name: Restart service
+        run: |
+          systemctl restart "$BIN_NAME.service"
+          echo "Waiting 10 seconds for health check..."
+          sleep 10
+          if ! systemctl is-active --quiet "$BIN_NAME.service"; then
+            echo "Service failed health check, rolling back"
+            [ -f "$APP_DIR/$BIN_NAME.bak" ] && mv "$APP_DIR/$BIN_NAME.bak" "$APP_DIR/$BIN_NAME"
+            systemctl restart "$BIN_NAME.service" || echo "Rollback restart failed"
+            exit 1
+          fi
+
+      - name: Clean up backup
+        run: |
+          rm -f "$APP_DIR/$BIN_NAME.bak"
