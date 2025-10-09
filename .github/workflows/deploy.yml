@@ -8,6 +8,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    needs: [test, lint]
     if: github.event_name == 'push' && github.event.sender.type == 'User'
 
     steps:
