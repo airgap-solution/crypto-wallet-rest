@@ -1,15 +1,44 @@
-name: Deploy to Dev
+name: Pipeline
 on:
+  pull_request:
   push:
     branches:
       - main
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+      - name: Sync configs
+        run: ./scripts/sync-configs.sh
+      - name: Run linter
+        run: make lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+      - name: Sync configs
+        run: ./scripts/sync-configs.sh
+      - name: Run tests
+        run: make tests
+
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [test, lint]
-    if: github.event_name == 'push' && github.event.sender.type == 'User'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.sender.type == 'User'
 
     steps:
       - name: Checkout code
