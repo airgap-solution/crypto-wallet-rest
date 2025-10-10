@@ -4,7 +4,7 @@ go 1.25.1
 
 require (
 	github.com/airgap-solution/cmc-rest/openapi v1.0.1
-	github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go v0.0.0-00010101000000-000000000000
+	github.com/airgap-solution/crypto-wallet-rest/openapi v0.0.0-20251010200234-93688796caf1
 	github.com/btcsuite/btcd v0.24.2
 	github.com/btcsuite/btcd/btcec/v2 v2.3.5
 	github.com/btcsuite/btcd/btcutil v1.1.6
@@ -14,8 +14,6 @@ require (
 	github.com/stretchr/testify v1.11.1
 	go.uber.org/mock v0.6.0
 )
-
-replace github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go => ./openapi/servergen/go
 
 require (
 	github.com/btcsuite/btcd/chaincfg/chainhash v1.1.0 // indirect
