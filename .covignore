@@ -1,3 +1,4 @@
 cmd/
 mocks/
 internal/assemble.go
+internal/adapters/crypto/

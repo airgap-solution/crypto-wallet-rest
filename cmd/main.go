@@ -7,6 +7,7 @@ import (
 
 	cmcrest "github.com/airgap-solution/cmc-rest/openapi/clientgen/go"
 	"github.com/airgap-solution/crypto-wallet-rest/internal"
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/bitcoin"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
@@ -25,7 +26,9 @@ func main() {
 
 	cmcRestCfg.Host = conf.CMCRestAddr
 	cmcRestClient := cmcrest.NewAPIClient(cmcRestCfg)
-	providerAdapter := provider.NewAdapter(cmcRestClient.DefaultAPI, map[string]ports.CryptoProvider{})
+	providerAdapter := provider.NewAdapter(cmcRestClient.DefaultAPI, map[string]ports.CryptoProvider{
+		"BTC": bitcoin.NewAdapter("electrum.blockstream.info:50001"),
+	})
 	servicer := service.New(providerAdapter)
 
 	srv := internal.Assemble(conf, servicer)
