@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	cmcrest "github.com/airgap-solution/cmc-rest/openapi/clientgen/go"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
@@ -32,26 +33,47 @@ func NewAdapter(cmcRest CMCRestClient, cryptoProviders map[string]ports.CryptoPr
 	}
 }
 
-func (a *Adapter) GetBalance(symbol, addr string) (float64, error) {
-	req := a.cmcRest.V1RateCurrencyFiatGet(context.Background(), symbol, "CAD")
+func (a *Adapter) GetBalance(symbol, addr, fiatSymbol string) (*ports.BalanceResult, error) {
+	// Default fiat symbol if not provided
+	if fiatSymbol == "" {
+		fiatSymbol = "USD"
+	}
+
+	// Get exchange rate from CMC REST API
+	req := a.cmcRest.V1RateCurrencyFiatGet(context.Background(), symbol, fiatSymbol)
 	resp, httpResp, err := a.cmcRest.V1RateCurrencyFiatGetExecute(req)
 	if err != nil {
-		return 0, fmt.Errorf("failed to get rate from CMC: %w", err)
+		return nil, fmt.Errorf("failed to get rate from CMC: %w", err)
 	}
 	if httpResp != nil && httpResp.Body != nil {
 		defer httpResp.Body.Close()
 	}
 
 	rate := resp.GetRate()
+
+	// Get crypto provider for the symbol
 	prov, ok := a.cryptoProviders[strings.ToUpper(symbol)]
 	if !ok {
-		return 0, fmt.Errorf("%w: %s", ErrProviderNotFoundForSymbol, symbol)
+		return nil, fmt.Errorf("%w: %s", ErrProviderNotFoundForSymbol, symbol)
 	}
 
-	balance, err := prov.GetBalance(addr)
+	// Get crypto balance from provider
+	cryptoBalance, err := prov.GetBalance(addr)
 	if err != nil {
-		return 0, fmt.Errorf("failed to get balance from provider: %w", err)
+		return nil, fmt.Errorf("failed to get balance from provider: %w", err)
 	}
 
-	return balance * rate, nil
+	// Calculate fiat value
+	fiatValue := cryptoBalance * rate
+
+	// Return structured balance result
+	return &ports.BalanceResult{
+		CryptoSymbol:  strings.ToUpper(symbol),
+		Address:       addr,
+		CryptoBalance: cryptoBalance,
+		FiatSymbol:    strings.ToUpper(fiatSymbol),
+		FiatValue:     fiatValue,
+		ExchangeRate:  rate,
+		Timestamp:     time.Now(),
+	}, nil
 }

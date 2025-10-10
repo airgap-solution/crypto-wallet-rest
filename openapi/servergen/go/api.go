@@ -3,7 +3,7 @@
 /*
  * Crypto Wallet REST API
  *
- * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+ * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
  * API version: 1.0.0
  */
@@ -33,8 +33,8 @@ type DefaultAPIRouter interface {
 // while the service implementation can be ignored with the .openapi-generator-ignore file
 // and updated with the logic required for the API.
 type DefaultAPIServicer interface { 
-	BalanceGet(context.Context, string, string) (ImplResponse, error)
-	TransactionsGet(context.Context, string, string) (ImplResponse, error)
-	UnsignedTxGet(context.Context, string, string, string, string) (ImplResponse, error)
+	BalanceGet(context.Context, string, string, string) (ImplResponse, error)
+	TransactionsGet(context.Context, string, string, int32, int32) (ImplResponse, error)
+	UnsignedTxGet(context.Context, string, string, string, string, float64) (ImplResponse, error)
 	BroadcastPost(context.Context, BroadcastPostRequest) (ImplResponse, error)
 }

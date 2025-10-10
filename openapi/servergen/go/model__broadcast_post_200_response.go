@@ -3,7 +3,7 @@
 /*
  * Crypto Wallet REST API
  *
- * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+ * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
  * API version: 1.0.0
  */
@@ -11,21 +11,45 @@
 package cryptowalletrest
 
 
+import (
+	"time"
+)
+
 
 
 type BroadcastPost200Response struct {
 
-	Crypto string `json:"crypto,omitempty"`
+	CryptoSymbol string `json:"crypto_symbol"`
 
-	Txid string `json:"txid,omitempty"`
+	// Transaction hash/ID
+	TransactionId string `json:"transaction_id"`
 
-	Status string `json:"status,omitempty"`
+	Status string `json:"status"`
 
-	Message string `json:"message,omitempty"`
+	// Human-readable status message
+	Message string `json:"message"`
+
+	// Actual network fee paid
+	NetworkFee string `json:"network_fee,omitempty"`
+
+	Timestamp time.Time `json:"timestamp"`
 }
 
 // AssertBroadcastPost200ResponseRequired checks if the required fields are not zero-ed
 func AssertBroadcastPost200ResponseRequired(obj BroadcastPost200Response) error {
+	elements := map[string]interface{}{
+		"crypto_symbol": obj.CryptoSymbol,
+		"transaction_id": obj.TransactionId,
+		"status": obj.Status,
+		"message": obj.Message,
+		"timestamp": obj.Timestamp,
+	}
+	for name, el := range elements {
+		if isZero := IsZeroValue(el); isZero {
+			return &RequiredError{Field: name}
+		}
+	}
+
 	return nil
 }
 

@@ -3,7 +3,7 @@
 /*
  * Crypto Wallet REST API
  *
- * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+ * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
  * API version: 1.0.0
  */
@@ -15,20 +15,40 @@ package cryptowalletrest
 
 type UnsignedTxGet200Response struct {
 
-	Crypto string `json:"crypto,omitempty"`
+	CryptoSymbol string `json:"crypto_symbol"`
 
-	From string `json:"from,omitempty"`
+	FromAddress string `json:"from_address"`
 
-	To string `json:"to,omitempty"`
+	ToAddress string `json:"to_address"`
 
-	Amount string `json:"amount,omitempty"`
+	Amount string `json:"amount"`
 
-	// Base64 / hex encoded unsigned transaction or PSBT
-	UnsignedTx string `json:"unsignedTx,omitempty"`
+	// Calculated transaction fee
+	FeeAmount string `json:"fee_amount"`
+
+	// Base64 or hex encoded unsigned transaction or PSBT
+	UnsignedTx string `json:"unsigned_tx"`
+
+	// Estimated transaction size in bytes
+	TxSizeBytes int32 `json:"tx_size_bytes,omitempty"`
 }
 
 // AssertUnsignedTxGet200ResponseRequired checks if the required fields are not zero-ed
 func AssertUnsignedTxGet200ResponseRequired(obj UnsignedTxGet200Response) error {
+	elements := map[string]interface{}{
+		"crypto_symbol": obj.CryptoSymbol,
+		"from_address": obj.FromAddress,
+		"to_address": obj.ToAddress,
+		"amount": obj.Amount,
+		"fee_amount": obj.FeeAmount,
+		"unsigned_tx": obj.UnsignedTx,
+	}
+	for name, el := range elements {
+		if isZero := IsZeroValue(el); isZero {
+			return &RequiredError{Field: name}
+		}
+	}
+
 	return nil
 }
 

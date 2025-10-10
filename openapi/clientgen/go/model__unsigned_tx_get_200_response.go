@@ -1,7 +1,7 @@
 /*
 Crypto Wallet REST API
 
-REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
 
 API version: 1.0.0
 */
@@ -12,6 +12,8 @@ package cryptowalletrest
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the UnsignedTxGet200Response type satisfies the MappedNullable interface at compile time
@@ -19,20 +21,32 @@ var _ MappedNullable = &UnsignedTxGet200Response{}
 
 // UnsignedTxGet200Response struct for UnsignedTxGet200Response
 type UnsignedTxGet200Response struct {
-	Crypto *string `json:"crypto,omitempty"`
-	From *string `json:"from,omitempty"`
-	To *string `json:"to,omitempty"`
-	Amount *string `json:"amount,omitempty"`
-	// Base64 / hex encoded unsigned transaction or PSBT
-	UnsignedTx *string `json:"unsignedTx,omitempty"`
+	CryptoSymbol string `json:"crypto_symbol"`
+	FromAddress string `json:"from_address"`
+	ToAddress string `json:"to_address"`
+	Amount string `json:"amount"`
+	// Calculated transaction fee
+	FeeAmount string `json:"fee_amount"`
+	// Base64 or hex encoded unsigned transaction or PSBT
+	UnsignedTx string `json:"unsigned_tx"`
+	// Estimated transaction size in bytes
+	TxSizeBytes *int32 `json:"tx_size_bytes,omitempty"`
 }
+
+type _UnsignedTxGet200Response UnsignedTxGet200Response
 
 // NewUnsignedTxGet200Response instantiates a new UnsignedTxGet200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUnsignedTxGet200Response() *UnsignedTxGet200Response {
+func NewUnsignedTxGet200Response(cryptoSymbol string, fromAddress string, toAddress string, amount string, feeAmount string, unsignedTx string) *UnsignedTxGet200Response {
 	this := UnsignedTxGet200Response{}
+	this.CryptoSymbol = cryptoSymbol
+	this.FromAddress = fromAddress
+	this.ToAddress = toAddress
+	this.Amount = amount
+	this.FeeAmount = feeAmount
+	this.UnsignedTx = unsignedTx
 	return &this
 }
 
@@ -44,164 +58,180 @@ func NewUnsignedTxGet200ResponseWithDefaults() *UnsignedTxGet200Response {
 	return &this
 }
 
-// GetCrypto returns the Crypto field value if set, zero value otherwise.
-func (o *UnsignedTxGet200Response) GetCrypto() string {
-	if o == nil || IsNil(o.Crypto) {
+// GetCryptoSymbol returns the CryptoSymbol field value
+func (o *UnsignedTxGet200Response) GetCryptoSymbol() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Crypto
+
+	return o.CryptoSymbol
 }
 
-// GetCryptoOk returns a tuple with the Crypto field value if set, nil otherwise
+// GetCryptoSymbolOk returns a tuple with the CryptoSymbol field value
 // and a boolean to check if the value has been set.
-func (o *UnsignedTxGet200Response) GetCryptoOk() (*string, bool) {
-	if o == nil || IsNil(o.Crypto) {
+func (o *UnsignedTxGet200Response) GetCryptoSymbolOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Crypto, true
+	return &o.CryptoSymbol, true
 }
 
-// HasCrypto returns a boolean if a field has been set.
-func (o *UnsignedTxGet200Response) HasCrypto() bool {
-	if o != nil && !IsNil(o.Crypto) {
-		return true
-	}
-
-	return false
+// SetCryptoSymbol sets field value
+func (o *UnsignedTxGet200Response) SetCryptoSymbol(v string) {
+	o.CryptoSymbol = v
 }
 
-// SetCrypto gets a reference to the given string and assigns it to the Crypto field.
-func (o *UnsignedTxGet200Response) SetCrypto(v string) {
-	o.Crypto = &v
-}
-
-// GetFrom returns the From field value if set, zero value otherwise.
-func (o *UnsignedTxGet200Response) GetFrom() string {
-	if o == nil || IsNil(o.From) {
+// GetFromAddress returns the FromAddress field value
+func (o *UnsignedTxGet200Response) GetFromAddress() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.From
+
+	return o.FromAddress
 }
 
-// GetFromOk returns a tuple with the From field value if set, nil otherwise
+// GetFromAddressOk returns a tuple with the FromAddress field value
 // and a boolean to check if the value has been set.
-func (o *UnsignedTxGet200Response) GetFromOk() (*string, bool) {
-	if o == nil || IsNil(o.From) {
+func (o *UnsignedTxGet200Response) GetFromAddressOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.From, true
+	return &o.FromAddress, true
 }
 
-// HasFrom returns a boolean if a field has been set.
-func (o *UnsignedTxGet200Response) HasFrom() bool {
-	if o != nil && !IsNil(o.From) {
-		return true
-	}
-
-	return false
+// SetFromAddress sets field value
+func (o *UnsignedTxGet200Response) SetFromAddress(v string) {
+	o.FromAddress = v
 }
 
-// SetFrom gets a reference to the given string and assigns it to the From field.
-func (o *UnsignedTxGet200Response) SetFrom(v string) {
-	o.From = &v
-}
-
-// GetTo returns the To field value if set, zero value otherwise.
-func (o *UnsignedTxGet200Response) GetTo() string {
-	if o == nil || IsNil(o.To) {
+// GetToAddress returns the ToAddress field value
+func (o *UnsignedTxGet200Response) GetToAddress() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.To
+
+	return o.ToAddress
 }
 
-// GetToOk returns a tuple with the To field value if set, nil otherwise
+// GetToAddressOk returns a tuple with the ToAddress field value
 // and a boolean to check if the value has been set.
-func (o *UnsignedTxGet200Response) GetToOk() (*string, bool) {
-	if o == nil || IsNil(o.To) {
+func (o *UnsignedTxGet200Response) GetToAddressOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.To, true
+	return &o.ToAddress, true
 }
 
-// HasTo returns a boolean if a field has been set.
-func (o *UnsignedTxGet200Response) HasTo() bool {
-	if o != nil && !IsNil(o.To) {
-		return true
-	}
-
-	return false
+// SetToAddress sets field value
+func (o *UnsignedTxGet200Response) SetToAddress(v string) {
+	o.ToAddress = v
 }
 
-// SetTo gets a reference to the given string and assigns it to the To field.
-func (o *UnsignedTxGet200Response) SetTo(v string) {
-	o.To = &v
-}
-
-// GetAmount returns the Amount field value if set, zero value otherwise.
+// GetAmount returns the Amount field value
 func (o *UnsignedTxGet200Response) GetAmount() string {
-	if o == nil || IsNil(o.Amount) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Amount
+
+	return o.Amount
 }
 
-// GetAmountOk returns a tuple with the Amount field value if set, nil otherwise
+// GetAmountOk returns a tuple with the Amount field value
 // and a boolean to check if the value has been set.
 func (o *UnsignedTxGet200Response) GetAmountOk() (*string, bool) {
-	if o == nil || IsNil(o.Amount) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Amount, true
+	return &o.Amount, true
 }
 
-// HasAmount returns a boolean if a field has been set.
-func (o *UnsignedTxGet200Response) HasAmount() bool {
-	if o != nil && !IsNil(o.Amount) {
-		return true
-	}
-
-	return false
-}
-
-// SetAmount gets a reference to the given string and assigns it to the Amount field.
+// SetAmount sets field value
 func (o *UnsignedTxGet200Response) SetAmount(v string) {
-	o.Amount = &v
+	o.Amount = v
 }
 
-// GetUnsignedTx returns the UnsignedTx field value if set, zero value otherwise.
-func (o *UnsignedTxGet200Response) GetUnsignedTx() string {
-	if o == nil || IsNil(o.UnsignedTx) {
+// GetFeeAmount returns the FeeAmount field value
+func (o *UnsignedTxGet200Response) GetFeeAmount() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.UnsignedTx
+
+	return o.FeeAmount
 }
 
-// GetUnsignedTxOk returns a tuple with the UnsignedTx field value if set, nil otherwise
+// GetFeeAmountOk returns a tuple with the FeeAmount field value
 // and a boolean to check if the value has been set.
-func (o *UnsignedTxGet200Response) GetUnsignedTxOk() (*string, bool) {
-	if o == nil || IsNil(o.UnsignedTx) {
+func (o *UnsignedTxGet200Response) GetFeeAmountOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.UnsignedTx, true
+	return &o.FeeAmount, true
 }
 
-// HasUnsignedTx returns a boolean if a field has been set.
-func (o *UnsignedTxGet200Response) HasUnsignedTx() bool {
-	if o != nil && !IsNil(o.UnsignedTx) {
+// SetFeeAmount sets field value
+func (o *UnsignedTxGet200Response) SetFeeAmount(v string) {
+	o.FeeAmount = v
+}
+
+// GetUnsignedTx returns the UnsignedTx field value
+func (o *UnsignedTxGet200Response) GetUnsignedTx() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.UnsignedTx
+}
+
+// GetUnsignedTxOk returns a tuple with the UnsignedTx field value
+// and a boolean to check if the value has been set.
+func (o *UnsignedTxGet200Response) GetUnsignedTxOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.UnsignedTx, true
+}
+
+// SetUnsignedTx sets field value
+func (o *UnsignedTxGet200Response) SetUnsignedTx(v string) {
+	o.UnsignedTx = v
+}
+
+// GetTxSizeBytes returns the TxSizeBytes field value if set, zero value otherwise.
+func (o *UnsignedTxGet200Response) GetTxSizeBytes() int32 {
+	if o == nil || IsNil(o.TxSizeBytes) {
+		var ret int32
+		return ret
+	}
+	return *o.TxSizeBytes
+}
+
+// GetTxSizeBytesOk returns a tuple with the TxSizeBytes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UnsignedTxGet200Response) GetTxSizeBytesOk() (*int32, bool) {
+	if o == nil || IsNil(o.TxSizeBytes) {
+		return nil, false
+	}
+	return o.TxSizeBytes, true
+}
+
+// HasTxSizeBytes returns a boolean if a field has been set.
+func (o *UnsignedTxGet200Response) HasTxSizeBytes() bool {
+	if o != nil && !IsNil(o.TxSizeBytes) {
 		return true
 	}
 
 	return false
 }
 
-// SetUnsignedTx gets a reference to the given string and assigns it to the UnsignedTx field.
-func (o *UnsignedTxGet200Response) SetUnsignedTx(v string) {
-	o.UnsignedTx = &v
+// SetTxSizeBytes gets a reference to the given int32 and assigns it to the TxSizeBytes field.
+func (o *UnsignedTxGet200Response) SetTxSizeBytes(v int32) {
+	o.TxSizeBytes = &v
 }
 
 func (o UnsignedTxGet200Response) MarshalJSON() ([]byte, error) {
@@ -214,22 +244,58 @@ func (o UnsignedTxGet200Response) MarshalJSON() ([]byte, error) {
 
 func (o UnsignedTxGet200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Crypto) {
-		toSerialize["crypto"] = o.Crypto
-	}
-	if !IsNil(o.From) {
-		toSerialize["from"] = o.From
-	}
-	if !IsNil(o.To) {
-		toSerialize["to"] = o.To
-	}
-	if !IsNil(o.Amount) {
-		toSerialize["amount"] = o.Amount
-	}
-	if !IsNil(o.UnsignedTx) {
-		toSerialize["unsignedTx"] = o.UnsignedTx
+	toSerialize["crypto_symbol"] = o.CryptoSymbol
+	toSerialize["from_address"] = o.FromAddress
+	toSerialize["to_address"] = o.ToAddress
+	toSerialize["amount"] = o.Amount
+	toSerialize["fee_amount"] = o.FeeAmount
+	toSerialize["unsigned_tx"] = o.UnsignedTx
+	if !IsNil(o.TxSizeBytes) {
+		toSerialize["tx_size_bytes"] = o.TxSizeBytes
 	}
 	return toSerialize, nil
+}
+
+func (o *UnsignedTxGet200Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"crypto_symbol",
+		"from_address",
+		"to_address",
+		"amount",
+		"fee_amount",
+		"unsigned_tx",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varUnsignedTxGet200Response := _UnsignedTxGet200Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varUnsignedTxGet200Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = UnsignedTxGet200Response(varUnsignedTxGet200Response)
+
+	return err
 }
 
 type NullableUnsignedTxGet200Response struct {

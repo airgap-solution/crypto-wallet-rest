@@ -1,7 +1,7 @@
 /*
 Crypto Wallet REST API
 
-REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
 
 API version: 1.0.0
 */
@@ -25,17 +25,23 @@ type DefaultAPIService service
 type ApiBalanceGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	crypto *string
+	cryptoSymbol *string
 	address *string
+	fiatSymbol *string
 }
 
-func (r ApiBalanceGetRequest) Crypto(crypto string) ApiBalanceGetRequest {
-	r.crypto = &crypto
+func (r ApiBalanceGetRequest) CryptoSymbol(cryptoSymbol string) ApiBalanceGetRequest {
+	r.cryptoSymbol = &cryptoSymbol
 	return r
 }
 
 func (r ApiBalanceGetRequest) Address(address string) ApiBalanceGetRequest {
 	r.address = &address
+	return r
+}
+
+func (r ApiBalanceGetRequest) FiatSymbol(fiatSymbol string) ApiBalanceGetRequest {
+	r.fiatSymbol = &fiatSymbol
 	return r
 }
 
@@ -76,15 +82,21 @@ func (a *DefaultAPIService) BalanceGetExecute(r ApiBalanceGetRequest) (*BalanceG
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.crypto == nil {
-		return localVarReturnValue, nil, reportError("crypto is required and must be specified")
+	if r.cryptoSymbol == nil {
+		return localVarReturnValue, nil, reportError("cryptoSymbol is required and must be specified")
 	}
 	if r.address == nil {
 		return localVarReturnValue, nil, reportError("address is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "crypto", r.crypto, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "crypto_symbol", r.cryptoSymbol, "form", "")
 	parameterAddToHeaderOrQuery(localVarQueryParams, "address", r.address, "form", "")
+	if r.fiatSymbol != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "fiat_symbol", r.fiatSymbol, "form", "")
+	} else {
+		var defaultValue string = "USD"
+		r.fiatSymbol = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -123,6 +135,38 @@ func (a *DefaultAPIService) BalanceGetExecute(r ApiBalanceGetRequest) (*BalanceG
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -250,12 +294,14 @@ func (a *DefaultAPIService) BroadcastPostExecute(r ApiBroadcastPostRequest) (*Br
 type ApiTransactionsGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	crypto *string
+	cryptoSymbol *string
 	address *string
+	limit *int32
+	offset *int32
 }
 
-func (r ApiTransactionsGetRequest) Crypto(crypto string) ApiTransactionsGetRequest {
-	r.crypto = &crypto
+func (r ApiTransactionsGetRequest) CryptoSymbol(cryptoSymbol string) ApiTransactionsGetRequest {
+	r.cryptoSymbol = &cryptoSymbol
 	return r
 }
 
@@ -264,7 +310,17 @@ func (r ApiTransactionsGetRequest) Address(address string) ApiTransactionsGetReq
 	return r
 }
 
-func (r ApiTransactionsGetRequest) Execute() ([]TransactionsGet200ResponseInner, *http.Response, error) {
+func (r ApiTransactionsGetRequest) Limit(limit int32) ApiTransactionsGetRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiTransactionsGetRequest) Offset(offset int32) ApiTransactionsGetRequest {
+	r.offset = &offset
+	return r
+}
+
+func (r ApiTransactionsGetRequest) Execute() (*TransactionsGet200Response, *http.Response, error) {
 	return r.ApiService.TransactionsGetExecute(r)
 }
 
@@ -282,13 +338,13 @@ func (a *DefaultAPIService) TransactionsGet(ctx context.Context) ApiTransactions
 }
 
 // Execute executes the request
-//  @return []TransactionsGet200ResponseInner
-func (a *DefaultAPIService) TransactionsGetExecute(r ApiTransactionsGetRequest) ([]TransactionsGet200ResponseInner, *http.Response, error) {
+//  @return TransactionsGet200Response
+func (a *DefaultAPIService) TransactionsGetExecute(r ApiTransactionsGetRequest) (*TransactionsGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  []TransactionsGet200ResponseInner
+		localVarReturnValue  *TransactionsGet200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.TransactionsGet")
@@ -301,15 +357,27 @@ func (a *DefaultAPIService) TransactionsGetExecute(r ApiTransactionsGetRequest) 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.crypto == nil {
-		return localVarReturnValue, nil, reportError("crypto is required and must be specified")
+	if r.cryptoSymbol == nil {
+		return localVarReturnValue, nil, reportError("cryptoSymbol is required and must be specified")
 	}
 	if r.address == nil {
 		return localVarReturnValue, nil, reportError("address is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "crypto", r.crypto, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "crypto_symbol", r.cryptoSymbol, "form", "")
 	parameterAddToHeaderOrQuery(localVarQueryParams, "address", r.address, "form", "")
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 50
+		r.limit = &defaultValue
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "form", "")
+	} else {
+		var defaultValue int32 = 0
+		r.offset = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -367,29 +435,35 @@ func (a *DefaultAPIService) TransactionsGetExecute(r ApiTransactionsGetRequest) 
 type ApiUnsignedTxGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	crypto *string
-	from *string
-	to *string
+	cryptoSymbol *string
+	fromAddress *string
+	toAddress *string
 	amount *string
+	feeRate *float64
 }
 
-func (r ApiUnsignedTxGetRequest) Crypto(crypto string) ApiUnsignedTxGetRequest {
-	r.crypto = &crypto
+func (r ApiUnsignedTxGetRequest) CryptoSymbol(cryptoSymbol string) ApiUnsignedTxGetRequest {
+	r.cryptoSymbol = &cryptoSymbol
 	return r
 }
 
-func (r ApiUnsignedTxGetRequest) From(from string) ApiUnsignedTxGetRequest {
-	r.from = &from
+func (r ApiUnsignedTxGetRequest) FromAddress(fromAddress string) ApiUnsignedTxGetRequest {
+	r.fromAddress = &fromAddress
 	return r
 }
 
-func (r ApiUnsignedTxGetRequest) To(to string) ApiUnsignedTxGetRequest {
-	r.to = &to
+func (r ApiUnsignedTxGetRequest) ToAddress(toAddress string) ApiUnsignedTxGetRequest {
+	r.toAddress = &toAddress
 	return r
 }
 
 func (r ApiUnsignedTxGetRequest) Amount(amount string) ApiUnsignedTxGetRequest {
 	r.amount = &amount
+	return r
+}
+
+func (r ApiUnsignedTxGetRequest) FeeRate(feeRate float64) ApiUnsignedTxGetRequest {
+	r.feeRate = &feeRate
 	return r
 }
 
@@ -430,23 +504,26 @@ func (a *DefaultAPIService) UnsignedTxGetExecute(r ApiUnsignedTxGetRequest) (*Un
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.crypto == nil {
-		return localVarReturnValue, nil, reportError("crypto is required and must be specified")
+	if r.cryptoSymbol == nil {
+		return localVarReturnValue, nil, reportError("cryptoSymbol is required and must be specified")
 	}
-	if r.from == nil {
-		return localVarReturnValue, nil, reportError("from is required and must be specified")
+	if r.fromAddress == nil {
+		return localVarReturnValue, nil, reportError("fromAddress is required and must be specified")
 	}
-	if r.to == nil {
-		return localVarReturnValue, nil, reportError("to is required and must be specified")
+	if r.toAddress == nil {
+		return localVarReturnValue, nil, reportError("toAddress is required and must be specified")
 	}
 	if r.amount == nil {
 		return localVarReturnValue, nil, reportError("amount is required and must be specified")
 	}
 
-	parameterAddToHeaderOrQuery(localVarQueryParams, "crypto", r.crypto, "form", "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "from", r.from, "form", "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "to", r.to, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "crypto_symbol", r.cryptoSymbol, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "from_address", r.fromAddress, "form", "")
+	parameterAddToHeaderOrQuery(localVarQueryParams, "to_address", r.toAddress, "form", "")
 	parameterAddToHeaderOrQuery(localVarQueryParams, "amount", r.amount, "form", "")
+	if r.feeRate != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "fee_rate", r.feeRate, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

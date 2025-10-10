@@ -12,6 +12,7 @@ package internalportsmocks
 import (
 	reflect "reflect"
 
+	ports "github.com/airgap-solution/crypto-wallet-rest/internal/ports"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -40,18 +41,18 @@ func (m *MockProvider) EXPECT() *MockProviderMockRecorder {
 }
 
 // GetBalance mocks base method.
-func (m *MockProvider) GetBalance(symbol, address string) (float64, error) {
+func (m *MockProvider) GetBalance(symbol, address, fiatSymbol string) (*ports.BalanceResult, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBalance", symbol, address)
-	ret0, _ := ret[0].(float64)
+	ret := m.ctrl.Call(m, "GetBalance", symbol, address, fiatSymbol)
+	ret0, _ := ret[0].(*ports.BalanceResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetBalance indicates an expected call of GetBalance.
-func (mr *MockProviderMockRecorder) GetBalance(symbol, address any) *gomock.Call {
+func (mr *MockProviderMockRecorder) GetBalance(symbol, address, fiatSymbol any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*MockProvider)(nil).GetBalance), symbol, address)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*MockProvider)(nil).GetBalance), symbol, address, fiatSymbol)
 }
 
 // MockCryptoProvider is a mock of CryptoProvider interface.

@@ -1,7 +1,7 @@
 /*
 Crypto Wallet REST API
 
-REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
 
 API version: 1.0.0
 */
@@ -12,6 +12,9 @@ package cryptowalletrest
 
 import (
 	"encoding/json"
+	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the BalanceGet200Response type satisfies the MappedNullable interface at compile time
@@ -19,17 +22,37 @@ var _ MappedNullable = &BalanceGet200Response{}
 
 // BalanceGet200Response struct for BalanceGet200Response
 type BalanceGet200Response struct {
-	Crypto *string `json:"crypto,omitempty"`
-	Address *string `json:"address,omitempty"`
-	Balance *float64 `json:"balance,omitempty"`
+	// The cryptocurrency symbol
+	CryptoSymbol string `json:"crypto_symbol"`
+	// The queried address
+	Address string `json:"address"`
+	// Balance in the native cryptocurrency units
+	CryptoBalance float64 `json:"crypto_balance"`
+	// The fiat currency symbol used for conversion
+	FiatSymbol string `json:"fiat_symbol"`
+	// Equivalent value in the specified fiat currency
+	FiatValue float64 `json:"fiat_value"`
+	// Current exchange rate (crypto to fiat)
+	ExchangeRate float64 `json:"exchange_rate"`
+	// Timestamp when the balance was retrieved
+	Timestamp time.Time `json:"timestamp"`
 }
+
+type _BalanceGet200Response BalanceGet200Response
 
 // NewBalanceGet200Response instantiates a new BalanceGet200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBalanceGet200Response() *BalanceGet200Response {
+func NewBalanceGet200Response(cryptoSymbol string, address string, cryptoBalance float64, fiatSymbol string, fiatValue float64, exchangeRate float64, timestamp time.Time) *BalanceGet200Response {
 	this := BalanceGet200Response{}
+	this.CryptoSymbol = cryptoSymbol
+	this.Address = address
+	this.CryptoBalance = cryptoBalance
+	this.FiatSymbol = fiatSymbol
+	this.FiatValue = fiatValue
+	this.ExchangeRate = exchangeRate
+	this.Timestamp = timestamp
 	return &this
 }
 
@@ -41,100 +64,172 @@ func NewBalanceGet200ResponseWithDefaults() *BalanceGet200Response {
 	return &this
 }
 
-// GetCrypto returns the Crypto field value if set, zero value otherwise.
-func (o *BalanceGet200Response) GetCrypto() string {
-	if o == nil || IsNil(o.Crypto) {
+// GetCryptoSymbol returns the CryptoSymbol field value
+func (o *BalanceGet200Response) GetCryptoSymbol() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Crypto
+
+	return o.CryptoSymbol
 }
 
-// GetCryptoOk returns a tuple with the Crypto field value if set, nil otherwise
+// GetCryptoSymbolOk returns a tuple with the CryptoSymbol field value
 // and a boolean to check if the value has been set.
-func (o *BalanceGet200Response) GetCryptoOk() (*string, bool) {
-	if o == nil || IsNil(o.Crypto) {
+func (o *BalanceGet200Response) GetCryptoSymbolOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Crypto, true
+	return &o.CryptoSymbol, true
 }
 
-// HasCrypto returns a boolean if a field has been set.
-func (o *BalanceGet200Response) HasCrypto() bool {
-	if o != nil && !IsNil(o.Crypto) {
-		return true
-	}
-
-	return false
+// SetCryptoSymbol sets field value
+func (o *BalanceGet200Response) SetCryptoSymbol(v string) {
+	o.CryptoSymbol = v
 }
 
-// SetCrypto gets a reference to the given string and assigns it to the Crypto field.
-func (o *BalanceGet200Response) SetCrypto(v string) {
-	o.Crypto = &v
-}
-
-// GetAddress returns the Address field value if set, zero value otherwise.
+// GetAddress returns the Address field value
 func (o *BalanceGet200Response) GetAddress() string {
-	if o == nil || IsNil(o.Address) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Address
+
+	return o.Address
 }
 
-// GetAddressOk returns a tuple with the Address field value if set, nil otherwise
+// GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
 func (o *BalanceGet200Response) GetAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.Address) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Address, true
+	return &o.Address, true
 }
 
-// HasAddress returns a boolean if a field has been set.
-func (o *BalanceGet200Response) HasAddress() bool {
-	if o != nil && !IsNil(o.Address) {
-		return true
-	}
-
-	return false
-}
-
-// SetAddress gets a reference to the given string and assigns it to the Address field.
+// SetAddress sets field value
 func (o *BalanceGet200Response) SetAddress(v string) {
-	o.Address = &v
+	o.Address = v
 }
 
-// GetBalance returns the Balance field value if set, zero value otherwise.
-func (o *BalanceGet200Response) GetBalance() float64 {
-	if o == nil || IsNil(o.Balance) {
+// GetCryptoBalance returns the CryptoBalance field value
+func (o *BalanceGet200Response) GetCryptoBalance() float64 {
+	if o == nil {
 		var ret float64
 		return ret
 	}
-	return *o.Balance
+
+	return o.CryptoBalance
 }
 
-// GetBalanceOk returns a tuple with the Balance field value if set, nil otherwise
+// GetCryptoBalanceOk returns a tuple with the CryptoBalance field value
 // and a boolean to check if the value has been set.
-func (o *BalanceGet200Response) GetBalanceOk() (*float64, bool) {
-	if o == nil || IsNil(o.Balance) {
+func (o *BalanceGet200Response) GetCryptoBalanceOk() (*float64, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Balance, true
+	return &o.CryptoBalance, true
 }
 
-// HasBalance returns a boolean if a field has been set.
-func (o *BalanceGet200Response) HasBalance() bool {
-	if o != nil && !IsNil(o.Balance) {
-		return true
+// SetCryptoBalance sets field value
+func (o *BalanceGet200Response) SetCryptoBalance(v float64) {
+	o.CryptoBalance = v
+}
+
+// GetFiatSymbol returns the FiatSymbol field value
+func (o *BalanceGet200Response) GetFiatSymbol() string {
+	if o == nil {
+		var ret string
+		return ret
 	}
 
-	return false
+	return o.FiatSymbol
 }
 
-// SetBalance gets a reference to the given float64 and assigns it to the Balance field.
-func (o *BalanceGet200Response) SetBalance(v float64) {
-	o.Balance = &v
+// GetFiatSymbolOk returns a tuple with the FiatSymbol field value
+// and a boolean to check if the value has been set.
+func (o *BalanceGet200Response) GetFiatSymbolOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FiatSymbol, true
+}
+
+// SetFiatSymbol sets field value
+func (o *BalanceGet200Response) SetFiatSymbol(v string) {
+	o.FiatSymbol = v
+}
+
+// GetFiatValue returns the FiatValue field value
+func (o *BalanceGet200Response) GetFiatValue() float64 {
+	if o == nil {
+		var ret float64
+		return ret
+	}
+
+	return o.FiatValue
+}
+
+// GetFiatValueOk returns a tuple with the FiatValue field value
+// and a boolean to check if the value has been set.
+func (o *BalanceGet200Response) GetFiatValueOk() (*float64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.FiatValue, true
+}
+
+// SetFiatValue sets field value
+func (o *BalanceGet200Response) SetFiatValue(v float64) {
+	o.FiatValue = v
+}
+
+// GetExchangeRate returns the ExchangeRate field value
+func (o *BalanceGet200Response) GetExchangeRate() float64 {
+	if o == nil {
+		var ret float64
+		return ret
+	}
+
+	return o.ExchangeRate
+}
+
+// GetExchangeRateOk returns a tuple with the ExchangeRate field value
+// and a boolean to check if the value has been set.
+func (o *BalanceGet200Response) GetExchangeRateOk() (*float64, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ExchangeRate, true
+}
+
+// SetExchangeRate sets field value
+func (o *BalanceGet200Response) SetExchangeRate(v float64) {
+	o.ExchangeRate = v
+}
+
+// GetTimestamp returns the Timestamp field value
+func (o *BalanceGet200Response) GetTimestamp() time.Time {
+	if o == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return o.Timestamp
+}
+
+// GetTimestampOk returns a tuple with the Timestamp field value
+// and a boolean to check if the value has been set.
+func (o *BalanceGet200Response) GetTimestampOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Timestamp, true
+}
+
+// SetTimestamp sets field value
+func (o *BalanceGet200Response) SetTimestamp(v time.Time) {
+	o.Timestamp = v
 }
 
 func (o BalanceGet200Response) MarshalJSON() ([]byte, error) {
@@ -147,16 +242,57 @@ func (o BalanceGet200Response) MarshalJSON() ([]byte, error) {
 
 func (o BalanceGet200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Crypto) {
-		toSerialize["crypto"] = o.Crypto
-	}
-	if !IsNil(o.Address) {
-		toSerialize["address"] = o.Address
-	}
-	if !IsNil(o.Balance) {
-		toSerialize["balance"] = o.Balance
-	}
+	toSerialize["crypto_symbol"] = o.CryptoSymbol
+	toSerialize["address"] = o.Address
+	toSerialize["crypto_balance"] = o.CryptoBalance
+	toSerialize["fiat_symbol"] = o.FiatSymbol
+	toSerialize["fiat_value"] = o.FiatValue
+	toSerialize["exchange_rate"] = o.ExchangeRate
+	toSerialize["timestamp"] = o.Timestamp
 	return toSerialize, nil
+}
+
+func (o *BalanceGet200Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"crypto_symbol",
+		"address",
+		"crypto_balance",
+		"fiat_symbol",
+		"fiat_value",
+		"exchange_rate",
+		"timestamp",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBalanceGet200Response := _BalanceGet200Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBalanceGet200Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BalanceGet200Response(varBalanceGet200Response)
+
+	return err
 }
 
 type NullableBalanceGet200Response struct {

@@ -4,98 +4,208 @@ info:
   version: 1.0.0
   description: >
     REST API for air-gapped crypto wallets.
-    Supports multiple cryptocurrencies, future-proof.
+    Supports multiple cryptocurrencies with fiat currency conversion, future-proof.
 
 paths:
   /balance:
     get:
       summary: Get balance for an address
       parameters:
-        - name: crypto
+        - name: crypto_symbol
           in: query
           required: true
           schema:
             type: string
             description: The cryptocurrency symbol (BTC, ETH, etc.)
+            example: "BTC"
         - name: address
           in: query
           required: true
           schema:
             type: string
+            description: The cryptocurrency address or xpub
+            example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+        - name: fiat_symbol
+          in: query
+          required: false
+          schema:
+            type: string
+            description: The fiat currency symbol for conversion (USD, EUR, CAD, etc.)
+            default: "USD"
+            example: "USD"
       responses:
         "200":
-          description: Balance response
+          description: Balance response with crypto and fiat values
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  crypto:
+                  crypto_symbol:
                     type: string
+                    description: The cryptocurrency symbol
+                    example: "BTC"
                   address:
                     type: string
-                  balance:
-                    type: double
+                    description: The queried address
+                    example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                  crypto_balance:
+                    type: number
+                    format: double
+                    description: Balance in the native cryptocurrency units
+                    example: 0.00123456
+                  fiat_symbol:
+                    type: string
+                    description: The fiat currency symbol used for conversion
+                    example: "USD"
+                  fiat_value:
+                    type: number
+                    format: double
+                    description: Equivalent value in the specified fiat currency
+                    example: 45.67
+                  exchange_rate:
+                    type: number
+                    format: double
+                    description: Current exchange rate (crypto to fiat)
+                    example: 37000.50
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the balance was retrieved
+                    example: "2023-10-10T15:30:00Z"
+                required:
+                  - crypto_symbol
+                  - address
+                  - crypto_balance
+                  - fiat_symbol
+                  - fiat_value
+                  - exchange_rate
+                  - timestamp
+        "400":
+          description: Bad request (invalid parameters)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Cryptocurrency or address not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /transactions:
     get:
       summary: Get transaction history for an address
       parameters:
-        - name: crypto
+        - name: crypto_symbol
           in: query
           required: true
           schema:
             type: string
+            description: The cryptocurrency symbol
+            example: "BTC"
         - name: address
           in: query
           required: true
           schema:
             type: string
+            description: The cryptocurrency address
+            example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+            description: Maximum number of transactions to return
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+            description: Number of transactions to skip for pagination
       responses:
         "200":
           description: Transaction history
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    txid:
-                      type: string
-                    timestamp:
-                      type: string
-                      format: date-time
-                    amount:
-                      type: string
-                    direction:
-                      type: string
-                      enum: [in, out]
+                type: object
+                properties:
+                  crypto_symbol:
+                    type: string
+                    example: "BTC"
+                  address:
+                    type: string
+                    example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                  transactions:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Transaction"
+                  total_count:
+                    type: integer
+                    description: Total number of transactions for this address
+                  has_more:
+                    type: boolean
+                    description: Whether there are more transactions available
+                required:
+                  - crypto_symbol
+                  - address
+                  - transactions
+                  - total_count
+                  - has_more
 
   /unsigned-tx:
     get:
       summary: Generate an unsigned transaction
       parameters:
-        - name: crypto
+        - name: crypto_symbol
           in: query
           required: true
           schema:
             type: string
-        - name: from
+            description: The cryptocurrency symbol
+            example: "BTC"
+        - name: from_address
           in: query
           required: true
           schema:
             type: string
-        - name: to
+            description: Source address
+            example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+        - name: to_address
           in: query
           required: true
           schema:
             type: string
+            description: Destination address
+            example: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
         - name: amount
           in: query
           required: true
           schema:
             type: string
+            description: Amount to send in crypto units
+            example: "0.00123456"
+        - name: fee_rate
+          in: query
+          required: false
+          schema:
+            type: number
+            format: double
+            description: Custom fee rate (satoshis per byte for BTC)
+            example: 10.5
       responses:
         "200":
           description: Unsigned transaction
@@ -104,17 +214,37 @@ paths:
               schema:
                 type: object
                 properties:
-                  crypto:
+                  crypto_symbol:
                     type: string
-                  from:
+                    example: "BTC"
+                  from_address:
                     type: string
-                  to:
+                    example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                  to_address:
                     type: string
+                    example: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
                   amount:
                     type: string
-                  unsignedTx:
+                    example: "0.00123456"
+                  fee_amount:
                     type: string
-                    description: Base64 / hex encoded unsigned transaction or PSBT
+                    description: Calculated transaction fee
+                    example: "0.00001500"
+                  unsigned_tx:
+                    type: string
+                    description: Base64 or hex encoded unsigned transaction or PSBT
+                    example: "70736274ff01007d..."
+                  tx_size_bytes:
+                    type: integer
+                    description: Estimated transaction size in bytes
+                    example: 225
+                required:
+                  - crypto_symbol
+                  - from_address
+                  - to_address
+                  - amount
+                  - fee_amount
+                  - unsigned_tx
 
   /broadcast:
     post:
@@ -126,12 +256,17 @@ paths:
             schema:
               type: object
               properties:
-                crypto:
+                crypto_symbol:
                   type: string
                   description: The cryptocurrency symbol
-                signedTx:
+                  example: "BTC"
+                signed_tx:
                   type: string
-                  description: Base64 / hex encoded signed transaction
+                  description: Base64 or hex encoded signed transaction
+                  example: "0200000001f5d8ee39a430..."
+              required:
+                - crypto_symbol
+                - signed_tx
       responses:
         "200":
           description: Transaction broadcast result
@@ -140,12 +275,107 @@ paths:
               schema:
                 type: object
                 properties:
-                  crypto:
+                  crypto_symbol:
                     type: string
-                  txid:
+                    example: "BTC"
+                  transaction_id:
                     type: string
+                    description: Transaction hash/ID
+                    example: "a1b2c3d4e5f6..."
                   status:
                     type: string
-                    enum: [success, failure]
+                    enum: [success, pending, failed]
+                    example: "success"
                   message:
                     type: string
+                    description: Human-readable status message
+                    example: "Transaction successfully broadcast to network"
+                  network_fee:
+                    type: string
+                    description: Actual network fee paid
+                    example: "0.00001500"
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: "2023-10-10T15:30:00Z"
+                required:
+                  - crypto_symbol
+                  - transaction_id
+                  - status
+                  - message
+                  - timestamp
+
+components:
+  schemas:
+    Transaction:
+      type: object
+      properties:
+        transaction_id:
+          type: string
+          description: Transaction hash/ID
+          example: "a1b2c3d4e5f6..."
+        block_height:
+          type: integer
+          nullable: true
+          description: Block height (null if unconfirmed)
+          example: 750000
+        timestamp:
+          type: string
+          format: date-time
+          description: Transaction timestamp
+          example: "2023-10-10T15:30:00Z"
+        amount:
+          type: string
+          description: Transaction amount in crypto units
+          example: "0.00123456"
+        direction:
+          type: string
+          enum: [incoming, outgoing]
+          description: Transaction direction relative to the queried address
+          example: "incoming"
+        confirmations:
+          type: integer
+          description: Number of confirmations
+          example: 6
+        fee_amount:
+          type: string
+          description: Transaction fee (for outgoing transactions)
+          example: "0.00001500"
+        from_addresses:
+          type: array
+          items:
+            type: string
+          description: Source addresses
+          example: ["1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"]
+        to_addresses:
+          type: array
+          items:
+            type: string
+          description: Destination addresses
+          example: ["1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"]
+      required:
+        - transaction_id
+        - timestamp
+        - amount
+        - direction
+        - confirmations
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: "INVALID_ADDRESS"
+        message:
+          type: string
+          description: Human-readable error message
+          example: "The provided address is not valid for BTC"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2023-10-10T15:30:00Z"
+      required:
+        - error
+        - message
+        - timestamp

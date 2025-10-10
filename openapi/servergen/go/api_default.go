@@ -3,7 +3,7 @@
 /*
  * Crypto Wallet REST API
  *
- * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+ * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
  * API version: 1.0.0
  */
@@ -115,13 +115,13 @@ func (c *DefaultAPIController) BalanceGet(w http.ResponseWriter, r *http.Request
 		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
 		return
 	}
-	var cryptoParam string
-	if query.Has("crypto") {
-		param := query.Get("crypto")
+	var cryptoSymbolParam string
+	if query.Has("crypto_symbol") {
+		param := query.Get("crypto_symbol")
 
-		cryptoParam = param
+		cryptoSymbolParam = param
 	} else {
-		c.errorHandler(w, r, &RequiredError{Field: "crypto"}, nil)
+		c.errorHandler(w, r, &RequiredError{Field: "crypto_symbol"}, nil)
 		return
 	}
 	var addressParam string
@@ -133,7 +133,16 @@ func (c *DefaultAPIController) BalanceGet(w http.ResponseWriter, r *http.Request
 		c.errorHandler(w, r, &RequiredError{Field: "address"}, nil)
 		return
 	}
-	result, err := c.service.BalanceGet(r.Context(), cryptoParam, addressParam)
+	var fiatSymbolParam string
+	if query.Has("fiat_symbol") {
+		param := query.Get("fiat_symbol")
+
+		fiatSymbolParam = param
+	} else {
+		param := "USD"
+		fiatSymbolParam = param
+	}
+	result, err := c.service.BalanceGet(r.Context(), cryptoSymbolParam, addressParam, fiatSymbolParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)
@@ -150,13 +159,13 @@ func (c *DefaultAPIController) TransactionsGet(w http.ResponseWriter, r *http.Re
 		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
 		return
 	}
-	var cryptoParam string
-	if query.Has("crypto") {
-		param := query.Get("crypto")
+	var cryptoSymbolParam string
+	if query.Has("crypto_symbol") {
+		param := query.Get("crypto_symbol")
 
-		cryptoParam = param
+		cryptoSymbolParam = param
 	} else {
-		c.errorHandler(w, r, &RequiredError{Field: "crypto"}, nil)
+		c.errorHandler(w, r, &RequiredError{Field: "crypto_symbol"}, nil)
 		return
 	}
 	var addressParam string
@@ -168,7 +177,42 @@ func (c *DefaultAPIController) TransactionsGet(w http.ResponseWriter, r *http.Re
 		c.errorHandler(w, r, &RequiredError{Field: "address"}, nil)
 		return
 	}
-	result, err := c.service.TransactionsGet(r.Context(), cryptoParam, addressParam)
+	var limitParam int32
+	if query.Has("limit") {
+		param, err := parseNumericParameter[int32](
+			query.Get("limit"),
+			WithParse[int32](parseInt32),
+			WithMinimum[int32](1),
+			WithMaximum[int32](100),
+		)
+		if err != nil {
+			c.errorHandler(w, r, &ParsingError{Param: "limit", Err: err}, nil)
+			return
+		}
+
+		limitParam = param
+	} else {
+		var param int32 = 50
+		limitParam = param
+	}
+	var offsetParam int32
+	if query.Has("offset") {
+		param, err := parseNumericParameter[int32](
+			query.Get("offset"),
+			WithParse[int32](parseInt32),
+			WithMinimum[int32](0),
+		)
+		if err != nil {
+			c.errorHandler(w, r, &ParsingError{Param: "offset", Err: err}, nil)
+			return
+		}
+
+		offsetParam = param
+	} else {
+		var param int32 = 0
+		offsetParam = param
+	}
+	result, err := c.service.TransactionsGet(r.Context(), cryptoSymbolParam, addressParam, limitParam, offsetParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)
@@ -185,31 +229,31 @@ func (c *DefaultAPIController) UnsignedTxGet(w http.ResponseWriter, r *http.Requ
 		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
 		return
 	}
-	var cryptoParam string
-	if query.Has("crypto") {
-		param := query.Get("crypto")
+	var cryptoSymbolParam string
+	if query.Has("crypto_symbol") {
+		param := query.Get("crypto_symbol")
 
-		cryptoParam = param
+		cryptoSymbolParam = param
 	} else {
-		c.errorHandler(w, r, &RequiredError{Field: "crypto"}, nil)
+		c.errorHandler(w, r, &RequiredError{Field: "crypto_symbol"}, nil)
 		return
 	}
-	var fromParam string
-	if query.Has("from") {
-		param := query.Get("from")
+	var fromAddressParam string
+	if query.Has("from_address") {
+		param := query.Get("from_address")
 
-		fromParam = param
+		fromAddressParam = param
 	} else {
-		c.errorHandler(w, r, &RequiredError{Field: "from"}, nil)
+		c.errorHandler(w, r, &RequiredError{Field: "from_address"}, nil)
 		return
 	}
-	var toParam string
-	if query.Has("to") {
-		param := query.Get("to")
+	var toAddressParam string
+	if query.Has("to_address") {
+		param := query.Get("to_address")
 
-		toParam = param
+		toAddressParam = param
 	} else {
-		c.errorHandler(w, r, &RequiredError{Field: "to"}, nil)
+		c.errorHandler(w, r, &RequiredError{Field: "to_address"}, nil)
 		return
 	}
 	var amountParam string
@@ -221,7 +265,21 @@ func (c *DefaultAPIController) UnsignedTxGet(w http.ResponseWriter, r *http.Requ
 		c.errorHandler(w, r, &RequiredError{Field: "amount"}, nil)
 		return
 	}
-	result, err := c.service.UnsignedTxGet(r.Context(), cryptoParam, fromParam, toParam, amountParam)
+	var feeRateParam float64
+	if query.Has("fee_rate") {
+		param, err := parseNumericParameter[float64](
+			query.Get("fee_rate"),
+			WithParse[float64](parseFloat64),
+		)
+		if err != nil {
+			c.errorHandler(w, r, &ParsingError{Param: "fee_rate", Err: err}, nil)
+			return
+		}
+
+		feeRateParam = param
+	} else {
+	}
+	result, err := c.service.UnsignedTxGet(r.Context(), cryptoSymbolParam, fromAddressParam, toAddressParam, amountParam, feeRateParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)
