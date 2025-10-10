@@ -1,2 +1,2 @@
 listen_addr = ':8399'
-cmc_rest_addr = ':7392'
+cmc_rest_addr = ':8765'
