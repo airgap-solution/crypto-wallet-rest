@@ -3,7 +3,7 @@
 /*
  * Crypto Wallet REST API
  *
- * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+ * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
  * API version: 1.0.0
  */
@@ -11,19 +11,53 @@
 package cryptowalletrest
 
 
+import (
+	"time"
+)
+
 
 
 type BalanceGet200Response struct {
 
-	Crypto string `json:"crypto,omitempty"`
+	// The cryptocurrency symbol
+	CryptoSymbol string `json:"crypto_symbol"`
 
-	Address string `json:"address,omitempty"`
+	// The queried address
+	Address string `json:"address"`
 
-	Balance float64 `json:"balance,omitempty"`
+	// Balance in the native cryptocurrency units
+	CryptoBalance float64 `json:"crypto_balance"`
+
+	// The fiat currency symbol used for conversion
+	FiatSymbol string `json:"fiat_symbol"`
+
+	// Equivalent value in the specified fiat currency
+	FiatValue float64 `json:"fiat_value"`
+
+	// Current exchange rate (crypto to fiat)
+	ExchangeRate float64 `json:"exchange_rate"`
+
+	// Timestamp when the balance was retrieved
+	Timestamp time.Time `json:"timestamp"`
 }
 
 // AssertBalanceGet200ResponseRequired checks if the required fields are not zero-ed
 func AssertBalanceGet200ResponseRequired(obj BalanceGet200Response) error {
+	elements := map[string]interface{}{
+		"crypto_symbol": obj.CryptoSymbol,
+		"address": obj.Address,
+		"crypto_balance": obj.CryptoBalance,
+		"fiat_symbol": obj.FiatSymbol,
+		"fiat_value": obj.FiatValue,
+		"exchange_rate": obj.ExchangeRate,
+		"timestamp": obj.Timestamp,
+	}
+	for name, el := range elements {
+		if isZero := IsZeroValue(el); isZero {
+			return &RequiredError{Field: name}
+		}
+	}
+
 	return nil
 }
 

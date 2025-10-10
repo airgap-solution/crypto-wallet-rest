@@ -1,7 +1,7 @@
 /*
 Crypto Wallet REST API
 
-REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
 
 API version: 1.0.0
 */
@@ -12,6 +12,9 @@ package cryptowalletrest
 
 import (
 	"encoding/json"
+	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the BroadcastPost200Response type satisfies the MappedNullable interface at compile time
@@ -19,18 +22,30 @@ var _ MappedNullable = &BroadcastPost200Response{}
 
 // BroadcastPost200Response struct for BroadcastPost200Response
 type BroadcastPost200Response struct {
-	Crypto *string `json:"crypto,omitempty"`
-	Txid *string `json:"txid,omitempty"`
-	Status *string `json:"status,omitempty"`
-	Message *string `json:"message,omitempty"`
+	CryptoSymbol string `json:"crypto_symbol"`
+	// Transaction hash/ID
+	TransactionId string `json:"transaction_id"`
+	Status string `json:"status"`
+	// Human-readable status message
+	Message string `json:"message"`
+	// Actual network fee paid
+	NetworkFee *string `json:"network_fee,omitempty"`
+	Timestamp time.Time `json:"timestamp"`
 }
+
+type _BroadcastPost200Response BroadcastPost200Response
 
 // NewBroadcastPost200Response instantiates a new BroadcastPost200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBroadcastPost200Response() *BroadcastPost200Response {
+func NewBroadcastPost200Response(cryptoSymbol string, transactionId string, status string, message string, timestamp time.Time) *BroadcastPost200Response {
 	this := BroadcastPost200Response{}
+	this.CryptoSymbol = cryptoSymbol
+	this.TransactionId = transactionId
+	this.Status = status
+	this.Message = message
+	this.Timestamp = timestamp
 	return &this
 }
 
@@ -42,132 +57,156 @@ func NewBroadcastPost200ResponseWithDefaults() *BroadcastPost200Response {
 	return &this
 }
 
-// GetCrypto returns the Crypto field value if set, zero value otherwise.
-func (o *BroadcastPost200Response) GetCrypto() string {
-	if o == nil || IsNil(o.Crypto) {
+// GetCryptoSymbol returns the CryptoSymbol field value
+func (o *BroadcastPost200Response) GetCryptoSymbol() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Crypto
+
+	return o.CryptoSymbol
 }
 
-// GetCryptoOk returns a tuple with the Crypto field value if set, nil otherwise
+// GetCryptoSymbolOk returns a tuple with the CryptoSymbol field value
 // and a boolean to check if the value has been set.
-func (o *BroadcastPost200Response) GetCryptoOk() (*string, bool) {
-	if o == nil || IsNil(o.Crypto) {
+func (o *BroadcastPost200Response) GetCryptoSymbolOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Crypto, true
+	return &o.CryptoSymbol, true
 }
 
-// HasCrypto returns a boolean if a field has been set.
-func (o *BroadcastPost200Response) HasCrypto() bool {
-	if o != nil && !IsNil(o.Crypto) {
-		return true
-	}
-
-	return false
+// SetCryptoSymbol sets field value
+func (o *BroadcastPost200Response) SetCryptoSymbol(v string) {
+	o.CryptoSymbol = v
 }
 
-// SetCrypto gets a reference to the given string and assigns it to the Crypto field.
-func (o *BroadcastPost200Response) SetCrypto(v string) {
-	o.Crypto = &v
-}
-
-// GetTxid returns the Txid field value if set, zero value otherwise.
-func (o *BroadcastPost200Response) GetTxid() string {
-	if o == nil || IsNil(o.Txid) {
+// GetTransactionId returns the TransactionId field value
+func (o *BroadcastPost200Response) GetTransactionId() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Txid
+
+	return o.TransactionId
 }
 
-// GetTxidOk returns a tuple with the Txid field value if set, nil otherwise
+// GetTransactionIdOk returns a tuple with the TransactionId field value
 // and a boolean to check if the value has been set.
-func (o *BroadcastPost200Response) GetTxidOk() (*string, bool) {
-	if o == nil || IsNil(o.Txid) {
+func (o *BroadcastPost200Response) GetTransactionIdOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Txid, true
+	return &o.TransactionId, true
 }
 
-// HasTxid returns a boolean if a field has been set.
-func (o *BroadcastPost200Response) HasTxid() bool {
-	if o != nil && !IsNil(o.Txid) {
-		return true
-	}
-
-	return false
+// SetTransactionId sets field value
+func (o *BroadcastPost200Response) SetTransactionId(v string) {
+	o.TransactionId = v
 }
 
-// SetTxid gets a reference to the given string and assigns it to the Txid field.
-func (o *BroadcastPost200Response) SetTxid(v string) {
-	o.Txid = &v
-}
-
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *BroadcastPost200Response) GetStatus() string {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *BroadcastPost200Response) GetStatusOk() (*string, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *BroadcastPost200Response) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given string and assigns it to the Status field.
+// SetStatus sets field value
 func (o *BroadcastPost200Response) SetStatus(v string) {
-	o.Status = &v
+	o.Status = v
 }
 
-// GetMessage returns the Message field value if set, zero value otherwise.
+// GetMessage returns the Message field value
 func (o *BroadcastPost200Response) GetMessage() string {
-	if o == nil || IsNil(o.Message) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Message
+
+	return o.Message
 }
 
-// GetMessageOk returns a tuple with the Message field value if set, nil otherwise
+// GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
 func (o *BroadcastPost200Response) GetMessageOk() (*string, bool) {
-	if o == nil || IsNil(o.Message) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Message, true
+	return &o.Message, true
 }
 
-// HasMessage returns a boolean if a field has been set.
-func (o *BroadcastPost200Response) HasMessage() bool {
-	if o != nil && !IsNil(o.Message) {
+// SetMessage sets field value
+func (o *BroadcastPost200Response) SetMessage(v string) {
+	o.Message = v
+}
+
+// GetNetworkFee returns the NetworkFee field value if set, zero value otherwise.
+func (o *BroadcastPost200Response) GetNetworkFee() string {
+	if o == nil || IsNil(o.NetworkFee) {
+		var ret string
+		return ret
+	}
+	return *o.NetworkFee
+}
+
+// GetNetworkFeeOk returns a tuple with the NetworkFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BroadcastPost200Response) GetNetworkFeeOk() (*string, bool) {
+	if o == nil || IsNil(o.NetworkFee) {
+		return nil, false
+	}
+	return o.NetworkFee, true
+}
+
+// HasNetworkFee returns a boolean if a field has been set.
+func (o *BroadcastPost200Response) HasNetworkFee() bool {
+	if o != nil && !IsNil(o.NetworkFee) {
 		return true
 	}
 
 	return false
 }
 
-// SetMessage gets a reference to the given string and assigns it to the Message field.
-func (o *BroadcastPost200Response) SetMessage(v string) {
-	o.Message = &v
+// SetNetworkFee gets a reference to the given string and assigns it to the NetworkFee field.
+func (o *BroadcastPost200Response) SetNetworkFee(v string) {
+	o.NetworkFee = &v
+}
+
+// GetTimestamp returns the Timestamp field value
+func (o *BroadcastPost200Response) GetTimestamp() time.Time {
+	if o == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return o.Timestamp
+}
+
+// GetTimestampOk returns a tuple with the Timestamp field value
+// and a boolean to check if the value has been set.
+func (o *BroadcastPost200Response) GetTimestampOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Timestamp, true
+}
+
+// SetTimestamp sets field value
+func (o *BroadcastPost200Response) SetTimestamp(v time.Time) {
+	o.Timestamp = v
 }
 
 func (o BroadcastPost200Response) MarshalJSON() ([]byte, error) {
@@ -180,19 +219,56 @@ func (o BroadcastPost200Response) MarshalJSON() ([]byte, error) {
 
 func (o BroadcastPost200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Crypto) {
-		toSerialize["crypto"] = o.Crypto
+	toSerialize["crypto_symbol"] = o.CryptoSymbol
+	toSerialize["transaction_id"] = o.TransactionId
+	toSerialize["status"] = o.Status
+	toSerialize["message"] = o.Message
+	if !IsNil(o.NetworkFee) {
+		toSerialize["network_fee"] = o.NetworkFee
 	}
-	if !IsNil(o.Txid) {
-		toSerialize["txid"] = o.Txid
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
-	if !IsNil(o.Message) {
-		toSerialize["message"] = o.Message
-	}
+	toSerialize["timestamp"] = o.Timestamp
 	return toSerialize, nil
+}
+
+func (o *BroadcastPost200Response) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"crypto_symbol",
+		"transaction_id",
+		"status",
+		"message",
+		"timestamp",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBroadcastPost200Response := _BroadcastPost200Response{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBroadcastPost200Response)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BroadcastPost200Response(varBroadcastPost200Response)
+
+	return err
 }
 
 type NullableBroadcastPost200Response struct {

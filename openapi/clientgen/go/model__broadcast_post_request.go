@@ -1,7 +1,7 @@
 /*
 Crypto Wallet REST API
 
-REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
 
 API version: 1.0.0
 */
@@ -12,6 +12,8 @@ package cryptowalletrest
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the BroadcastPostRequest type satisfies the MappedNullable interface at compile time
@@ -20,17 +22,21 @@ var _ MappedNullable = &BroadcastPostRequest{}
 // BroadcastPostRequest struct for BroadcastPostRequest
 type BroadcastPostRequest struct {
 	// The cryptocurrency symbol
-	Crypto *string `json:"crypto,omitempty"`
-	// Base64 / hex encoded signed transaction
-	SignedTx *string `json:"signedTx,omitempty"`
+	CryptoSymbol string `json:"crypto_symbol"`
+	// Base64 or hex encoded signed transaction
+	SignedTx string `json:"signed_tx"`
 }
+
+type _BroadcastPostRequest BroadcastPostRequest
 
 // NewBroadcastPostRequest instantiates a new BroadcastPostRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBroadcastPostRequest() *BroadcastPostRequest {
+func NewBroadcastPostRequest(cryptoSymbol string, signedTx string) *BroadcastPostRequest {
 	this := BroadcastPostRequest{}
+	this.CryptoSymbol = cryptoSymbol
+	this.SignedTx = signedTx
 	return &this
 }
 
@@ -42,68 +48,52 @@ func NewBroadcastPostRequestWithDefaults() *BroadcastPostRequest {
 	return &this
 }
 
-// GetCrypto returns the Crypto field value if set, zero value otherwise.
-func (o *BroadcastPostRequest) GetCrypto() string {
-	if o == nil || IsNil(o.Crypto) {
+// GetCryptoSymbol returns the CryptoSymbol field value
+func (o *BroadcastPostRequest) GetCryptoSymbol() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Crypto
+
+	return o.CryptoSymbol
 }
 
-// GetCryptoOk returns a tuple with the Crypto field value if set, nil otherwise
+// GetCryptoSymbolOk returns a tuple with the CryptoSymbol field value
 // and a boolean to check if the value has been set.
-func (o *BroadcastPostRequest) GetCryptoOk() (*string, bool) {
-	if o == nil || IsNil(o.Crypto) {
+func (o *BroadcastPostRequest) GetCryptoSymbolOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Crypto, true
+	return &o.CryptoSymbol, true
 }
 
-// HasCrypto returns a boolean if a field has been set.
-func (o *BroadcastPostRequest) HasCrypto() bool {
-	if o != nil && !IsNil(o.Crypto) {
-		return true
-	}
-
-	return false
+// SetCryptoSymbol sets field value
+func (o *BroadcastPostRequest) SetCryptoSymbol(v string) {
+	o.CryptoSymbol = v
 }
 
-// SetCrypto gets a reference to the given string and assigns it to the Crypto field.
-func (o *BroadcastPostRequest) SetCrypto(v string) {
-	o.Crypto = &v
-}
-
-// GetSignedTx returns the SignedTx field value if set, zero value otherwise.
+// GetSignedTx returns the SignedTx field value
 func (o *BroadcastPostRequest) GetSignedTx() string {
-	if o == nil || IsNil(o.SignedTx) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.SignedTx
+
+	return o.SignedTx
 }
 
-// GetSignedTxOk returns a tuple with the SignedTx field value if set, nil otherwise
+// GetSignedTxOk returns a tuple with the SignedTx field value
 // and a boolean to check if the value has been set.
 func (o *BroadcastPostRequest) GetSignedTxOk() (*string, bool) {
-	if o == nil || IsNil(o.SignedTx) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SignedTx, true
+	return &o.SignedTx, true
 }
 
-// HasSignedTx returns a boolean if a field has been set.
-func (o *BroadcastPostRequest) HasSignedTx() bool {
-	if o != nil && !IsNil(o.SignedTx) {
-		return true
-	}
-
-	return false
-}
-
-// SetSignedTx gets a reference to the given string and assigns it to the SignedTx field.
+// SetSignedTx sets field value
 func (o *BroadcastPostRequest) SetSignedTx(v string) {
-	o.SignedTx = &v
+	o.SignedTx = v
 }
 
 func (o BroadcastPostRequest) MarshalJSON() ([]byte, error) {
@@ -116,13 +106,47 @@ func (o BroadcastPostRequest) MarshalJSON() ([]byte, error) {
 
 func (o BroadcastPostRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Crypto) {
-		toSerialize["crypto"] = o.Crypto
-	}
-	if !IsNil(o.SignedTx) {
-		toSerialize["signedTx"] = o.SignedTx
-	}
+	toSerialize["crypto_symbol"] = o.CryptoSymbol
+	toSerialize["signed_tx"] = o.SignedTx
 	return toSerialize, nil
+}
+
+func (o *BroadcastPostRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"crypto_symbol",
+		"signed_tx",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varBroadcastPostRequest := _BroadcastPostRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varBroadcastPostRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = BroadcastPostRequest(varBroadcastPostRequest)
+
+	return err
 }
 
 type NullableBroadcastPostRequest struct {

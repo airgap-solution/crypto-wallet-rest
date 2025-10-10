@@ -3,7 +3,7 @@
 /*
  * Crypto Wallet REST API
  *
- * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies, future-proof. 
+ * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
  * API version: 1.0.0
  */
@@ -28,29 +28,38 @@ func NewDefaultAPIService() *DefaultAPIService {
 }
 
 // BalanceGet - Get balance for an address
-func (s *DefaultAPIService) BalanceGet(ctx context.Context, crypto string, address string) (ImplResponse, error) {
+func (s *DefaultAPIService) BalanceGet(ctx context.Context, cryptoSymbol string, address string, fiatSymbol string) (ImplResponse, error) {
 	// TODO - update BalanceGet with the required logic for this service method.
 	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
 	// TODO: Uncomment the next line to return response Response(200, BalanceGet200Response{}) or use other options such as http.Ok ...
 	// return Response(200, BalanceGet200Response{}), nil
 
+	// TODO: Uncomment the next line to return response Response(400, ErrorResponse{}) or use other options such as http.Ok ...
+	// return Response(400, ErrorResponse{}), nil
+
+	// TODO: Uncomment the next line to return response Response(404, ErrorResponse{}) or use other options such as http.Ok ...
+	// return Response(404, ErrorResponse{}), nil
+
+	// TODO: Uncomment the next line to return response Response(500, ErrorResponse{}) or use other options such as http.Ok ...
+	// return Response(500, ErrorResponse{}), nil
+
 	return Response(http.StatusNotImplemented, nil), errors.New("BalanceGet method not implemented")
 }
 
 // TransactionsGet - Get transaction history for an address
-func (s *DefaultAPIService) TransactionsGet(ctx context.Context, crypto string, address string) (ImplResponse, error) {
+func (s *DefaultAPIService) TransactionsGet(ctx context.Context, cryptoSymbol string, address string, limit int32, offset int32) (ImplResponse, error) {
 	// TODO - update TransactionsGet with the required logic for this service method.
 	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
-	// TODO: Uncomment the next line to return response Response(200, []TransactionsGet200ResponseInner{}) or use other options such as http.Ok ...
-	// return Response(200, []TransactionsGet200ResponseInner{}), nil
+	// TODO: Uncomment the next line to return response Response(200, TransactionsGet200Response{}) or use other options such as http.Ok ...
+	// return Response(200, TransactionsGet200Response{}), nil
 
 	return Response(http.StatusNotImplemented, nil), errors.New("TransactionsGet method not implemented")
 }
 
 // UnsignedTxGet - Generate an unsigned transaction
-func (s *DefaultAPIService) UnsignedTxGet(ctx context.Context, crypto string, from string, to string, amount string) (ImplResponse, error) {
+func (s *DefaultAPIService) UnsignedTxGet(ctx context.Context, cryptoSymbol string, fromAddress string, toAddress string, amount string, feeRate float64) (ImplResponse, error) {
 	// TODO - update UnsignedTxGet with the required logic for this service method.
 	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
