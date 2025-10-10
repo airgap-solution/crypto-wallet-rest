@@ -9,6 +9,7 @@ import (
 	"github.com/airgap-solution/crypto-wallet-rest/internal"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/bitcoin"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/ethereum"
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/litecoin"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/solana"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
@@ -29,7 +30,10 @@ func main() {
 	cmcRestClient := cmcrest.NewAPIClient(cmcRestCfg)
 
 	providerAdapter := provider.NewAdapter(cmcRestClient.DefaultAPI, map[string]ports.CryptoProvider{
-		"BTC":         bitcoin.NewAdapter(conf.Crypto.Bitcoin.RPC),
+		"BTC":         bitcoin.NewAdapter(conf.Crypto.Bitcoin.MainnetRPC, false),
+		"BTC_TESTNET": bitcoin.NewAdapter(conf.Crypto.Bitcoin.TestnetRPC, true),
+		"LTC":         litecoin.NewAdapter(conf.Crypto.Litecoin.MainnetRPC, false),
+		"LTC_TESTNET": litecoin.NewAdapter(conf.Crypto.Litecoin.TestnetRPC, true),
 		"ETH":         ethereum.NewAdapter(conf.Crypto.Ethereum.MainnetRPC),
 		"ETH_TESTNET": ethereum.NewAdapter(conf.Crypto.Ethereum.TestnetRPC),
 		"SOL":         solana.NewAdapter(conf.Crypto.Solana.MainnetRPC),

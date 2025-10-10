@@ -39,8 +39,11 @@ func (a *Adapter) GetBalance(symbol, addr, fiatSymbol string) (*ports.BalanceRes
 		fiatSymbol = "USD"
 	}
 
+	// Strip _TESTNET suffix for fiat rate fetching
+	rateSymbol := strings.TrimSuffix(symbol, "_TESTNET")
+
 	// Get exchange rate from CMC REST API
-	req := a.cmcRest.V1RateCurrencyFiatGet(context.Background(), symbol, fiatSymbol)
+	req := a.cmcRest.V1RateCurrencyFiatGet(context.Background(), rateSymbol, fiatSymbol)
 	resp, httpResp, err := a.cmcRest.V1RateCurrencyFiatGetExecute(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get rate from CMC: %w", err)

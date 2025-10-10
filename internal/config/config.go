@@ -1,21 +1,13 @@
 package config
 
 type CryptoConfig struct {
-	Bitcoin  BitcoinConfig  `toml:"bitcoin"`
-	Ethereum EthereumConfig `toml:"ethereum"`
-	Solana   SolanaConfig   `toml:"solana"`
+	Bitcoin  RPCConfig `toml:"bitcoin"`
+	Litecoin RPCConfig `toml:"litecoin"`
+	Ethereum RPCConfig `toml:"ethereum"`
+	Solana   RPCConfig `toml:"solana"`
 }
 
-type BitcoinConfig struct {
-	RPC string `toml:"rpc"`
-}
-
-type EthereumConfig struct {
-	MainnetRPC string `toml:"mainnet_rpc"`
-	TestnetRPC string `toml:"testnet_rpc"`
-}
-
-type SolanaConfig struct {
+type RPCConfig struct {
 	MainnetRPC string `toml:"mainnet_rpc"`
 	TestnetRPC string `toml:"testnet_rpc"`
 }
@@ -29,16 +21,21 @@ type Config struct {
 func DefaultConfig() Config {
 	cfg := Config{
 		ListenAddr:  ":8399",
-		CMCRestAddr: ":7392",
+		CMCRestAddr: "192.168.2.71:8765",
 		Crypto: CryptoConfig{
-			Bitcoin: BitcoinConfig{
-				RPC: "electrum.blockstream.info:50001",
+			Bitcoin: RPCConfig{
+				MainnetRPC: "electrum.blockstream.info:50001",
+				TestnetRPC: "electrum.blockstream.info:60001",
 			},
-			Ethereum: EthereumConfig{
+			Litecoin: RPCConfig{
+				MainnetRPC: "electrum-ltc.bysh.me:50001",
+				TestnetRPC: "electrum-ltc.bysh.me:51001",
+			},
+			Ethereum: RPCConfig{
 				MainnetRPC: "https://eth.llamarpc.com",
 				TestnetRPC: "https://eth-sepolia.public.blastapi.io",
 			},
-			Solana: SolanaConfig{
+			Solana: RPCConfig{
 				MainnetRPC: "https://api.mainnet-beta.solana.com",
 				TestnetRPC: "https://api.testnet.solana.com",
 			},

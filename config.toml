@@ -2,7 +2,12 @@ listen_addr = ':8399'
 cmc_rest_addr = '192.168.2.71:8765'
 
 [crypto.bitcoin]
-rpc = 'electrum.blockstream.info:50001'
+mainnet_rpc = 'electrum.blockstream.info:50001'
+testnet_rpc = 'electrum.blockstream.info:60001'
+
+[crypto.litecoin]
+mainnet_rpc = 'electrum-ltc.bysh.me:50001'
+testnet_rpc = 'electrum-ltc.bysh.me:51001'
 
 [crypto.ethereum]
 mainnet_rpc = 'https://eth.llamarpc.com'
