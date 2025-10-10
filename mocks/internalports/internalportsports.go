@@ -53,3 +53,42 @@ func (mr *MockProviderMockRecorder) GetBalance(symbol, address any) *gomock.Call
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*MockProvider)(nil).GetBalance), symbol, address)
 }
+
+// MockCryptoProvider is a mock of CryptoProvider interface.
+type MockCryptoProvider struct {
+	ctrl     *gomock.Controller
+	recorder *MockCryptoProviderMockRecorder
+	isgomock struct{}
+}
+
+// MockCryptoProviderMockRecorder is the mock recorder for MockCryptoProvider.
+type MockCryptoProviderMockRecorder struct {
+	mock *MockCryptoProvider
+}
+
+// NewMockCryptoProvider creates a new mock instance.
+func NewMockCryptoProvider(ctrl *gomock.Controller) *MockCryptoProvider {
+	mock := &MockCryptoProvider{ctrl: ctrl}
+	mock.recorder = &MockCryptoProviderMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCryptoProvider) EXPECT() *MockCryptoProviderMockRecorder {
+	return m.recorder
+}
+
+// GetBalance mocks base method.
+func (m *MockCryptoProvider) GetBalance(address string) (float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBalance", address)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBalance indicates an expected call of GetBalance.
+func (mr *MockCryptoProviderMockRecorder) GetBalance(address any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*MockCryptoProvider)(nil).GetBalance), address)
+}

@@ -1,2 +1,3 @@
 cmd/
 mocks/
+internal/assemble.go
