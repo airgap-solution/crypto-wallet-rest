@@ -1,5 +1,13 @@
 listen_addr = ':8399'
 cmc_rest_addr = '192.168.2.71:8765'
-bitcoin_rpc = 'electrum.blockstream.info:50001'
-ethereum_rpc = 'https://eth.llamarpc.com'
-solana_rpc = 'https://api.mainnet-beta.solana.com'
+
+[crypto.bitcoin]
+rpc = 'electrum.blockstream.info:50001'
+
+[crypto.ethereum]
+mainnet_rpc = 'https://eth.llamarpc.com'
+testnet_rpc = 'https://eth-sepolia.public.blastapi.io'
+
+[crypto.solana]
+mainnet_rpc = 'https://api.mainnet-beta.solana.com'
+testnet_rpc = 'https://api.testnet.solana.com'

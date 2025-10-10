@@ -25,13 +25,15 @@ func main() {
 
 	cmcRestCfg := cmcrest.NewConfiguration()
 	cmcRestCfg.Scheme = "http"
-
 	cmcRestCfg.Host = conf.CMCRestAddr
 	cmcRestClient := cmcrest.NewAPIClient(cmcRestCfg)
+
 	providerAdapter := provider.NewAdapter(cmcRestClient.DefaultAPI, map[string]ports.CryptoProvider{
-		"BTC": bitcoin.NewAdapter(conf.BitcoinRPC),
-		"ETH": ethereum.NewAdapter(conf.EthereumRPC),
-		"SOL": solana.NewAdapter(conf.SolanaRPC),
+		"BTC":         bitcoin.NewAdapter(conf.Crypto.Bitcoin.RPC),
+		"ETH":         ethereum.NewAdapter(conf.Crypto.Ethereum.MainnetRPC),
+		"ETH_TESTNET": ethereum.NewAdapter(conf.Crypto.Ethereum.TestnetRPC),
+		"SOL":         solana.NewAdapter(conf.Crypto.Solana.MainnetRPC),
+		"SOL_TESTNET": solana.NewAdapter(conf.Crypto.Solana.TestnetRPC),
 	})
 	servicer := service.New(providerAdapter)
 
