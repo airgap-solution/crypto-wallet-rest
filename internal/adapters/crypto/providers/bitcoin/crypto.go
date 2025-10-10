@@ -30,10 +30,21 @@ const (
 var (
 	// ErrIndexOutOfRange indicates that an index is out of range for uint32 conversion.
 	ErrIndexOutOfRange = errors.New("index out of range for uint32")
+
+	// BitcoinMainNetParams - Bitcoin mainnet parameters.
+	BitcoinMainNetParams = &chaincfg.MainNetParams
+
+	// BitcoinTestNetParams - Bitcoin testnet parameters.
+	BitcoinTestNetParams = &chaincfg.TestNet3Params
 )
 
-func addressToScripthash(addr string) (string, error) {
-	a, err := btcutil.DecodeAddress(addr, &chaincfg.MainNetParams)
+func addressToScripthash(addr string, isTestnet bool) (string, error) {
+	params := BitcoinMainNetParams
+	if isTestnet {
+		params = BitcoinTestNetParams
+	}
+
+	a, err := btcutil.DecodeAddress(addr, params)
 	if err != nil {
 		return "", fmt.Errorf("failed to decode address: %w", err)
 	}
@@ -48,7 +59,9 @@ func addressToScripthash(addr string) (string, error) {
 	return hex.EncodeToString(h[:]), nil
 }
 
-func deriveTaprootAddresses(xpub string, externalCount, changeCount int) ([]btcutil.Address, []btcutil.Address, error) {
+func deriveTaprootAddresses(
+	xpub string, externalCount, changeCount int, isTestnet bool,
+) ([]btcutil.Address, []btcutil.Address, error) {
 	key, err := hd.NewKeyFromString(xpub)
 	if err != nil {
 		return nil, nil, fmt.Errorf("bad xpub: %w", err)
@@ -59,12 +72,12 @@ func deriveTaprootAddresses(xpub string, externalCount, changeCount int) ([]btcu
 		return nil, nil, err
 	}
 
-	external, err := deriveAddresses(extRoot, externalCount)
+	external, err := deriveAddresses(extRoot, externalCount, isTestnet)
 	if err != nil {
 		return nil, nil, fmt.Errorf("derive external addresses: %w", err)
 	}
 
-	change, err := deriveAddresses(chRoot, changeCount)
+	change, err := deriveAddresses(chRoot, changeCount, isTestnet)
 	if err != nil {
 		return nil, nil, fmt.Errorf("derive change addresses: %w", err)
 	}
@@ -98,7 +111,7 @@ func deriveChainKeys(key *hd.ExtendedKey) (*hd.ExtendedKey, *hd.ExtendedKey, err
 	return extRoot, chRoot, nil
 }
 
-func deriveAddresses(root *hd.ExtendedKey, count int) ([]btcutil.Address, error) {
+func deriveAddresses(root *hd.ExtendedKey, count int, isTestnet bool) ([]btcutil.Address, error) {
 	if root == nil {
 		return nil, nil
 	}
@@ -119,7 +132,7 @@ func deriveAddresses(root *hd.ExtendedKey, count int) ([]btcutil.Address, error)
 			return nil, fmt.Errorf("get public key for child %d: %w", i, err)
 		}
 
-		addr, err := makeTaprootAddress(pub)
+		addr, err := makeTaprootAddress(pub, isTestnet)
 		if err != nil {
 			return nil, fmt.Errorf("make taproot address for child %d: %w", i, err)
 		}
@@ -130,21 +143,26 @@ func deriveAddresses(root *hd.ExtendedKey, count int) ([]btcutil.Address, error)
 	return addresses, nil
 }
 
-func makeTaprootAddress(pub *btcec.PublicKey) (*btcutil.AddressTaproot, error) {
+func makeTaprootAddress(pub *btcec.PublicKey, isTestnet bool) (*btcutil.AddressTaproot, error) {
+	params := BitcoinMainNetParams
+	if isTestnet {
+		params = BitcoinTestNetParams
+	}
+
 	outputKey := txscript.ComputeTaprootKeyNoScript(pub)
 	ser := schnorr.SerializePubKey(outputKey)
-	addr, err := btcutil.NewAddressTaproot(ser, &chaincfg.MainNetParams)
+	addr, err := btcutil.NewAddressTaproot(ser, params)
 	if err != nil {
 		return nil, fmt.Errorf("create taproot address: %w", err)
 	}
 	return addr, nil
 }
 
-func getXpubBalance(node *electrum.Client, addresses []btcutil.Address) (float64, error) {
+func getXpubBalance(node *electrum.Client, addresses []btcutil.Address, isTestnet bool) (float64, error) {
 	totalSats := int64(0)
 
 	for _, addr := range addresses {
-		sats, err := getAddressBalance(node, addr)
+		sats, err := getAddressBalance(node, addr, isTestnet)
 		if err != nil {
 			return 0, err
 		}
@@ -154,8 +172,8 @@ func getXpubBalance(node *electrum.Client, addresses []btcutil.Address) (float64
 	return float64(totalSats) / SatoshiPerBTC, nil
 }
 
-func getAddressBalance(node *electrum.Client, addr btcutil.Address) (int64, error) {
-	sh, err := addressToScripthash(addr.EncodeAddress())
+func getAddressBalance(node *electrum.Client, addr btcutil.Address, isTestnet bool) (int64, error) {
+	sh, err := addressToScripthash(addr.EncodeAddress(), isTestnet)
 	if err != nil {
 		return 0, err
 	}

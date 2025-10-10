@@ -27,12 +27,14 @@ type Adapter struct {
 	electrumClient  *electrum.Client
 	addresses       map[string][]btcutil.Address
 	electrumAddress string
+	isTestnet       bool
 }
 
-func NewAdapter(addr string) *Adapter {
+func NewAdapter(addr string, isTestnet bool) *Adapter {
 	a := &Adapter{
 		addresses:       make(map[string][]btcutil.Address),
 		electrumAddress: addr,
+		isTestnet:       isTestnet,
 	}
 	a.connectWithRetry()
 	return a
@@ -41,7 +43,7 @@ func NewAdapter(addr string) *Adapter {
 func (a *Adapter) GetBalance(xpub string) (float64, error) {
 	addresses, ok := a.addresses[xpub]
 	if !ok {
-		external, change, err := deriveTaprootAddresses(xpub, DefaultExternalCount, DefaultChangeCount)
+		external, change, err := deriveTaprootAddresses(xpub, DefaultExternalCount, DefaultChangeCount, a.isTestnet)
 		if err != nil {
 			return 0, err
 		}
@@ -61,7 +63,7 @@ func (a *Adapter) GetBalance(xpub string) (float64, error) {
 			continue
 		}
 
-		bal, err := getXpubBalance(client, addresses)
+		bal, err := getXpubBalance(client, addresses, a.isTestnet)
 		if err == nil {
 			return bal, nil
 		}
