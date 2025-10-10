@@ -34,9 +34,12 @@ func NewAdapter(cmcRest CMCRestClient, cryptoProviders map[string]ports.CryptoPr
 
 func (a *Adapter) GetBalance(symbol, addr string) (float64, error) {
 	req := a.cmcRest.V1RateCurrencyFiatGet(context.Background(), symbol, "CAD")
-	resp, _, err := a.cmcRest.V1RateCurrencyFiatGetExecute(req)
+	resp, httpResp, err := a.cmcRest.V1RateCurrencyFiatGetExecute(req)
 	if err != nil {
 		return 0, fmt.Errorf("failed to get rate from CMC: %w", err)
+	}
+	if httpResp != nil && httpResp.Body != nil {
+		defer httpResp.Body.Close()
 	}
 
 	rate := resp.GetRate()
