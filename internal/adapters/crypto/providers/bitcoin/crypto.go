@@ -59,7 +59,9 @@ func addressToScripthash(addr string, isTestnet bool) (string, error) {
 	return hex.EncodeToString(h[:]), nil
 }
 
-func deriveTaprootAddresses(xpub string, externalCount, changeCount int, isTestnet bool) ([]btcutil.Address, []btcutil.Address, error) {
+func deriveTaprootAddresses(
+	xpub string, externalCount, changeCount int, isTestnet bool,
+) ([]btcutil.Address, []btcutil.Address, error) {
 	key, err := hd.NewKeyFromString(xpub)
 	if err != nil {
 		return nil, nil, fmt.Errorf("bad xpub: %w", err)

@@ -110,7 +110,6 @@ func deriveChainKeys(key *hd.ExtendedKey) (*hd.ExtendedKey, *hd.ExtendedKey, err
 	return extRoot, chRoot, nil
 }
 
-//nolint:ireturn // btcutil.Address slice return is expected for address types
 func deriveAddresses(root *hd.ExtendedKey, count int, isTestnet bool) ([]btcutil.Address, error) {
 	if root == nil {
 		return nil, nil
