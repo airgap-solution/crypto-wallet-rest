@@ -1,2 +1,5 @@
 listen_addr = ':8399'
 cmc_rest_addr = '192.168.2.71:8765'
+bitcoin_rpc = 'electrum.blockstream.info:50001'
+ethereum_rpc = 'https://eth.llamarpc.com'
+solana_rpc = 'https://api.mainnet-beta.solana.com'
