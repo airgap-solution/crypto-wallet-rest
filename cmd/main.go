@@ -5,10 +5,12 @@ import (
 	"log"
 	"os"
 
+	cmcrest "github.com/airgap-solution/cmc-rest/openapi/clientgen/go"
 	"github.com/airgap-solution/crypto-wallet-rest/internal"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/config"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
 	"github.com/restartfu/gophig"
 )
 
@@ -18,7 +20,11 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	providerAdapter := provider.NewAdapter()
+	cmcRest := cmcrest.NewAPIClient(&cmcrest.Configuration{
+		Scheme: "http",
+		Host:   conf.CMCRestAddr,
+	})
+	providerAdapter := provider.NewAdapter(cmcRest.DefaultAPI, map[string]ports.CryptoProvider{})
 	servicer := service.New(providerAdapter)
 
 	srv := internal.Assemble(conf, servicer)
