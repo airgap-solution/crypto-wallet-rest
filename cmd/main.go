@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -20,11 +21,16 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	cmcRest := cmcrest.NewAPIClient(&cmcrest.Configuration{
-		Scheme: "http",
-		Host:   conf.CMCRestAddr,
-	})
-	providerAdapter := provider.NewAdapter(cmcRest.DefaultAPI, map[string]ports.CryptoProvider{})
+	cmcRestCfg := cmcrest.NewConfiguration()
+	cmcRestCfg.Scheme = "http"
+
+	cmcRestCfg.Host = conf.CMCRestAddr
+	cmcRestClient := cmcrest.NewAPIClient(cmcRestCfg)
+	_, err = cmcRestClient.GetConfig().ServerURLWithContext(context.Background(), "DefaultAPIService.V1RateCurrencyFiatGet")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	providerAdapter := provider.NewAdapter(cmcRestClient.DefaultAPI, map[string]ports.CryptoProvider{})
 	servicer := service.New(providerAdapter)
 
 	srv := internal.Assemble(conf, servicer)
