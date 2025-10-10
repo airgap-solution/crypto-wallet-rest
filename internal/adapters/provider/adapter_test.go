@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 
 	cmcrest "github.com/airgap-solution/cmc-rest/openapi/clientgen/go"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
@@ -26,18 +27,18 @@ func TestNewAdapter(t *testing.T) {
 func TestGetBalance(t *testing.T) {
 	t.Parallel()
 
-	rate := 0.00000601
-	balance := 5.12345678
-	value := rate * float64(balance)
+	rate := 45000.50
+	cryptoBalance := 0.00123456
+	fiatValue := rate * cryptoBalance
 	addr := "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
 	cryptoSymbol := "BTC"
-	fiatSymbol := "CAD"
+	fiatSymbol := "USD"
 	req := cmcrest.ApiV1RateCurrencyFiatGetRequest{}
 
 	testCases := []struct {
 		name                     string
 		expectedError            error
-		expectedBalance          float64
+		expectedBalanceResult    *ports.BalanceResult
 		setupMockCryptoProviders func(map[string]ports.CryptoProvider)
 		setupMocks               func(
 			*internaladaptersprovidermocks.MockCMCRestClient,
@@ -55,9 +56,16 @@ func TestGetBalance(t *testing.T) {
 					gomock.Any(), cryptoSymbol, fiatSymbol).Return(req)
 				mockCMC.EXPECT().V1RateCurrencyFiatGetExecute(req).Return(
 					&cmcrest.GetRateResponse{Rate: lo.ToPtr(rate)}, nil, nil)
-				mockBTC.EXPECT().GetBalance(addr).Return(balance, nil)
+				mockBTC.EXPECT().GetBalance(addr).Return(cryptoBalance, nil)
 			},
-			expectedBalance: value,
+			expectedBalanceResult: &ports.BalanceResult{
+				CryptoSymbol:  "BTC",
+				Address:       addr,
+				CryptoBalance: cryptoBalance,
+				FiatSymbol:    "USD",
+				FiatValue:     fiatValue,
+				ExchangeRate:  rate,
+			},
 		},
 		{
 			name:          "cmc client request fails",
@@ -116,9 +124,16 @@ func TestGetBalance(t *testing.T) {
 				}
 				mockCMC.EXPECT().V1RateCurrencyFiatGetExecute(req).Return(
 					&cmcrest.GetRateResponse{Rate: lo.ToPtr(rate)}, httpResp, nil)
-				mockBTC.EXPECT().GetBalance(addr).Return(balance, nil)
+				mockBTC.EXPECT().GetBalance(addr).Return(cryptoBalance, nil)
 			},
-			expectedBalance: value,
+			expectedBalanceResult: &ports.BalanceResult{
+				CryptoSymbol:  "BTC",
+				Address:       addr,
+				CryptoBalance: cryptoBalance,
+				FiatSymbol:    "USD",
+				FiatValue:     fiatValue,
+				ExchangeRate:  rate,
+			},
 		},
 		{
 			name:          "successful request with nil http response",
@@ -131,9 +146,61 @@ func TestGetBalance(t *testing.T) {
 					gomock.Any(), cryptoSymbol, fiatSymbol).Return(req)
 				mockCMC.EXPECT().V1RateCurrencyFiatGetExecute(req).Return(
 					&cmcrest.GetRateResponse{Rate: lo.ToPtr(rate)}, nil, nil)
-				mockBTC.EXPECT().GetBalance(addr).Return(balance, nil)
+				mockBTC.EXPECT().GetBalance(addr).Return(cryptoBalance, nil)
 			},
-			expectedBalance: value,
+			expectedBalanceResult: &ports.BalanceResult{
+				CryptoSymbol:  "BTC",
+				Address:       addr,
+				CryptoBalance: cryptoBalance,
+				FiatSymbol:    "USD",
+				FiatValue:     fiatValue,
+				ExchangeRate:  rate,
+			},
+		},
+		{
+			name:          "empty fiat symbol defaults to USD",
+			expectedError: nil,
+			setupMocks: func(
+				mockCMC *internaladaptersprovidermocks.MockCMCRestClient,
+				mockBTC *internalportsmocks.MockCryptoProvider,
+			) {
+				mockCMC.EXPECT().V1RateCurrencyFiatGet(
+					gomock.Any(), cryptoSymbol, "USD").Return(req)
+				mockCMC.EXPECT().V1RateCurrencyFiatGetExecute(req).Return(
+					&cmcrest.GetRateResponse{Rate: lo.ToPtr(rate)}, nil, nil)
+				mockBTC.EXPECT().GetBalance(addr).Return(cryptoBalance, nil)
+			},
+			expectedBalanceResult: &ports.BalanceResult{
+				CryptoSymbol:  "BTC",
+				Address:       addr,
+				CryptoBalance: cryptoBalance,
+				FiatSymbol:    "USD",
+				FiatValue:     fiatValue,
+				ExchangeRate:  rate,
+			},
+		},
+		{
+			name:          "different fiat currency (EUR)",
+			expectedError: nil,
+			setupMocks: func(
+				mockCMC *internaladaptersprovidermocks.MockCMCRestClient,
+				mockBTC *internalportsmocks.MockCryptoProvider,
+			) {
+				eurRate := 42000.75
+				mockCMC.EXPECT().V1RateCurrencyFiatGet(
+					gomock.Any(), cryptoSymbol, "EUR").Return(req)
+				mockCMC.EXPECT().V1RateCurrencyFiatGetExecute(req).Return(
+					&cmcrest.GetRateResponse{Rate: lo.ToPtr(eurRate)}, nil, nil)
+				mockBTC.EXPECT().GetBalance(addr).Return(cryptoBalance, nil)
+			},
+			expectedBalanceResult: &ports.BalanceResult{
+				CryptoSymbol:  "BTC",
+				Address:       addr,
+				CryptoBalance: cryptoBalance,
+				FiatSymbol:    "EUR",
+				FiatValue:     42000.75 * cryptoBalance,
+				ExchangeRate:  42000.75,
+			},
 		},
 	}
 
@@ -154,13 +221,33 @@ func TestGetBalance(t *testing.T) {
 
 			adapter := provider.NewAdapter(mockCMCRestClient, cryptoProviders)
 
-			balance, err := adapter.GetBalance(cryptoSymbol, addr)
+			// Use appropriate fiat symbol for test case
+			testFiatSymbol := fiatSymbol
+			if tc.name == "empty fiat symbol defaults to USD" {
+				testFiatSymbol = ""
+			} else if tc.name == "different fiat currency (EUR)" {
+				testFiatSymbol = "EUR"
+			}
+
+			balanceResult, err := adapter.GetBalance(cryptoSymbol, addr, testFiatSymbol)
+
 			if tc.expectedError != nil {
 				require.ErrorIs(t, err, tc.expectedError)
-				require.InDelta(t, 0.0, balance, 1e-9)
+				require.Nil(t, balanceResult)
 			} else {
 				require.NoError(t, err)
-				require.InEpsilon(t, tc.expectedBalance, balance, 1e-9)
+				require.NotNil(t, balanceResult)
+
+				// Verify the structure and values
+				assert.Equal(t, tc.expectedBalanceResult.CryptoSymbol, balanceResult.CryptoSymbol)
+				assert.Equal(t, tc.expectedBalanceResult.Address, balanceResult.Address)
+				assert.InEpsilon(t, tc.expectedBalanceResult.CryptoBalance, balanceResult.CryptoBalance, 1e-9)
+				assert.Equal(t, tc.expectedBalanceResult.FiatSymbol, balanceResult.FiatSymbol)
+				assert.InEpsilon(t, tc.expectedBalanceResult.FiatValue, balanceResult.FiatValue, 1e-9)
+				assert.InEpsilon(t, tc.expectedBalanceResult.ExchangeRate, balanceResult.ExchangeRate, 1e-9)
+
+				// Verify timestamp is recent (within last 5 seconds)
+				assert.WithinDuration(t, time.Now(), balanceResult.Timestamp, 5*time.Second)
 			}
 		})
 	}

@@ -115,18 +115,18 @@ func (m *MockDefaultAPIServicer) EXPECT() *MockDefaultAPIServicerMockRecorder {
 }
 
 // BalanceGet mocks base method.
-func (m *MockDefaultAPIServicer) BalanceGet(arg0 context.Context, arg1, arg2 string) (cryptowalletrest.ImplResponse, error) {
+func (m *MockDefaultAPIServicer) BalanceGet(arg0 context.Context, arg1, arg2, arg3 string) (cryptowalletrest.ImplResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BalanceGet", arg0, arg1, arg2)
+	ret := m.ctrl.Call(m, "BalanceGet", arg0, arg1, arg2, arg3)
 	ret0, _ := ret[0].(cryptowalletrest.ImplResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // BalanceGet indicates an expected call of BalanceGet.
-func (mr *MockDefaultAPIServicerMockRecorder) BalanceGet(arg0, arg1, arg2 any) *gomock.Call {
+func (mr *MockDefaultAPIServicerMockRecorder) BalanceGet(arg0, arg1, arg2, arg3 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BalanceGet", reflect.TypeOf((*MockDefaultAPIServicer)(nil).BalanceGet), arg0, arg1, arg2)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BalanceGet", reflect.TypeOf((*MockDefaultAPIServicer)(nil).BalanceGet), arg0, arg1, arg2, arg3)
 }
 
 // BroadcastPost mocks base method.
@@ -145,31 +145,31 @@ func (mr *MockDefaultAPIServicerMockRecorder) BroadcastPost(arg0, arg1 any) *gom
 }
 
 // TransactionsGet mocks base method.
-func (m *MockDefaultAPIServicer) TransactionsGet(arg0 context.Context, arg1, arg2 string) (cryptowalletrest.ImplResponse, error) {
+func (m *MockDefaultAPIServicer) TransactionsGet(arg0 context.Context, arg1, arg2 string, arg3, arg4 int32) (cryptowalletrest.ImplResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "TransactionsGet", arg0, arg1, arg2)
+	ret := m.ctrl.Call(m, "TransactionsGet", arg0, arg1, arg2, arg3, arg4)
 	ret0, _ := ret[0].(cryptowalletrest.ImplResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // TransactionsGet indicates an expected call of TransactionsGet.
-func (mr *MockDefaultAPIServicerMockRecorder) TransactionsGet(arg0, arg1, arg2 any) *gomock.Call {
+func (mr *MockDefaultAPIServicerMockRecorder) TransactionsGet(arg0, arg1, arg2, arg3, arg4 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TransactionsGet", reflect.TypeOf((*MockDefaultAPIServicer)(nil).TransactionsGet), arg0, arg1, arg2)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "TransactionsGet", reflect.TypeOf((*MockDefaultAPIServicer)(nil).TransactionsGet), arg0, arg1, arg2, arg3, arg4)
 }
 
 // UnsignedTxGet mocks base method.
-func (m *MockDefaultAPIServicer) UnsignedTxGet(arg0 context.Context, arg1, arg2, arg3, arg4 string) (cryptowalletrest.ImplResponse, error) {
+func (m *MockDefaultAPIServicer) UnsignedTxGet(arg0 context.Context, arg1, arg2, arg3, arg4 string, arg5 float64) (cryptowalletrest.ImplResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UnsignedTxGet", arg0, arg1, arg2, arg3, arg4)
+	ret := m.ctrl.Call(m, "UnsignedTxGet", arg0, arg1, arg2, arg3, arg4, arg5)
 	ret0, _ := ret[0].(cryptowalletrest.ImplResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // UnsignedTxGet indicates an expected call of UnsignedTxGet.
-func (mr *MockDefaultAPIServicerMockRecorder) UnsignedTxGet(arg0, arg1, arg2, arg3, arg4 any) *gomock.Call {
+func (mr *MockDefaultAPIServicerMockRecorder) UnsignedTxGet(arg0, arg1, arg2, arg3, arg4, arg5 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnsignedTxGet", reflect.TypeOf((*MockDefaultAPIServicer)(nil).UnsignedTxGet), arg0, arg1, arg2, arg3, arg4)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnsignedTxGet", reflect.TypeOf((*MockDefaultAPIServicer)(nil).UnsignedTxGet), arg0, arg1, arg2, arg3, arg4, arg5)
 }

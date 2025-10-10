@@ -1,11 +1,11 @@
 package service_test
 
 import (
-	"fmt"
-	"net/http"
 	"testing"
+	"time"
 
 	"github.com/airgap-solution/crypto-wallet-rest/internal/core/service"
+	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
 	internalportsmocks "github.com/airgap-solution/crypto-wallet-rest/mocks/internalports"
 	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
 	"github.com/stretchr/testify/assert"
@@ -24,9 +24,13 @@ func TestNew(t *testing.T) {
 
 func TestBalanceGet(t *testing.T) {
 	t.Parallel()
-	symbol := "BTC"
-	address := "address"
-	balance := 1.23456
+	cryptoSymbol := "BTC"
+	address := "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+	fiatSymbol := "USD"
+	cryptoBalance := 0.00123456
+	fiatValue := 55.67
+	exchangeRate := 45000.50
+	timestamp := time.Now()
 
 	for _, tc := range []struct {
 		name                 string
@@ -38,12 +42,25 @@ func TestBalanceGet(t *testing.T) {
 		{
 			name: "provider returns no error",
 			setupMocks: func(mockProvider *internalportsmocks.MockProvider) {
-				mockProvider.EXPECT().GetBalance(symbol, address).Return(balance, nil)
+				balanceResult := &ports.BalanceResult{
+					CryptoSymbol:  cryptoSymbol,
+					Address:       address,
+					CryptoBalance: cryptoBalance,
+					FiatSymbol:    fiatSymbol,
+					FiatValue:     fiatValue,
+					ExchangeRate:  exchangeRate,
+					Timestamp:     timestamp,
+				}
+				mockProvider.EXPECT().GetBalance(cryptoSymbol, address, fiatSymbol).Return(balanceResult, nil)
 			},
 			expectedResponseBody: cryptowalletrest.BalanceGet200Response{
-				Crypto:  symbol,
-				Address: address,
-				Balance: fmt.Sprintf("%.f", balance),
+				CryptoSymbol:  cryptoSymbol,
+				Address:       address,
+				CryptoBalance: cryptoBalance,
+				FiatSymbol:    fiatSymbol,
+				FiatValue:     fiatValue,
+				ExchangeRate:  exchangeRate,
+				Timestamp:     timestamp,
 			},
 			expectedResponseCode: 200,
 			expectedError:        nil,
@@ -51,10 +68,36 @@ func TestBalanceGet(t *testing.T) {
 		{
 			name: "provider returns error",
 			setupMocks: func(mockProvider *internalportsmocks.MockProvider) {
-				mockProvider.EXPECT().GetBalance(symbol, address).Return(0.0, assert.AnError)
+				mockProvider.EXPECT().GetBalance(cryptoSymbol, address, fiatSymbol).Return(nil, assert.AnError)
 			},
 			expectedResponseBody: service.Error{Message: assert.AnError.Error()},
-			expectedResponseCode: http.StatusNotImplemented,
+			expectedResponseCode: 501, // StatusNotImplemented
+			expectedError:        nil,
+		},
+		{
+			name: "EUR fiat currency",
+			setupMocks: func(mockProvider *internalportsmocks.MockProvider) {
+				balanceResult := &ports.BalanceResult{
+					CryptoSymbol:  cryptoSymbol,
+					Address:       address,
+					CryptoBalance: cryptoBalance,
+					FiatSymbol:    "EUR",
+					FiatValue:     52.34,
+					ExchangeRate:  42400.25,
+					Timestamp:     timestamp,
+				}
+				mockProvider.EXPECT().GetBalance(cryptoSymbol, address, "EUR").Return(balanceResult, nil)
+			},
+			expectedResponseBody: cryptowalletrest.BalanceGet200Response{
+				CryptoSymbol:  cryptoSymbol,
+				Address:       address,
+				CryptoBalance: cryptoBalance,
+				FiatSymbol:    "EUR",
+				FiatValue:     52.34,
+				ExchangeRate:  42400.25,
+				Timestamp:     timestamp,
+			},
+			expectedResponseCode: 200,
 			expectedError:        nil,
 		},
 	} {
@@ -68,7 +111,12 @@ func TestBalanceGet(t *testing.T) {
 
 			svc := service.New(mockProvider)
 
-			resp, err := svc.BalanceGet(t.Context(), symbol, address)
+			testFiatSymbol := fiatSymbol
+			if tc.name == "EUR fiat currency" {
+				testFiatSymbol = "EUR"
+			}
+
+			resp, err := svc.BalanceGet(t.Context(), cryptoSymbol, address, testFiatSymbol)
 
 			if tc.expectedError != nil {
 				require.ErrorIs(t, err, tc.expectedError)
@@ -90,10 +138,11 @@ func TestTransactionsGet(t *testing.T) {
 	mockProvider := internalportsmocks.NewMockProvider(ctrl)
 	svc := service.New(mockProvider)
 
-	resp, err := svc.TransactionsGet(t.Context(), "BTC", "address")
+	resp, err := svc.TransactionsGet(t.Context(), "BTC", "address", 50, 0)
 
 	require.NoError(t, err)
 	require.NotNil(t, resp)
+	require.Equal(t, 501, resp.Code) // StatusNotImplemented
 }
 
 func TestUnsignedTxGet(t *testing.T) {
@@ -104,10 +153,11 @@ func TestUnsignedTxGet(t *testing.T) {
 	mockProvider := internalportsmocks.NewMockProvider(ctrl)
 	svc := service.New(mockProvider)
 
-	resp, err := svc.UnsignedTxGet(t.Context(), "BTC", "from", "to", "amount")
+	resp, err := svc.UnsignedTxGet(t.Context(), "BTC", "from", "to", "0.001", 10.5)
 
 	require.NoError(t, err)
 	require.NotNil(t, resp)
+	require.Equal(t, 501, resp.Code) // StatusNotImplemented
 }
 
 func TestBroadcastPost(t *testing.T) {
@@ -118,9 +168,13 @@ func TestBroadcastPost(t *testing.T) {
 	mockProvider := internalportsmocks.NewMockProvider(ctrl)
 	svc := service.New(mockProvider)
 
-	req := cryptowalletrest.BroadcastPostRequest{}
+	req := cryptowalletrest.BroadcastPostRequest{
+		CryptoSymbol: "BTC",
+		SignedTx:     "0200000001f5d8ee39a430...",
+	}
 	resp, err := svc.BroadcastPost(t.Context(), req)
 
 	require.NoError(t, err)
 	require.NotNil(t, resp)
+	require.Equal(t, 501, resp.Code) // StatusNotImplemented
 }
