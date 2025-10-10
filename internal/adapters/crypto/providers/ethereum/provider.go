@@ -12,11 +12,20 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
+var (
+	// ErrInvalidEthereumAddress indicates an invalid Ethereum address format.
+	ErrInvalidEthereumAddress = errors.New("invalid Ethereum address format")
+)
+
 const (
 	// Retry constants.
 	MaxRetryAttempts = 3
 	RetryDelay       = 2 * time.Second
 	ReconnectDelay   = 5 * time.Second
+
+	// Timeout constants.
+	BalanceTimeout    = 10 * time.Second
+	ConnectionTimeout = 5 * time.Second
 
 	// Wei to ETH conversion factor.
 	WeiPerEther = 1e18
@@ -39,7 +48,7 @@ func NewAdapter(rpcURL string) *Adapter {
 
 func (a *Adapter) GetBalance(address string) (float64, error) {
 	if !common.IsHexAddress(address) {
-		return 0, errors.New("invalid Ethereum address format")
+		return 0, ErrInvalidEthereumAddress
 	}
 
 	addr := common.HexToAddress(address)
@@ -52,7 +61,7 @@ func (a *Adapter) GetBalance(address string) (float64, error) {
 			continue
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), BalanceTimeout)
 		balance, err := client.BalanceAt(ctx, addr, nil)
 		cancel()
 
@@ -86,7 +95,7 @@ func (a *Adapter) connectWithRetry() {
 		client, err := ethclient.Dial(a.rpcURL)
 		if err == nil {
 			// Test the connection
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			ctx, cancel := context.WithTimeout(context.Background(), ConnectionTimeout)
 			_, err = client.NetworkID(ctx)
 			cancel()
 

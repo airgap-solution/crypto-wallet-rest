@@ -11,11 +11,20 @@ import (
 	"github.com/gagliardetto/solana-go/rpc"
 )
 
+var (
+	// ErrInvalidSolanaAddress indicates an invalid Solana address format.
+	ErrInvalidSolanaAddress = errors.New("invalid Solana address format")
+)
+
 const (
 	// Retry constants.
 	MaxRetryAttempts = 3
 	RetryDelay       = 2 * time.Second
 	ReconnectDelay   = 5 * time.Second
+
+	// Timeout constants.
+	BalanceTimeout    = 10 * time.Second
+	ConnectionTimeout = 5 * time.Second
 
 	// Lamports to SOL conversion factor.
 	LamportsPerSol = 1e9
@@ -39,7 +48,7 @@ func NewAdapter(rpcURL string) *Adapter {
 func (a *Adapter) GetBalance(address string) (float64, error) {
 	pubkey, err := solana.PublicKeyFromBase58(address)
 	if err != nil {
-		return 0, errors.New("invalid Solana address format")
+		return 0, ErrInvalidSolanaAddress
 	}
 
 	var lastErr error
@@ -50,7 +59,7 @@ func (a *Adapter) GetBalance(address string) (float64, error) {
 			continue
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), BalanceTimeout)
 		balance, err := client.GetBalance(ctx, pubkey, rpc.CommitmentFinalized)
 		cancel()
 
@@ -78,7 +87,7 @@ func (a *Adapter) connectWithRetry() {
 		client := rpc.New(a.rpcURL)
 
 		// Test the connection
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), ConnectionTimeout)
 		_, err := client.GetVersion(ctx)
 		cancel()
 
