@@ -1,0 +1,23 @@
+{
+  "name": "@airgap-solution/crypto-wallet-rest",
+  "version": "1.0.0",
+  "description": "TypeScript client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "tsc --declaration",
+    "clean": "rm -rf dist/",
+    "prepare": "yarn run build"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.7.0",
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}

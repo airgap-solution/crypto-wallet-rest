@@ -3,24 +3,23 @@
 /*
  * Crypto Wallet REST API
  *
- * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof.
+ * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.0
+ * API version: 1.0.1
  */
 
 package cryptowalletrest
 
 import (
 	"net/http"
-
 	"github.com/gorilla/mux"
 )
 
 // A Route defines the parameters for an api endpoint
 type Route struct {
 	Name        string
-	Method      string
-	Pattern     string
+	Method	    string
+	Pattern	    string
 	HandlerFunc http.HandlerFunc
 }
 
