@@ -1,0 +1,58 @@
+name: Publish TypeScript Client
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to publish from"
+        required: true
+        default: "main"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: 🧰 Install jq (for debugging or later use)
+        run: sudo apt-get update -y && sudo apt-get install -y jq
+
+      - name: 📦 Install dependencies
+        working-directory: openapi/clientgen/ts
+        run: |
+          if [ ! -f "package.json" ]; then
+            echo "❌ No package.json found — did you generate the client?"
+            exit 1
+          fi
+          echo "Installing dependencies..."
+          npm install --ignore-scripts
+
+      - name: 🏗️ Build TypeScript client
+        working-directory: openapi/clientgen/ts
+        run: |
+          if [ -d "src" ]; then
+            npm run build
+          else
+            echo "⚠️ No TypeScript client source found (openapi/clientgen/ts/src missing)."
+            echo "Run your OpenAPI generator before publishing."
+            exit 1
+          fi
+
+      - name: 🚀 Publish to npm
+        working-directory: openapi/clientgen/ts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "Publishing package..."
+          npm publish --access public
+          echo "✅ Published successfully!"
