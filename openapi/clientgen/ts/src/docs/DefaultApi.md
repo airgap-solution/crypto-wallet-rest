@@ -61,7 +61,7 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | Balance response with crypto and fiat values |  -  |
+|**200** | Balance response with crypto, fiat values, and 24h change |  -  |
 |**400** | Bad request (invalid parameters) |  -  |
 |**404** | Cryptocurrency or address not found |  -  |
 |**500** | Internal server error |  -  |

@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**error** | **string** | Error type | [default to undefined]
-**message** | **string** | Human-readable error message | [default to undefined]
+**error** | **string** |  | [default to undefined]
+**message** | **string** |  | [default to undefined]
 **timestamp** | **string** |  | [default to undefined]
 
 ## Example

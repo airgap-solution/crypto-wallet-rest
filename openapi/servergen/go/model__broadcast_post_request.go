@@ -5,7 +5,7 @@
  *
  * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.1
+ * API version: 1.0.2
  */
 
 package cryptowalletrest
@@ -15,10 +15,8 @@ package cryptowalletrest
 
 type BroadcastPostRequest struct {
 
-	// The cryptocurrency symbol
 	CryptoSymbol string `json:"crypto_symbol"`
 
-	// Base64 or hex encoded signed transaction
 	SignedTx string `json:"signed_tx"`
 }
 

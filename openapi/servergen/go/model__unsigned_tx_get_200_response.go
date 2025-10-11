@@ -5,7 +5,7 @@
  *
  * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.1
+ * API version: 1.0.2
  */
 
 package cryptowalletrest
@@ -23,13 +23,10 @@ type UnsignedTxGet200Response struct {
 
 	Amount string `json:"amount"`
 
-	// Calculated transaction fee
 	FeeAmount string `json:"fee_amount"`
 
-	// Base64 or hex encoded unsigned transaction or PSBT
 	UnsignedTx string `json:"unsigned_tx"`
 
-	// Estimated transaction size in bytes
 	TxSizeBytes int32 `json:"tx_size_bytes,omitempty"`
 }
 

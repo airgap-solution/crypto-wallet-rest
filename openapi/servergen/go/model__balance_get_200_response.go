@@ -5,7 +5,7 @@
  *
  * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.1
+ * API version: 1.0.2
  */
 
 package cryptowalletrest
@@ -19,25 +19,21 @@ import (
 
 type BalanceGet200Response struct {
 
-	// The cryptocurrency symbol
 	CryptoSymbol string `json:"crypto_symbol"`
 
-	// The queried address
 	Address string `json:"address"`
 
-	// Balance in the native cryptocurrency units
 	CryptoBalance float64 `json:"crypto_balance"`
 
-	// The fiat currency symbol used for conversion
 	FiatSymbol string `json:"fiat_symbol"`
 
-	// Equivalent value in the specified fiat currency
 	FiatValue float64 `json:"fiat_value"`
 
-	// Current exchange rate (crypto to fiat)
 	ExchangeRate float64 `json:"exchange_rate"`
 
-	// Timestamp when the balance was retrieved
+	// Absolute change in fiat value over the last 24 hours
+	Change24h float64 `json:"change24h"`
+
 	Timestamp time.Time `json:"timestamp"`
 }
 
@@ -50,6 +46,7 @@ func AssertBalanceGet200ResponseRequired(obj BalanceGet200Response) error {
 		"fiat_symbol": obj.FiatSymbol,
 		"fiat_value": obj.FiatValue,
 		"exchange_rate": obj.ExchangeRate,
+		"change24h": obj.Change24h,
 		"timestamp": obj.Timestamp,
 	}
 	for name, el := range elements {

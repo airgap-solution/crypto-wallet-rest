@@ -5,7 +5,7 @@
  *
  * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.1
+ * API version: 1.0.2
  */
 
 package cryptowalletrest
@@ -19,10 +19,8 @@ import (
 
 type ErrorResponse struct {
 
-	// Error type
 	Error string `json:"error"`
 
-	// Human-readable error message
 	Message string `json:"message"`
 
 	Timestamp time.Time `json:"timestamp"`

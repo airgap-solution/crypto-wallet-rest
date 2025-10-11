@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**crypto_symbol** | **string** | The cryptocurrency symbol | [default to undefined]
-**signed_tx** | **string** | Base64 or hex encoded signed transaction | [default to undefined]
+**crypto_symbol** | **string** |  | [default to undefined]
+**signed_tx** | **string** |  | [default to undefined]
 
 ## Example
 

@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Crypto Wallet REST API
-  version: 1.0.1
+  version: 1.0.2
   description: >
     REST API for air-gapped crypto wallets.
     Supports multiple cryptocurrencies with fiat currency conversion, future-proof.
@@ -35,7 +35,7 @@ paths:
             example: "USD"
       responses:
         "200":
-          description: Balance response with crypto and fiat values
+          description: Balance response with crypto, fiat values, and 24h change
           content:
             application/json:
               schema:
@@ -43,35 +43,33 @@ paths:
                 properties:
                   crypto_symbol:
                     type: string
-                    description: The cryptocurrency symbol
                     example: "BTC"
                   address:
                     type: string
-                    description: The queried address
                     example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
                   crypto_balance:
                     type: number
                     format: double
-                    description: Balance in the native cryptocurrency units
                     example: 0.00123456
                   fiat_symbol:
                     type: string
-                    description: The fiat currency symbol used for conversion
                     example: "USD"
                   fiat_value:
                     type: number
                     format: double
-                    description: Equivalent value in the specified fiat currency
                     example: 45.67
                   exchange_rate:
                     type: number
                     format: double
-                    description: Current exchange rate (crypto to fiat)
                     example: 37000.50
+                  change24h:
+                    type: number
+                    format: double
+                    description: Absolute change in fiat value over the last 24 hours
+                    example: 1.23
                   timestamp:
                     type: string
                     format: date-time
-                    description: Timestamp when the balance was retrieved
                     example: "2023-10-10T15:30:00Z"
                 required:
                   - crypto_symbol
@@ -80,6 +78,7 @@ paths:
                   - fiat_symbol
                   - fiat_value
                   - exchange_rate
+                  - change24h
                   - timestamp
         "400":
           description: Bad request (invalid parameters)
@@ -109,14 +108,12 @@ paths:
           required: true
           schema:
             type: string
-            description: The cryptocurrency symbol
             example: "BTC"
         - name: address
           in: query
           required: true
           schema:
             type: string
-            description: The cryptocurrency address
             example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
         - name: limit
           in: query
@@ -126,7 +123,6 @@ paths:
             minimum: 1
             maximum: 100
             default: 50
-            description: Maximum number of transactions to return
         - name: offset
           in: query
           required: false
@@ -134,7 +130,6 @@ paths:
             type: integer
             minimum: 0
             default: 0
-            description: Number of transactions to skip for pagination
       responses:
         "200":
           description: Transaction history
@@ -155,10 +150,8 @@ paths:
                       $ref: "#/components/schemas/Transaction"
                   total_count:
                     type: integer
-                    description: Total number of transactions for this address
                   has_more:
                     type: boolean
-                    description: Whether there are more transactions available
                 required:
                   - crypto_symbol
                   - address
@@ -175,28 +168,24 @@ paths:
           required: true
           schema:
             type: string
-            description: The cryptocurrency symbol
             example: "BTC"
         - name: from_address
           in: query
           required: true
           schema:
             type: string
-            description: Source address
             example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
         - name: to_address
           in: query
           required: true
           schema:
             type: string
-            description: Destination address
             example: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"
         - name: amount
           in: query
           required: true
           schema:
             type: string
-            description: Amount to send in crypto units
             example: "0.00123456"
         - name: fee_rate
           in: query
@@ -204,7 +193,6 @@ paths:
           schema:
             type: number
             format: double
-            description: Custom fee rate (satoshis per byte for BTC)
             example: 10.5
       responses:
         "200":
@@ -228,15 +216,12 @@ paths:
                     example: "0.00123456"
                   fee_amount:
                     type: string
-                    description: Calculated transaction fee
                     example: "0.00001500"
                   unsigned_tx:
                     type: string
-                    description: Base64 or hex encoded unsigned transaction or PSBT
                     example: "70736274ff01007d..."
                   tx_size_bytes:
                     type: integer
-                    description: Estimated transaction size in bytes
                     example: 225
                 required:
                   - crypto_symbol
@@ -258,11 +243,9 @@ paths:
               properties:
                 crypto_symbol:
                   type: string
-                  description: The cryptocurrency symbol
                   example: "BTC"
                 signed_tx:
                   type: string
-                  description: Base64 or hex encoded signed transaction
                   example: "0200000001f5d8ee39a430..."
               required:
                 - crypto_symbol
@@ -280,7 +263,6 @@ paths:
                     example: "BTC"
                   transaction_id:
                     type: string
-                    description: Transaction hash/ID
                     example: "a1b2c3d4e5f6..."
                   status:
                     type: string
@@ -288,11 +270,9 @@ paths:
                     example: "success"
                   message:
                     type: string
-                    description: Human-readable status message
                     example: "Transaction successfully broadcast to network"
                   network_fee:
                     type: string
-                    description: Actual network fee paid
                     example: "0.00001500"
                   timestamp:
                     type: string
@@ -312,46 +292,37 @@ components:
       properties:
         transaction_id:
           type: string
-          description: Transaction hash/ID
           example: "a1b2c3d4e5f6..."
         block_height:
           type: integer
           nullable: true
-          description: Block height (null if unconfirmed)
           example: 750000
         timestamp:
           type: string
           format: date-time
-          description: Transaction timestamp
           example: "2023-10-10T15:30:00Z"
         amount:
           type: string
-          description: Transaction amount in crypto units
           example: "0.00123456"
         direction:
           type: string
           enum: [incoming, outgoing]
-          description: Transaction direction relative to the queried address
           example: "incoming"
         confirmations:
           type: integer
-          description: Number of confirmations
           example: 6
         fee_amount:
           type: string
-          description: Transaction fee (for outgoing transactions)
           example: "0.00001500"
         from_addresses:
           type: array
           items:
             type: string
-          description: Source addresses
           example: ["1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"]
         to_addresses:
           type: array
           items:
             type: string
-          description: Destination addresses
           example: ["1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2"]
       required:
         - transaction_id
@@ -365,11 +336,9 @@ components:
       properties:
         error:
           type: string
-          description: Error type
           example: "INVALID_ADDRESS"
         message:
           type: string
-          description: Human-readable error message
           example: "The provided address is not valid for BTC"
         timestamp:
           type: string

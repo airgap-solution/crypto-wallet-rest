@@ -1,6 +1,6 @@
 {
   "name": "@airgap-solution/crypto-wallet-rest",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OpenAPI client for @airgap-solution/crypto-wallet-rest",
   "author": "OpenAPI-Generator Contributors",
   "repository": {

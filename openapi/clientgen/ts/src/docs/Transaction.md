@@ -5,15 +5,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**transaction_id** | **string** | Transaction hash/ID | [default to undefined]
-**block_height** | **number** | Block height (null if unconfirmed) | [optional] [default to undefined]
-**timestamp** | **string** | Transaction timestamp | [default to undefined]
-**amount** | **string** | Transaction amount in crypto units | [default to undefined]
-**direction** | **string** | Transaction direction relative to the queried address | [default to undefined]
-**confirmations** | **number** | Number of confirmations | [default to undefined]
-**fee_amount** | **string** | Transaction fee (for outgoing transactions) | [optional] [default to undefined]
-**from_addresses** | **Array&lt;string&gt;** | Source addresses | [optional] [default to undefined]
-**to_addresses** | **Array&lt;string&gt;** | Destination addresses | [optional] [default to undefined]
+**transaction_id** | **string** |  | [default to undefined]
+**block_height** | **number** |  | [optional] [default to undefined]
+**timestamp** | **string** |  | [default to undefined]
+**amount** | **string** |  | [default to undefined]
+**direction** | **string** |  | [default to undefined]
+**confirmations** | **number** |  | [default to undefined]
+**fee_amount** | **string** |  | [optional] [default to undefined]
+**from_addresses** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
+**to_addresses** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 
 ## Example
 

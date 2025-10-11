@@ -5,7 +5,7 @@
  *
  * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.1
+ * API version: 1.0.2
  */
 
 package cryptowalletrest
@@ -21,15 +21,12 @@ type BroadcastPost200Response struct {
 
 	CryptoSymbol string `json:"crypto_symbol"`
 
-	// Transaction hash/ID
 	TransactionId string `json:"transaction_id"`
 
 	Status string `json:"status"`
 
-	// Human-readable status message
 	Message string `json:"message"`
 
-	// Actual network fee paid
 	NetworkFee string `json:"network_fee,omitempty"`
 
 	Timestamp time.Time `json:"timestamp"`

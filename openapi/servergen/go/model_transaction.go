@@ -5,7 +5,7 @@
  *
  * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.1
+ * API version: 1.0.2
  */
 
 package cryptowalletrest
@@ -19,31 +19,22 @@ import (
 
 type Transaction struct {
 
-	// Transaction hash/ID
 	TransactionId string `json:"transaction_id"`
 
-	// Block height (null if unconfirmed)
 	BlockHeight int32 `json:"block_height,omitempty"`
 
-	// Transaction timestamp
 	Timestamp time.Time `json:"timestamp"`
 
-	// Transaction amount in crypto units
 	Amount string `json:"amount"`
 
-	// Transaction direction relative to the queried address
 	Direction string `json:"direction"`
 
-	// Number of confirmations
 	Confirmations int32 `json:"confirmations"`
 
-	// Transaction fee (for outgoing transactions)
 	FeeAmount string `json:"fee_amount,omitempty"`
 
-	// Source addresses
 	FromAddresses []string `json:"from_addresses,omitempty"`
 
-	// Destination addresses
 	ToAddresses []string `json:"to_addresses,omitempty"`
 }
 

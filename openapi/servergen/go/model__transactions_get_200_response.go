@@ -5,7 +5,7 @@
  *
  * REST API for air-gapped crypto wallets. Supports multiple cryptocurrencies with fiat currency conversion, future-proof. 
  *
- * API version: 1.0.1
+ * API version: 1.0.2
  */
 
 package cryptowalletrest
@@ -21,10 +21,8 @@ type TransactionsGet200Response struct {
 
 	Transactions []Transaction `json:"transactions"`
 
-	// Total number of transactions for this address
 	TotalCount int32 `json:"total_count"`
 
-	// Whether there are more transactions available
 	HasMore bool `json:"has_more"`
 }
 

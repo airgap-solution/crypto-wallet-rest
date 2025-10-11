@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **crypto_symbol** | **string** |  | [default to undefined]
 **address** | **string** |  | [default to undefined]
 **transactions** | [**Array&lt;Transaction&gt;**](Transaction.md) |  | [default to undefined]
-**total_count** | **number** | Total number of transactions for this address | [default to undefined]
-**has_more** | **boolean** | Whether there are more transactions available | [default to undefined]
+**total_count** | **number** |  | [default to undefined]
+**has_more** | **boolean** |  | [default to undefined]
 
 ## Example
 

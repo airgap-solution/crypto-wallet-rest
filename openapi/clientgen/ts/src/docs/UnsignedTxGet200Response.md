@@ -9,9 +9,9 @@ Name | Type | Description | Notes
 **from_address** | **string** |  | [default to undefined]
 **to_address** | **string** |  | [default to undefined]
 **amount** | **string** |  | [default to undefined]
-**fee_amount** | **string** | Calculated transaction fee | [default to undefined]
-**unsigned_tx** | **string** | Base64 or hex encoded unsigned transaction or PSBT | [default to undefined]
-**tx_size_bytes** | **number** | Estimated transaction size in bytes | [optional] [default to undefined]
+**fee_amount** | **string** |  | [default to undefined]
+**unsigned_tx** | **string** |  | [default to undefined]
+**tx_size_bytes** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
