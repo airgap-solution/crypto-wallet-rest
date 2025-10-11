@@ -1,6 +1,10 @@
 listen_addr = ':8399'
 cmc_rest_addr = '192.168.2.71:8765'
 
+
+[crypto.bitcoin]
+mainnet_rpc = 'https://api.kaspa.org'
+
 [crypto.bitcoin]
 mainnet_rpc = 'electrum.blockstream.info:50001'
 testnet_rpc = 'electrum.blockstream.info:60001'

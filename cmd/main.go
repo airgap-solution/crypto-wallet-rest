@@ -9,6 +9,7 @@ import (
 	"github.com/airgap-solution/crypto-wallet-rest/internal"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/bitcoin"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/ethereum"
+	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/kaspa"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/litecoin"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/crypto/providers/solana"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/adapters/provider"
@@ -30,6 +31,7 @@ func main() {
 	cmcRestClient := cmcrest.NewAPIClient(cmcRestCfg)
 
 	providerAdapter := provider.NewAdapter(cmcRestClient.DefaultAPI, map[string]ports.CryptoProvider{
+		"KAS":         kaspa.NewAdapter(conf.Crypto.Bitcoin.MainnetRPC, false),
 		"BTC":         bitcoin.NewAdapter(conf.Crypto.Bitcoin.MainnetRPC, false),
 		"BTC_TESTNET": bitcoin.NewAdapter(conf.Crypto.Bitcoin.TestnetRPC, true),
 		"LTC":         litecoin.NewAdapter(conf.Crypto.Litecoin.MainnetRPC, false),

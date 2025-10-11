@@ -1,6 +1,7 @@
 package config
 
 type CryptoConfig struct {
+	Kaspa    RPCConfig `toml:"kaspa"`
 	Bitcoin  RPCConfig `toml:"bitcoin"`
 	Litecoin RPCConfig `toml:"litecoin"`
 	Ethereum RPCConfig `toml:"ethereum"`
