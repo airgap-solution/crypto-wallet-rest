@@ -2,7 +2,7 @@ listen_addr = ':8399'
 cmc_rest_addr = '192.168.2.71:8765'
 
 
-[crypto.bitcoin]
+[crypto.kaspa]
 mainnet_rpc = 'https://api.kaspa.org'
 
 [crypto.bitcoin]
