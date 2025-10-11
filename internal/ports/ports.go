@@ -11,6 +11,7 @@ type BalanceResult struct {
 	FiatValue     float64   `json:"fiatValue"`
 	ExchangeRate  float64   `json:"exchangeRate"`
 	Timestamp     time.Time `json:"timestamp"`
+	Change24h     float64   `json:"change24h"`
 }
 
 // Provider interface for getting balance with fiat conversion.

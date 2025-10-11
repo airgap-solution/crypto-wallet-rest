@@ -10,6 +10,7 @@ import (
 
 	cmcrest "github.com/airgap-solution/cmc-rest/openapi/clientgen/go"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
+	"github.com/samber/lo"
 )
 
 var ErrProviderNotFoundForSymbol = errors.New("provider not found for symbol")
@@ -34,7 +35,6 @@ func NewAdapter(cmcRest CMCRestClient, cryptoProviders map[string]ports.CryptoPr
 }
 
 func (a *Adapter) GetBalance(symbol, addr, fiatSymbol string) (*ports.BalanceResult, error) {
-	// Default fiat symbol if not provided
 	if fiatSymbol == "" {
 		fiatSymbol = "USD"
 	}
@@ -42,7 +42,6 @@ func (a *Adapter) GetBalance(symbol, addr, fiatSymbol string) (*ports.BalanceRes
 	// Strip _TESTNET suffix for fiat rate fetching
 	rateSymbol := strings.TrimSuffix(symbol, "_TESTNET")
 
-	// Get exchange rate from CMC REST API
 	req := a.cmcRest.V1RateCurrencyFiatGet(context.Background(), rateSymbol, fiatSymbol)
 	resp, httpResp, err := a.cmcRest.V1RateCurrencyFiatGetExecute(req)
 	if err != nil {
@@ -52,24 +51,18 @@ func (a *Adapter) GetBalance(symbol, addr, fiatSymbol string) (*ports.BalanceRes
 		defer httpResp.Body.Close()
 	}
 
-	rate := resp.GetRate()
-
-	// Get crypto provider for the symbol
 	prov, ok := a.cryptoProviders[strings.ToUpper(symbol)]
 	if !ok {
 		return nil, fmt.Errorf("%w: %s", ErrProviderNotFoundForSymbol, symbol)
 	}
 
-	// Get crypto balance from provider
 	cryptoBalance, err := prov.GetBalance(addr)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get balance from provider: %w", err)
 	}
 
-	// Calculate fiat value
+	rate := resp.GetRate()
 	fiatValue := cryptoBalance * rate
-
-	// Return structured balance result
 	return &ports.BalanceResult{
 		CryptoSymbol:  strings.ToUpper(symbol),
 		Address:       addr,
@@ -78,5 +71,6 @@ func (a *Adapter) GetBalance(symbol, addr, fiatSymbol string) (*ports.BalanceRes
 		FiatValue:     fiatValue,
 		ExchangeRate:  rate,
 		Timestamp:     time.Now(),
+		Change24h:     cryptoBalance * lo.FromPtr(resp.Change24h),
 	}, nil
 }

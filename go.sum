@@ -13,8 +13,8 @@ github.com/VictoriaMetrics/fastcache v1.12.2/go.mod h1:AmC+Nzz1+3G2eCPapF6UcsnkT
 github.com/aead/siphash v1.0.1/go.mod h1:Nywa3cDsYNNK3gaciGTWPwHt0wlpNV15vwmswBAUSII=
 github.com/airgap-solution/cmc-rest/openapi v1.0.1 h1:5NeXGNSQrv+KY5j+rX15n10/r//uH6/I6wBOyX45oNc=
 github.com/airgap-solution/cmc-rest/openapi v1.0.1/go.mod h1:8M1AuEAH9HCFs2wQfrBmj8dKPKD4erpj/NzLTwDOa9Q=
-github.com/airgap-solution/crypto-wallet-rest/openapi v0.0.0-20251010200234-93688796caf1 h1:0fAMtmrKNiI1GE7OyI8o5I0spdKtT8pVUgWYqR8XkYQ=
-github.com/airgap-solution/crypto-wallet-rest/openapi v0.0.0-20251010200234-93688796caf1/go.mod h1:yeUILTnb8JQ6+3aEHyhCkHNReNTVas19U6Pg22chSAU=
+github.com/airgap-solution/crypto-wallet-rest/openapi v1.0.2 h1:6UmkaGJ2GEzoEESC7x4NQ5IC0IoV6mc9VtzIyvJA1G4=
+github.com/airgap-solution/crypto-wallet-rest/openapi v1.0.2/go.mod h1:yeUILTnb8JQ6+3aEHyhCkHNReNTVas19U6Pg22chSAU=
 github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129 h1:MzBOUgng9orim59UnfUTLRjMpd09C5uEVQ6RPGeCaVI=
 github.com/andres-erbsen/clock v0.0.0-20160526145045-9e14626cd129/go.mod h1:rFgpPQZYZ8vdbc+48xibu8ALc3yeyd64IhHS+PU6Yyg=
 github.com/benbjohnson/clock v1.1.0 h1:Q92kusRqC1XV2MjkWETPvjJVqKetz1OzxZB7mHJLju8=

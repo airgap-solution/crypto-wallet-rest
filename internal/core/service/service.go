@@ -32,6 +32,7 @@ func (s Service) BalanceGet(
 		FiatValue:     balanceResult.FiatValue,
 		ExchangeRate:  balanceResult.ExchangeRate,
 		Timestamp:     balanceResult.Timestamp,
+		Change24h:     balanceResult.Change24h,
 	}), nil
 }
 
