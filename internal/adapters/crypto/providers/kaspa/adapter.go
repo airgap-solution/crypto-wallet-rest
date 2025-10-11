@@ -2,12 +2,16 @@ package kaspa
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"sync"
 )
+
+var ErrUnexpectedStatus = errors.New("unexpected status")
 
 type Adapter struct {
 	explorerURL string
@@ -28,12 +32,13 @@ func (a *Adapter) GetBalance(kpub string) (float64, error) {
 	a.mu.RUnlock()
 
 	if !ok {
-		recv, change, err := deriveAddresses(kpub, 1000, 1000)
+		deriveCount := 1000
+		recv, change, err := deriveAddresses(kpub, deriveCount, deriveCount)
 		if err != nil {
 			return 0, err
 		}
 
-		addresses = append(recv, change...)
+		addresses = append(recv, change...) //nolint:gocritic
 
 		a.mu.Lock()
 		a.cache[kpub] = addresses
@@ -47,7 +52,7 @@ func (a *Adapter) GetBalance(kpub string) (float64, error) {
 
 	var bal float64
 	for _, r := range res {
-		bal += r.Balance / 1e8
+		bal += r.Balance / SompiPerKAS
 	}
 	return bal, nil
 }
@@ -81,7 +86,7 @@ func (a *Adapter) fetchBalances(addresses []string) ([]balanceResponse, error) {
 }
 
 func postJSON(url string, data []byte) ([]byte, error) {
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodPost, url, bytes.NewBuffer(data))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -97,8 +102,12 @@ func postJSON(url string, data []byte) ([]byte, error) {
 
 	if resp.StatusCode != http.StatusOK {
 		body, _ := io.ReadAll(resp.Body)
-		return nil, fmt.Errorf("unexpected status %d: %s", resp.StatusCode, string(body))
+		return nil, fmt.Errorf("%w %d: %s", ErrUnexpectedStatus, resp.StatusCode, string(body))
 	}
 
-	return io.ReadAll(resp.Body)
+	buf, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("could not read response body: %w", err)
+	}
+	return buf, nil
 }
