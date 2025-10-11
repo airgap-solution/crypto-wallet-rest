@@ -24,16 +24,25 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org/"
 
-      - name: 🧰 Install jq (for debugging or later use)
+      - name: 🧰 Install jq
         run: sudo apt-get update -y && sudo apt-get install -y jq
+
+      - name: 🔢 Sync version from VERSION file
+        run: |
+          VERSION=$(cat VERSION)
+          echo "🔹 Using version: $VERSION"
+          PACKAGE_JSON="openapi/clientgen/ts/package.json"
+          if [ ! -f "$PACKAGE_JSON" ]; then
+            echo "❌ package.json not found at $PACKAGE_JSON"
+            exit 1
+          fi
+          # Update version field in package.json
+          jq --arg v "$VERSION" '.version = $v' "$PACKAGE_JSON" > tmp.$$.json && mv tmp.$$.json "$PACKAGE_JSON"
+          echo "✅ Updated package.json version to $VERSION"
 
       - name: 📦 Install dependencies
         working-directory: openapi/clientgen/ts
         run: |
-          if [ ! -f "package.json" ]; then
-            echo "❌ No package.json found — did you generate the client?"
-            exit 1
-          fi
           echo "Installing dependencies..."
           npm install --ignore-scripts
 
