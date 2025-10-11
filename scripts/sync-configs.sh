@@ -15,3 +15,4 @@ echo "Syncing workflows..."
 mkdir -p .github/workflows
 cp -r "$COMMON_DIR/workflows/go/"* .github/workflows/
 cp -r "$COMMON_DIR/workflows/ts/"* .github/workflows/
+cp -r "$COMMON_DIR/workflows/common/"* .github/workflows/
