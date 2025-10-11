@@ -31,7 +31,7 @@ func main() {
 	cmcRestClient := cmcrest.NewAPIClient(cmcRestCfg)
 
 	providerAdapter := provider.NewAdapter(cmcRestClient.DefaultAPI, map[string]ports.CryptoProvider{
-		"KAS":         kaspa.NewAdapter(conf.Crypto.Bitcoin.MainnetRPC, false),
+		"KAS":         kaspa.NewAdapter(conf.Crypto.Kaspa.MainnetRPC),
 		"BTC":         bitcoin.NewAdapter(conf.Crypto.Bitcoin.MainnetRPC, false),
 		"BTC_TESTNET": bitcoin.NewAdapter(conf.Crypto.Bitcoin.TestnetRPC, true),
 		"LTC":         litecoin.NewAdapter(conf.Crypto.Litecoin.MainnetRPC, false),
