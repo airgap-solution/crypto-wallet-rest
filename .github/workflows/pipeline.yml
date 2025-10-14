@@ -35,137 +35,14 @@ jobs:
         run: make tests
 
   deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    name: Deploy to CD Server
     needs: [test, lint]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.event.sender.type == 'User'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | base64 -d > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-          # Add server to known hosts (or disable strict host checking)
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts 2>&1 || {
-            echo "Warning: ssh-keyscan failed, will use StrictHostKeyChecking=no"
-          }
-
-      - name: Deploy to server
-        env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          BIN_NAME: ${{ github.event.repository.name }}
-        run: |
-          # Define remote paths
-          APP_DIR="/home/$SERVER_USER/projects/$BIN_NAME"
-
-          # Create deployment script that will run on the server
-          cat > deploy.sh <<'DEPLOY_SCRIPT'
-          #!/bin/bash
-          set -e
-
-          APP_DIR="$1"
-          BIN_NAME="$2"
-          REPO_URL="$3"
-          BRANCH="$4"
-
-          echo "Preparing deployment directory..."
-          mkdir -p "$APP_DIR"
-
-          echo "Cloning/updating repository..."
-          if [ -d "$APP_DIR/.git" ]; then
-            cd "$APP_DIR"
-            git fetch origin
-            git reset --hard "origin/$BRANCH"
-          else
-            git clone -b "$BRANCH" "$REPO_URL" "$APP_DIR"
-            cd "$APP_DIR"
-          fi
-
-          echo "Running sync-configs script..."
-          if [ -f "./scripts/sync-configs.sh" ]; then
-            chmod +x ./scripts/sync-configs.sh
-            ./scripts/sync-configs.sh
-          fi
-
-          echo "Backing up current binary..."
-          if [ -f "$BIN_NAME" ]; then
-            cp "$BIN_NAME" "$BIN_NAME.bak"
-          fi
-
-          echo "Building binary..."
-          if ! go build -o "$BIN_NAME" ./cmd; then
-            echo "Build failed, rolling back"
-            if [ -f "$BIN_NAME.bak" ]; then
-              mv "$BIN_NAME.bak" "$BIN_NAME"
-              sudo systemctl restart "$BIN_NAME.service" || echo "Rollback restart failed"
-            fi
-            exit 1
-          fi
-
-          chmod +x "$BIN_NAME"
-
-          echo "Creating/updating systemd service..."
-          cat > /tmp/$BIN_NAME.service <<EOF
-          [Unit]
-          Description=$BIN_NAME service
-          After=network.target
-
-          [Service]
-          Type=simple
-          User=github-deploy
-          WorkingDirectory=$APP_DIR
-          ExecStart=$APP_DIR/$BIN_NAME
-          Restart=on-failure
-          RestartSec=5s
-
-          [Install]
-          WantedBy=multi-user.target
-          EOF
-          sudo cp /tmp/$BIN_NAME.service /etc/systemd/system/$BIN_NAME.service
-          sudo systemctl daemon-reload
-          sudo systemctl enable "$BIN_NAME.service" || true
-          rm /tmp/$BIN_NAME.service
-
-          echo "Restarting service..."
-          sudo systemctl restart "$BIN_NAME.service"
-
-          echo "Waiting for health check..."
-          sleep 10
-
-          if ! sudo systemctl is-active --quiet "$BIN_NAME.service"; then
-            echo "Service failed health check, rolling back..."
-            echo "Service status:"
-            sudo systemctl status "$BIN_NAME.service" --no-pager || true
-            echo "Recent logs:"
-            sudo journalctl -u "$BIN_NAME.service" -n 20 --no-pager || true
-            if [ -f "$BIN_NAME.bak" ]; then
-              mv "$BIN_NAME.bak" "$BIN_NAME"
-              sudo systemctl restart "$BIN_NAME.service" || echo "Rollback restart failed"
-            fi
-            exit 1
-          fi
-
-          echo "Cleaning up backup..."
-          rm -f "$BIN_NAME.bak"
-
-          echo "Deployment successful!"
-          DEPLOY_SCRIPT
-
-          # Copy deployment script to server
-          scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            deploy.sh "$SERVER_USER@$SERVER_HOST:/tmp/deploy.sh"
-
-          # Execute deployment on server
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            "$SERVER_USER@$SERVER_HOST" \
-            "chmod +x /tmp/deploy.sh && /tmp/deploy.sh '$APP_DIR' '$BIN_NAME' '${{ github.server_url }}/${{ github.repository }}.git' '${{ github.ref_name }}' && rm /tmp/deploy.sh"
-
-      - name: Cleanup
-        if: always()
-        run: rm -f ~/.ssh/deploy_key
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    uses: RestartFU/cd/.github/workflows/deploy.yml@master
+    with:
+      environment: production
+      env_vars: "BUILD_NUMBER=${{ github.run_number }}"
+      include_github_secrets: true
+    secrets:
+      CD_SERVER_HOST: ${{ secrets.CD_SERVER_HOST }}
+      CD_API_KEY: ${{ secrets.CD_API_KEY }}
