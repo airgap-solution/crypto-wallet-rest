@@ -26,7 +26,7 @@ func main() {
 	}
 
 	cmcRestCfg := cmcrest.NewConfiguration()
-	cmcRestCfg.Scheme = "http"
+	cmcRestCfg.Scheme = "https"
 	cmcRestCfg.Host = conf.CMCRestAddr
 	cmcRestClient := cmcrest.NewAPIClient(cmcRestCfg)
 

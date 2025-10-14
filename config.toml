@@ -1,5 +1,5 @@
 listen_addr = ':8399'
-cmc_rest_addr = 'api.cmcr.restartfu.com'
+cmc_rest_addr = 'https://api.cmcr.restartfu.com'
 
 
 [crypto.kaspa]
