@@ -1,4 +1,4 @@
-# BalancesPostRequestRequestsInner
+# BalancesGetRequestRequestsInner
 
 
 ## Properties
@@ -12,9 +12,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { BalancesPostRequestRequestsInner } from '@airgap-solution/crypto-wallet-rest';
+import { BalancesGetRequestRequestsInner } from '@airgap-solution/crypto-wallet-rest';
 
-const instance: BalancesPostRequestRequestsInner = {
+const instance: BalancesGetRequestRequestsInner = {
     crypto_symbol,
     address,
     fiat_symbol,

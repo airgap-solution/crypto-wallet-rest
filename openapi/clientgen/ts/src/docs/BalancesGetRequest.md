@@ -1,19 +1,19 @@
-# BalancesPostRequest
+# BalancesGetRequest
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**requests** | [**Array&lt;BalancesPostRequestRequestsInner&gt;**](BalancesPostRequestRequestsInner.md) |  | [default to undefined]
+**requests** | [**Array&lt;BalancesGetRequestRequestsInner&gt;**](BalancesGetRequestRequestsInner.md) |  | [default to undefined]
 **fiat_symbol** | **string** | Default fiat currency symbol for all requests if not specified individually | [optional] [default to 'USD']
 
 ## Example
 
 ```typescript
-import { BalancesPostRequest } from '@airgap-solution/crypto-wallet-rest';
+import { BalancesGetRequest } from '@airgap-solution/crypto-wallet-rest';
 
-const instance: BalancesPostRequest = {
+const instance: BalancesGetRequest = {
     requests,
     fiat_symbol,
 };

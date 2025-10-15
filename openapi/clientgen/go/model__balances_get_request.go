@@ -16,44 +16,44 @@ import (
 	"fmt"
 )
 
-// checks if the BalancesPostRequest type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &BalancesPostRequest{}
+// checks if the BalancesGetRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BalancesGetRequest{}
 
-// BalancesPostRequest struct for BalancesPostRequest
-type BalancesPostRequest struct {
-	Requests []BalancesPostRequestRequestsInner `json:"requests"`
+// BalancesGetRequest struct for BalancesGetRequest
+type BalancesGetRequest struct {
+	Requests []BalancesGetRequestRequestsInner `json:"requests"`
 	// Default fiat currency symbol for all requests if not specified individually
 	FiatSymbol *string `json:"fiat_symbol,omitempty"`
 }
 
-type _BalancesPostRequest BalancesPostRequest
+type _BalancesGetRequest BalancesGetRequest
 
-// NewBalancesPostRequest instantiates a new BalancesPostRequest object
+// NewBalancesGetRequest instantiates a new BalancesGetRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBalancesPostRequest(requests []BalancesPostRequestRequestsInner) *BalancesPostRequest {
-	this := BalancesPostRequest{}
+func NewBalancesGetRequest(requests []BalancesGetRequestRequestsInner) *BalancesGetRequest {
+	this := BalancesGetRequest{}
 	this.Requests = requests
 	var fiatSymbol string = "USD"
 	this.FiatSymbol = &fiatSymbol
 	return &this
 }
 
-// NewBalancesPostRequestWithDefaults instantiates a new BalancesPostRequest object
+// NewBalancesGetRequestWithDefaults instantiates a new BalancesGetRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewBalancesPostRequestWithDefaults() *BalancesPostRequest {
-	this := BalancesPostRequest{}
+func NewBalancesGetRequestWithDefaults() *BalancesGetRequest {
+	this := BalancesGetRequest{}
 	var fiatSymbol string = "USD"
 	this.FiatSymbol = &fiatSymbol
 	return &this
 }
 
 // GetRequests returns the Requests field value
-func (o *BalancesPostRequest) GetRequests() []BalancesPostRequestRequestsInner {
+func (o *BalancesGetRequest) GetRequests() []BalancesGetRequestRequestsInner {
 	if o == nil {
-		var ret []BalancesPostRequestRequestsInner
+		var ret []BalancesGetRequestRequestsInner
 		return ret
 	}
 
@@ -62,7 +62,7 @@ func (o *BalancesPostRequest) GetRequests() []BalancesPostRequestRequestsInner {
 
 // GetRequestsOk returns a tuple with the Requests field value
 // and a boolean to check if the value has been set.
-func (o *BalancesPostRequest) GetRequestsOk() ([]BalancesPostRequestRequestsInner, bool) {
+func (o *BalancesGetRequest) GetRequestsOk() ([]BalancesGetRequestRequestsInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,12 +70,12 @@ func (o *BalancesPostRequest) GetRequestsOk() ([]BalancesPostRequestRequestsInne
 }
 
 // SetRequests sets field value
-func (o *BalancesPostRequest) SetRequests(v []BalancesPostRequestRequestsInner) {
+func (o *BalancesGetRequest) SetRequests(v []BalancesGetRequestRequestsInner) {
 	o.Requests = v
 }
 
 // GetFiatSymbol returns the FiatSymbol field value if set, zero value otherwise.
-func (o *BalancesPostRequest) GetFiatSymbol() string {
+func (o *BalancesGetRequest) GetFiatSymbol() string {
 	if o == nil || IsNil(o.FiatSymbol) {
 		var ret string
 		return ret
@@ -85,7 +85,7 @@ func (o *BalancesPostRequest) GetFiatSymbol() string {
 
 // GetFiatSymbolOk returns a tuple with the FiatSymbol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BalancesPostRequest) GetFiatSymbolOk() (*string, bool) {
+func (o *BalancesGetRequest) GetFiatSymbolOk() (*string, bool) {
 	if o == nil || IsNil(o.FiatSymbol) {
 		return nil, false
 	}
@@ -93,7 +93,7 @@ func (o *BalancesPostRequest) GetFiatSymbolOk() (*string, bool) {
 }
 
 // HasFiatSymbol returns a boolean if a field has been set.
-func (o *BalancesPostRequest) HasFiatSymbol() bool {
+func (o *BalancesGetRequest) HasFiatSymbol() bool {
 	if o != nil && !IsNil(o.FiatSymbol) {
 		return true
 	}
@@ -102,11 +102,11 @@ func (o *BalancesPostRequest) HasFiatSymbol() bool {
 }
 
 // SetFiatSymbol gets a reference to the given string and assigns it to the FiatSymbol field.
-func (o *BalancesPostRequest) SetFiatSymbol(v string) {
+func (o *BalancesGetRequest) SetFiatSymbol(v string) {
 	o.FiatSymbol = &v
 }
 
-func (o BalancesPostRequest) MarshalJSON() ([]byte, error) {
+func (o BalancesGetRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -114,7 +114,7 @@ func (o BalancesPostRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o BalancesPostRequest) ToMap() (map[string]interface{}, error) {
+func (o BalancesGetRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["requests"] = o.Requests
 	if !IsNil(o.FiatSymbol) {
@@ -123,7 +123,7 @@ func (o BalancesPostRequest) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *BalancesPostRequest) UnmarshalJSON(data []byte) (err error) {
+func (o *BalancesGetRequest) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -145,53 +145,53 @@ func (o *BalancesPostRequest) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varBalancesPostRequest := _BalancesPostRequest{}
+	varBalancesGetRequest := _BalancesGetRequest{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varBalancesPostRequest)
+	err = decoder.Decode(&varBalancesGetRequest)
 
 	if err != nil {
 		return err
 	}
 
-	*o = BalancesPostRequest(varBalancesPostRequest)
+	*o = BalancesGetRequest(varBalancesGetRequest)
 
 	return err
 }
 
-type NullableBalancesPostRequest struct {
-	value *BalancesPostRequest
+type NullableBalancesGetRequest struct {
+	value *BalancesGetRequest
 	isSet bool
 }
 
-func (v NullableBalancesPostRequest) Get() *BalancesPostRequest {
+func (v NullableBalancesGetRequest) Get() *BalancesGetRequest {
 	return v.value
 }
 
-func (v *NullableBalancesPostRequest) Set(val *BalancesPostRequest) {
+func (v *NullableBalancesGetRequest) Set(val *BalancesGetRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableBalancesPostRequest) IsSet() bool {
+func (v NullableBalancesGetRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableBalancesPostRequest) Unset() {
+func (v *NullableBalancesGetRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableBalancesPostRequest(val *BalancesPostRequest) *NullableBalancesPostRequest {
-	return &NullableBalancesPostRequest{value: val, isSet: true}
+func NewNullableBalancesGetRequest(val *BalancesGetRequest) *NullableBalancesGetRequest {
+	return &NullableBalancesGetRequest{value: val, isSet: true}
 }
 
-func (v NullableBalancesPostRequest) MarshalJSON() ([]byte, error) {
+func (v NullableBalancesGetRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableBalancesPostRequest) UnmarshalJSON(src []byte) error {
+func (v *NullableBalancesGetRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -27,35 +27,15 @@ func NewDefaultAPIService() *DefaultAPIService {
 	return &DefaultAPIService{}
 }
 
-// BalanceGet - Get balance for an address
-func (s *DefaultAPIService) BalanceGet(ctx context.Context, cryptoSymbol string, address string, fiatSymbol string) (ImplResponse, error) {
-	// TODO - update BalanceGet with the required logic for this service method.
+// BalancesGet - Get balances for multiple addresses and cryptocurrencies
+func (s *DefaultAPIService) BalancesGet(ctx context.Context, balancesGetRequest BalancesGetRequest) (ImplResponse, error) {
+	// TODO - update BalancesGet with the required logic for this service method.
 	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
 
-	// TODO: Uncomment the next line to return response Response(200, BalanceGet200Response{}) or use other options such as http.Ok ...
-	// return Response(200, BalanceGet200Response{}), nil
+	// TODO: Uncomment the next line to return response Response(200, BalancesGet200Response{}) or use other options such as http.Ok ...
+	// return Response(200, BalancesGet200Response{}), nil
 
-	// TODO: Uncomment the next line to return response Response(400, ErrorResponse{}) or use other options such as http.Ok ...
-	// return Response(400, ErrorResponse{}), nil
-
-	// TODO: Uncomment the next line to return response Response(404, ErrorResponse{}) or use other options such as http.Ok ...
-	// return Response(404, ErrorResponse{}), nil
-
-	// TODO: Uncomment the next line to return response Response(500, ErrorResponse{}) or use other options such as http.Ok ...
-	// return Response(500, ErrorResponse{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("BalanceGet method not implemented")
-}
-
-// BalancesPost - Get balances for multiple addresses and cryptocurrencies
-func (s *DefaultAPIService) BalancesPost(ctx context.Context, balancesPostRequest BalancesPostRequest) (ImplResponse, error) {
-	// TODO - update BalancesPost with the required logic for this service method.
-	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
-
-	// TODO: Uncomment the next line to return response Response(200, BalancesPost200Response{}) or use other options such as http.Ok ...
-	// return Response(200, BalancesPost200Response{}), nil
-
-	return Response(http.StatusNotImplemented, nil), errors.New("BalancesPost method not implemented")
+	return Response(http.StatusNotImplemented, nil), errors.New("BalancesGet method not implemented")
 }
 
 // TransactionsGet - Get transaction history for an address

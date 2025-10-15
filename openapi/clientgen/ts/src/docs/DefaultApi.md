@@ -4,73 +4,13 @@ All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**balanceGet**](#balanceget) | **GET** /balance | Get balance for an address|
-|[**balancesPost**](#balancespost) | **POST** /balances | Get balances for multiple addresses and cryptocurrencies|
+|[**balancesGet**](#balancesget) | **GET** /balances | Get balances for multiple addresses and cryptocurrencies|
 |[**broadcastPost**](#broadcastpost) | **POST** /broadcast | Broadcast signed transaction|
 |[**transactionsGet**](#transactionsget) | **GET** /transactions | Get transaction history for an address|
 |[**unsignedTxGet**](#unsignedtxget) | **GET** /unsigned-tx | Generate an unsigned transaction|
 
-# **balanceGet**
-> BalanceGet200Response balanceGet()
-
-
-### Example
-
-```typescript
-import {
-    DefaultApi,
-    Configuration
-} from '@airgap-solution/crypto-wallet-rest';
-
-const configuration = new Configuration();
-const apiInstance = new DefaultApi(configuration);
-
-let cryptoSymbol: string; // (default to undefined)
-let address: string; // (default to undefined)
-let fiatSymbol: string; // (optional) (default to 'USD')
-
-const { status, data } = await apiInstance.balanceGet(
-    cryptoSymbol,
-    address,
-    fiatSymbol
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **cryptoSymbol** | [**string**] |  | defaults to undefined|
-| **address** | [**string**] |  | defaults to undefined|
-| **fiatSymbol** | [**string**] |  | (optional) defaults to 'USD'|
-
-
-### Return type
-
-**BalanceGet200Response**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | Balance response with crypto, fiat values, and 24h change |  -  |
-|**400** | Bad request (invalid parameters) |  -  |
-|**404** | Cryptocurrency or address not found |  -  |
-|**500** | Internal server error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **balancesPost**
-> BalancesPost200Response balancesPost(balancesPostRequest)
+# **balancesGet**
+> BalancesGet200Response balancesGet(balancesGetRequest)
 
 
 ### Example
@@ -79,16 +19,16 @@ No authorization required
 import {
     DefaultApi,
     Configuration,
-    BalancesPostRequest
+    BalancesGetRequest
 } from '@airgap-solution/crypto-wallet-rest';
 
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
-let balancesPostRequest: BalancesPostRequest; //
+let balancesGetRequest: BalancesGetRequest; //
 
-const { status, data } = await apiInstance.balancesPost(
-    balancesPostRequest
+const { status, data } = await apiInstance.balancesGet(
+    balancesGetRequest
 );
 ```
 
@@ -96,12 +36,12 @@ const { status, data } = await apiInstance.balancesPost(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **balancesPostRequest** | **BalancesPostRequest**|  | |
+| **balancesGetRequest** | **BalancesGetRequest**|  | |
 
 
 ### Return type
 
-**BalancesPost200Response**
+**BalancesGet200Response**
 
 ### Authorization
 

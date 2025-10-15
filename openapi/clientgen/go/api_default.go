@@ -22,206 +22,45 @@ import (
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
-type ApiBalanceGetRequest struct {
+type ApiBalancesGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	cryptoSymbol *string
-	address *string
-	fiatSymbol *string
+	balancesGetRequest *BalancesGetRequest
 }
 
-func (r ApiBalanceGetRequest) CryptoSymbol(cryptoSymbol string) ApiBalanceGetRequest {
-	r.cryptoSymbol = &cryptoSymbol
+func (r ApiBalancesGetRequest) BalancesGetRequest(balancesGetRequest BalancesGetRequest) ApiBalancesGetRequest {
+	r.balancesGetRequest = &balancesGetRequest
 	return r
 }
 
-func (r ApiBalanceGetRequest) Address(address string) ApiBalanceGetRequest {
-	r.address = &address
-	return r
-}
-
-func (r ApiBalanceGetRequest) FiatSymbol(fiatSymbol string) ApiBalanceGetRequest {
-	r.fiatSymbol = &fiatSymbol
-	return r
-}
-
-func (r ApiBalanceGetRequest) Execute() (*BalanceGet200Response, *http.Response, error) {
-	return r.ApiService.BalanceGetExecute(r)
+func (r ApiBalancesGetRequest) Execute() (*BalancesGet200Response, *http.Response, error) {
+	return r.ApiService.BalancesGetExecute(r)
 }
 
 /*
-BalanceGet Get balance for an address
+BalancesGet Get balances for multiple addresses and cryptocurrencies
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiBalanceGetRequest
+ @return ApiBalancesGetRequest
 */
-func (a *DefaultAPIService) BalanceGet(ctx context.Context) ApiBalanceGetRequest {
-	return ApiBalanceGetRequest{
+func (a *DefaultAPIService) BalancesGet(ctx context.Context) ApiBalancesGetRequest {
+	return ApiBalancesGetRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return BalanceGet200Response
-func (a *DefaultAPIService) BalanceGetExecute(r ApiBalanceGetRequest) (*BalanceGet200Response, *http.Response, error) {
+//  @return BalancesGet200Response
+func (a *DefaultAPIService) BalancesGetExecute(r ApiBalancesGetRequest) (*BalancesGet200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BalanceGet200Response
+		localVarReturnValue  *BalancesGet200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.BalanceGet")
-	if err != nil {
-		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
-	}
-
-	localVarPath := localBasePath + "/balance"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-	if r.cryptoSymbol == nil {
-		return localVarReturnValue, nil, reportError("cryptoSymbol is required and must be specified")
-	}
-	if r.address == nil {
-		return localVarReturnValue, nil, reportError("address is required and must be specified")
-	}
-
-	parameterAddToHeaderOrQuery(localVarQueryParams, "crypto_symbol", r.cryptoSymbol, "form", "")
-	parameterAddToHeaderOrQuery(localVarQueryParams, "address", r.address, "form", "")
-	if r.fiatSymbol != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "fiat_symbol", r.fiatSymbol, "form", "")
-	} else {
-		var defaultValue string = "USD"
-		r.fiatSymbol = &defaultValue
-	}
-	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
-	if localVarHTTPContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
-	}
-
-	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
-	if localVarHTTPHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHTTPResponse, err := a.client.callAPI(req)
-	if err != nil || localVarHTTPResponse == nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
-	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
-	if err != nil {
-		return localVarReturnValue, localVarHTTPResponse, err
-	}
-
-	if localVarHTTPResponse.StatusCode >= 300 {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: localVarHTTPResponse.Status,
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 500 {
-			var v ErrorResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-	if err != nil {
-		newErr := &GenericOpenAPIError{
-			body:  localVarBody,
-			error: err.Error(),
-		}
-		return localVarReturnValue, localVarHTTPResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHTTPResponse, nil
-}
-
-type ApiBalancesPostRequest struct {
-	ctx context.Context
-	ApiService *DefaultAPIService
-	balancesPostRequest *BalancesPostRequest
-}
-
-func (r ApiBalancesPostRequest) BalancesPostRequest(balancesPostRequest BalancesPostRequest) ApiBalancesPostRequest {
-	r.balancesPostRequest = &balancesPostRequest
-	return r
-}
-
-func (r ApiBalancesPostRequest) Execute() (*BalancesPost200Response, *http.Response, error) {
-	return r.ApiService.BalancesPostExecute(r)
-}
-
-/*
-BalancesPost Get balances for multiple addresses and cryptocurrencies
-
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiBalancesPostRequest
-*/
-func (a *DefaultAPIService) BalancesPost(ctx context.Context) ApiBalancesPostRequest {
-	return ApiBalancesPostRequest{
-		ApiService: a,
-		ctx: ctx,
-	}
-}
-
-// Execute executes the request
-//  @return BalancesPost200Response
-func (a *DefaultAPIService) BalancesPostExecute(r ApiBalancesPostRequest) (*BalancesPost200Response, *http.Response, error) {
-	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *BalancesPost200Response
-	)
-
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.BalancesPost")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.BalancesGet")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -231,8 +70,8 @@ func (a *DefaultAPIService) BalancesPostExecute(r ApiBalancesPostRequest) (*Bala
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.balancesPostRequest == nil {
-		return localVarReturnValue, nil, reportError("balancesPostRequest is required and must be specified")
+	if r.balancesGetRequest == nil {
+		return localVarReturnValue, nil, reportError("balancesGetRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -253,7 +92,7 @@ func (a *DefaultAPIService) BalancesPostExecute(r ApiBalancesPostRequest) (*Bala
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.balancesPostRequest
+	localVarPostBody = r.balancesGetRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

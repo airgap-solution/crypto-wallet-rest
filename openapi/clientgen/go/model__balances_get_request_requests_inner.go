@@ -16,11 +16,11 @@ import (
 	"fmt"
 )
 
-// checks if the BalancesPostRequestRequestsInner type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &BalancesPostRequestRequestsInner{}
+// checks if the BalancesGetRequestRequestsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BalancesGetRequestRequestsInner{}
 
-// BalancesPostRequestRequestsInner struct for BalancesPostRequestRequestsInner
-type BalancesPostRequestRequestsInner struct {
+// BalancesGetRequestRequestsInner struct for BalancesGetRequestRequestsInner
+type BalancesGetRequestRequestsInner struct {
 	// The cryptocurrency symbol (BTC, ETH, etc.)
 	CryptoSymbol string `json:"crypto_symbol"`
 	// The cryptocurrency address or xpub
@@ -29,14 +29,14 @@ type BalancesPostRequestRequestsInner struct {
 	FiatSymbol *string `json:"fiat_symbol,omitempty"`
 }
 
-type _BalancesPostRequestRequestsInner BalancesPostRequestRequestsInner
+type _BalancesGetRequestRequestsInner BalancesGetRequestRequestsInner
 
-// NewBalancesPostRequestRequestsInner instantiates a new BalancesPostRequestRequestsInner object
+// NewBalancesGetRequestRequestsInner instantiates a new BalancesGetRequestRequestsInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBalancesPostRequestRequestsInner(cryptoSymbol string, address string) *BalancesPostRequestRequestsInner {
-	this := BalancesPostRequestRequestsInner{}
+func NewBalancesGetRequestRequestsInner(cryptoSymbol string, address string) *BalancesGetRequestRequestsInner {
+	this := BalancesGetRequestRequestsInner{}
 	this.CryptoSymbol = cryptoSymbol
 	this.Address = address
 	var fiatSymbol string = "USD"
@@ -44,18 +44,18 @@ func NewBalancesPostRequestRequestsInner(cryptoSymbol string, address string) *B
 	return &this
 }
 
-// NewBalancesPostRequestRequestsInnerWithDefaults instantiates a new BalancesPostRequestRequestsInner object
+// NewBalancesGetRequestRequestsInnerWithDefaults instantiates a new BalancesGetRequestRequestsInner object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewBalancesPostRequestRequestsInnerWithDefaults() *BalancesPostRequestRequestsInner {
-	this := BalancesPostRequestRequestsInner{}
+func NewBalancesGetRequestRequestsInnerWithDefaults() *BalancesGetRequestRequestsInner {
+	this := BalancesGetRequestRequestsInner{}
 	var fiatSymbol string = "USD"
 	this.FiatSymbol = &fiatSymbol
 	return &this
 }
 
 // GetCryptoSymbol returns the CryptoSymbol field value
-func (o *BalancesPostRequestRequestsInner) GetCryptoSymbol() string {
+func (o *BalancesGetRequestRequestsInner) GetCryptoSymbol() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -66,7 +66,7 @@ func (o *BalancesPostRequestRequestsInner) GetCryptoSymbol() string {
 
 // GetCryptoSymbolOk returns a tuple with the CryptoSymbol field value
 // and a boolean to check if the value has been set.
-func (o *BalancesPostRequestRequestsInner) GetCryptoSymbolOk() (*string, bool) {
+func (o *BalancesGetRequestRequestsInner) GetCryptoSymbolOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -74,12 +74,12 @@ func (o *BalancesPostRequestRequestsInner) GetCryptoSymbolOk() (*string, bool) {
 }
 
 // SetCryptoSymbol sets field value
-func (o *BalancesPostRequestRequestsInner) SetCryptoSymbol(v string) {
+func (o *BalancesGetRequestRequestsInner) SetCryptoSymbol(v string) {
 	o.CryptoSymbol = v
 }
 
 // GetAddress returns the Address field value
-func (o *BalancesPostRequestRequestsInner) GetAddress() string {
+func (o *BalancesGetRequestRequestsInner) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -90,7 +90,7 @@ func (o *BalancesPostRequestRequestsInner) GetAddress() string {
 
 // GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *BalancesPostRequestRequestsInner) GetAddressOk() (*string, bool) {
+func (o *BalancesGetRequestRequestsInner) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -98,12 +98,12 @@ func (o *BalancesPostRequestRequestsInner) GetAddressOk() (*string, bool) {
 }
 
 // SetAddress sets field value
-func (o *BalancesPostRequestRequestsInner) SetAddress(v string) {
+func (o *BalancesGetRequestRequestsInner) SetAddress(v string) {
 	o.Address = v
 }
 
 // GetFiatSymbol returns the FiatSymbol field value if set, zero value otherwise.
-func (o *BalancesPostRequestRequestsInner) GetFiatSymbol() string {
+func (o *BalancesGetRequestRequestsInner) GetFiatSymbol() string {
 	if o == nil || IsNil(o.FiatSymbol) {
 		var ret string
 		return ret
@@ -113,7 +113,7 @@ func (o *BalancesPostRequestRequestsInner) GetFiatSymbol() string {
 
 // GetFiatSymbolOk returns a tuple with the FiatSymbol field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BalancesPostRequestRequestsInner) GetFiatSymbolOk() (*string, bool) {
+func (o *BalancesGetRequestRequestsInner) GetFiatSymbolOk() (*string, bool) {
 	if o == nil || IsNil(o.FiatSymbol) {
 		return nil, false
 	}
@@ -121,7 +121,7 @@ func (o *BalancesPostRequestRequestsInner) GetFiatSymbolOk() (*string, bool) {
 }
 
 // HasFiatSymbol returns a boolean if a field has been set.
-func (o *BalancesPostRequestRequestsInner) HasFiatSymbol() bool {
+func (o *BalancesGetRequestRequestsInner) HasFiatSymbol() bool {
 	if o != nil && !IsNil(o.FiatSymbol) {
 		return true
 	}
@@ -130,11 +130,11 @@ func (o *BalancesPostRequestRequestsInner) HasFiatSymbol() bool {
 }
 
 // SetFiatSymbol gets a reference to the given string and assigns it to the FiatSymbol field.
-func (o *BalancesPostRequestRequestsInner) SetFiatSymbol(v string) {
+func (o *BalancesGetRequestRequestsInner) SetFiatSymbol(v string) {
 	o.FiatSymbol = &v
 }
 
-func (o BalancesPostRequestRequestsInner) MarshalJSON() ([]byte, error) {
+func (o BalancesGetRequestRequestsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -142,7 +142,7 @@ func (o BalancesPostRequestRequestsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o BalancesPostRequestRequestsInner) ToMap() (map[string]interface{}, error) {
+func (o BalancesGetRequestRequestsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["crypto_symbol"] = o.CryptoSymbol
 	toSerialize["address"] = o.Address
@@ -152,7 +152,7 @@ func (o BalancesPostRequestRequestsInner) ToMap() (map[string]interface{}, error
 	return toSerialize, nil
 }
 
-func (o *BalancesPostRequestRequestsInner) UnmarshalJSON(data []byte) (err error) {
+func (o *BalancesGetRequestRequestsInner) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -175,53 +175,53 @@ func (o *BalancesPostRequestRequestsInner) UnmarshalJSON(data []byte) (err error
 		}
 	}
 
-	varBalancesPostRequestRequestsInner := _BalancesPostRequestRequestsInner{}
+	varBalancesGetRequestRequestsInner := _BalancesGetRequestRequestsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varBalancesPostRequestRequestsInner)
+	err = decoder.Decode(&varBalancesGetRequestRequestsInner)
 
 	if err != nil {
 		return err
 	}
 
-	*o = BalancesPostRequestRequestsInner(varBalancesPostRequestRequestsInner)
+	*o = BalancesGetRequestRequestsInner(varBalancesGetRequestRequestsInner)
 
 	return err
 }
 
-type NullableBalancesPostRequestRequestsInner struct {
-	value *BalancesPostRequestRequestsInner
+type NullableBalancesGetRequestRequestsInner struct {
+	value *BalancesGetRequestRequestsInner
 	isSet bool
 }
 
-func (v NullableBalancesPostRequestRequestsInner) Get() *BalancesPostRequestRequestsInner {
+func (v NullableBalancesGetRequestRequestsInner) Get() *BalancesGetRequestRequestsInner {
 	return v.value
 }
 
-func (v *NullableBalancesPostRequestRequestsInner) Set(val *BalancesPostRequestRequestsInner) {
+func (v *NullableBalancesGetRequestRequestsInner) Set(val *BalancesGetRequestRequestsInner) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableBalancesPostRequestRequestsInner) IsSet() bool {
+func (v NullableBalancesGetRequestRequestsInner) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableBalancesPostRequestRequestsInner) Unset() {
+func (v *NullableBalancesGetRequestRequestsInner) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableBalancesPostRequestRequestsInner(val *BalancesPostRequestRequestsInner) *NullableBalancesPostRequestRequestsInner {
-	return &NullableBalancesPostRequestRequestsInner{value: val, isSet: true}
+func NewNullableBalancesGetRequestRequestsInner(val *BalancesGetRequestRequestsInner) *NullableBalancesGetRequestRequestsInner {
+	return &NullableBalancesGetRequestRequestsInner{value: val, isSet: true}
 }
 
-func (v NullableBalancesPostRequestRequestsInner) MarshalJSON() ([]byte, error) {
+func (v NullableBalancesGetRequestRequestsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableBalancesPostRequestRequestsInner) UnmarshalJSON(src []byte) error {
+func (v *NullableBalancesGetRequestRequestsInner) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

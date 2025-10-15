@@ -17,7 +17,7 @@ import (
 
 
 
-type BalanceGet200Response struct {
+type BalancesGet200ResponseResultsInner struct {
 
 	CryptoSymbol string `json:"crypto_symbol"`
 
@@ -35,10 +35,13 @@ type BalanceGet200Response struct {
 	Change24h float64 `json:"change24h"`
 
 	Timestamp time.Time `json:"timestamp"`
+
+	// Error message if this specific balance fetch failed
+	Error string `json:"error,omitempty"`
 }
 
-// AssertBalanceGet200ResponseRequired checks if the required fields are not zero-ed
-func AssertBalanceGet200ResponseRequired(obj BalanceGet200Response) error {
+// AssertBalancesGet200ResponseResultsInnerRequired checks if the required fields are not zero-ed
+func AssertBalancesGet200ResponseResultsInnerRequired(obj BalancesGet200ResponseResultsInner) error {
 	elements := map[string]interface{}{
 		"crypto_symbol": obj.CryptoSymbol,
 		"address": obj.Address,
@@ -58,7 +61,7 @@ func AssertBalanceGet200ResponseRequired(obj BalanceGet200Response) error {
 	return nil
 }
 
-// AssertBalanceGet200ResponseConstraints checks if the values respects the defined constraints
-func AssertBalanceGet200ResponseConstraints(obj BalanceGet200Response) error {
+// AssertBalancesGet200ResponseResultsInnerConstraints checks if the values respects the defined constraints
+func AssertBalancesGet200ResponseResultsInnerConstraints(obj BalancesGet200ResponseResultsInner) error {
 	return nil
 }

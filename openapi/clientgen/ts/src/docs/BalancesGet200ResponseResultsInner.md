@@ -1,4 +1,4 @@
-# BalanceGet200Response
+# BalancesGet200ResponseResultsInner
 
 
 ## Properties
@@ -13,13 +13,14 @@ Name | Type | Description | Notes
 **exchange_rate** | **number** |  | [default to undefined]
 **change24h** | **number** | Absolute change in fiat value over the last 24 hours | [default to undefined]
 **timestamp** | **string** |  | [default to undefined]
+**error** | **string** | Error message if this specific balance fetch failed | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { BalanceGet200Response } from '@airgap-solution/crypto-wallet-rest';
+import { BalancesGet200ResponseResultsInner } from '@airgap-solution/crypto-wallet-rest';
 
-const instance: BalanceGet200Response = {
+const instance: BalancesGet200ResponseResultsInner = {
     crypto_symbol,
     address,
     crypto_balance,
@@ -28,6 +29,7 @@ const instance: BalanceGet200Response = {
     exchange_rate,
     change24h,
     timestamp,
+    error,
 };
 ```
 

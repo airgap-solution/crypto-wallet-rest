@@ -33,19 +33,15 @@ export const DefaultApiAxiosParamCreator = function (configuration) {
     return {
         /**
          *
-         * @summary Get balance for an address
-         * @param {string} cryptoSymbol
-         * @param {string} address
-         * @param {string} [fiatSymbol]
+         * @summary Get balances for multiple addresses and cryptocurrencies
+         * @param {BalancesGetRequest} balancesGetRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        balanceGet: async (cryptoSymbol, address, fiatSymbol, options = {}) => {
-            // verify required parameter 'cryptoSymbol' is not null or undefined
-            assertParamExists('balanceGet', 'cryptoSymbol', cryptoSymbol);
-            // verify required parameter 'address' is not null or undefined
-            assertParamExists('balanceGet', 'address', address);
-            const localVarPath = `/balance`;
+        balancesGet: async (balancesGetRequest, options = {}) => {
+            // verify required parameter 'balancesGetRequest' is not null or undefined
+            assertParamExists('balancesGet', 'balancesGetRequest', balancesGetRequest);
+            const localVarPath = `/balances`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -55,48 +51,11 @@ export const DefaultApiAxiosParamCreator = function (configuration) {
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
-            if (cryptoSymbol !== undefined) {
-                localVarQueryParameter['crypto_symbol'] = cryptoSymbol;
-            }
-            if (address !== undefined) {
-                localVarQueryParameter['address'] = address;
-            }
-            if (fiatSymbol !== undefined) {
-                localVarQueryParameter['fiat_symbol'] = fiatSymbol;
-            }
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @summary Get balances for multiple addresses and cryptocurrencies
-         * @param {BalancesPostRequest} balancesPostRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        balancesPost: async (balancesPostRequest, options = {}) => {
-            // verify required parameter 'balancesPostRequest' is not null or undefined
-            assertParamExists('balancesPost', 'balancesPostRequest', balancesPostRequest);
-            const localVarPath = `/balances`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-            localVarRequestOptions.data = serializeDataIfNeeded(balancesPostRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.data = serializeDataIfNeeded(balancesGetRequest, localVarRequestOptions, configuration);
             return {
                 url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -240,30 +199,15 @@ export const DefaultApiFp = function (configuration) {
     return {
         /**
          *
-         * @summary Get balance for an address
-         * @param {string} cryptoSymbol
-         * @param {string} address
-         * @param {string} [fiatSymbol]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async balanceGet(cryptoSymbol, address, fiatSymbol, options) {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.balanceGet(cryptoSymbol, address, fiatSymbol, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.balanceGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         *
          * @summary Get balances for multiple addresses and cryptocurrencies
-         * @param {BalancesPostRequest} balancesPostRequest
+         * @param {BalancesGetRequest} balancesGetRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async balancesPost(balancesPostRequest, options) {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.balancesPost(balancesPostRequest, options);
+        async balancesGet(balancesGetRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.balancesGet(balancesGetRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.balancesPost']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.balancesGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -322,25 +266,13 @@ export const DefaultApiFactory = function (configuration, basePath, axios) {
     return {
         /**
          *
-         * @summary Get balance for an address
-         * @param {string} cryptoSymbol
-         * @param {string} address
-         * @param {string} [fiatSymbol]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        balanceGet(cryptoSymbol, address, fiatSymbol, options) {
-            return localVarFp.balanceGet(cryptoSymbol, address, fiatSymbol, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *
          * @summary Get balances for multiple addresses and cryptocurrencies
-         * @param {BalancesPostRequest} balancesPostRequest
+         * @param {BalancesGetRequest} balancesGetRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        balancesPost(balancesPostRequest, options) {
-            return localVarFp.balancesPost(balancesPostRequest, options).then((request) => request(axios, basePath));
+        balancesGet(balancesGetRequest, options) {
+            return localVarFp.balancesGet(balancesGetRequest, options).then((request) => request(axios, basePath));
         },
         /**
          *
@@ -387,25 +319,13 @@ export const DefaultApiFactory = function (configuration, basePath, axios) {
 export class DefaultApi extends BaseAPI {
     /**
      *
-     * @summary Get balance for an address
-     * @param {string} cryptoSymbol
-     * @param {string} address
-     * @param {string} [fiatSymbol]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    balanceGet(cryptoSymbol, address, fiatSymbol, options) {
-        return DefaultApiFp(this.configuration).balanceGet(cryptoSymbol, address, fiatSymbol, options).then((request) => request(this.axios, this.basePath));
-    }
-    /**
-     *
      * @summary Get balances for multiple addresses and cryptocurrencies
-     * @param {BalancesPostRequest} balancesPostRequest
+     * @param {BalancesGetRequest} balancesGetRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balancesPost(balancesPostRequest, options) {
-        return DefaultApiFp(this.configuration).balancesPost(balancesPostRequest, options).then((request) => request(this.axios, this.basePath));
+    balancesGet(balancesGetRequest, options) {
+        return DefaultApiFp(this.configuration).balancesGet(balancesGetRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *

@@ -49,17 +49,11 @@ func NewDefaultAPIController(s DefaultAPIServicer, opts ...DefaultAPIOption) *De
 // Routes returns all the api routes for the DefaultAPIController
 func (c *DefaultAPIController) Routes() Routes {
 	return Routes{
-		"BalanceGet": Route{
-			"BalanceGet",
+		"BalancesGet": Route{
+			"BalancesGet",
 			strings.ToUpper("Get"),
-			"/balance",
-			c.BalanceGet,
-		},
-		"BalancesPost": Route{
-			"BalancesPost",
-			strings.ToUpper("Post"),
 			"/balances",
-			c.BalancesPost,
+			c.BalancesGet,
 		},
 		"TransactionsGet": Route{
 			"TransactionsGet",
@@ -86,16 +80,10 @@ func (c *DefaultAPIController) Routes() Routes {
 func (c *DefaultAPIController) OrderedRoutes() []Route {
 	return []Route{
 		Route{
-			"BalanceGet",
+			"BalancesGet",
 			strings.ToUpper("Get"),
-			"/balance",
-			c.BalanceGet,
-		},
-		Route{
-			"BalancesPost",
-			strings.ToUpper("Post"),
 			"/balances",
-			c.BalancesPost,
+			c.BalancesGet,
 		},
 		Route{
 			"TransactionsGet",
@@ -120,68 +108,24 @@ func (c *DefaultAPIController) OrderedRoutes() []Route {
 
 
 
-// BalanceGet - Get balance for an address
-func (c *DefaultAPIController) BalanceGet(w http.ResponseWriter, r *http.Request) {
-	query, err := parseQuery(r.URL.RawQuery)
-	if err != nil {
-		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
-		return
-	}
-	var cryptoSymbolParam string
-	if query.Has("crypto_symbol") {
-		param := query.Get("crypto_symbol")
-
-		cryptoSymbolParam = param
-	} else {
-		c.errorHandler(w, r, &RequiredError{Field: "crypto_symbol"}, nil)
-		return
-	}
-	var addressParam string
-	if query.Has("address") {
-		param := query.Get("address")
-
-		addressParam = param
-	} else {
-		c.errorHandler(w, r, &RequiredError{Field: "address"}, nil)
-		return
-	}
-	var fiatSymbolParam string
-	if query.Has("fiat_symbol") {
-		param := query.Get("fiat_symbol")
-
-		fiatSymbolParam = param
-	} else {
-		param := "USD"
-		fiatSymbolParam = param
-	}
-	result, err := c.service.BalanceGet(r.Context(), cryptoSymbolParam, addressParam, fiatSymbolParam)
-	// If an error occurred, encode the error with the status code
-	if err != nil {
-		c.errorHandler(w, r, err, &result)
-		return
-	}
-	// If no error, encode the body and the result code
-	_ = EncodeJSONResponse(result.Body, &result.Code, w)
-}
-
-// BalancesPost - Get balances for multiple addresses and cryptocurrencies
-func (c *DefaultAPIController) BalancesPost(w http.ResponseWriter, r *http.Request) {
-	var balancesPostRequestParam BalancesPostRequest
+// BalancesGet - Get balances for multiple addresses and cryptocurrencies
+func (c *DefaultAPIController) BalancesGet(w http.ResponseWriter, r *http.Request) {
+	var balancesGetRequestParam BalancesGetRequest
 	d := json.NewDecoder(r.Body)
 	d.DisallowUnknownFields()
-	if err := d.Decode(&balancesPostRequestParam); err != nil {
+	if err := d.Decode(&balancesGetRequestParam); err != nil {
 		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
 		return
 	}
-	if err := AssertBalancesPostRequestRequired(balancesPostRequestParam); err != nil {
+	if err := AssertBalancesGetRequestRequired(balancesGetRequestParam); err != nil {
 		c.errorHandler(w, r, err, nil)
 		return
 	}
-	if err := AssertBalancesPostRequestConstraints(balancesPostRequestParam); err != nil {
+	if err := AssertBalancesGetRequestConstraints(balancesGetRequestParam); err != nil {
 		c.errorHandler(w, r, err, nil)
 		return
 	}
-	result, err := c.service.BalancesPost(r.Context(), balancesPostRequestParam)
+	result, err := c.service.BalancesGet(r.Context(), balancesGetRequestParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)
