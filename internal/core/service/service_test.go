@@ -28,7 +28,7 @@ func TestNew(t *testing.T) {
 	assert.NotNil(t, svc)
 }
 
-func TestService_BalancesGet_BasicFunctionality(t *testing.T) {
+func TestService_BalancesPost_BasicFunctionality(t *testing.T) {
 	t.Parallel()
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
@@ -76,8 +76,8 @@ func TestService_BalancesGet_BasicFunctionality(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesGetRequest{
-		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
+	request := cryptowalletrest.BalancesPostRequest{
+		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -91,12 +91,12 @@ func TestService_BalancesGet_BasicFunctionality(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesGet(t.Context(), request)
+	response, err := svc.BalancesPost(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
 	require.True(t, ok)
 	require.Len(t, responseBody.Results, 2)
 
@@ -166,8 +166,8 @@ func TestService_BalancesPost_ErrorHandling(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesGetRequest{
-		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
+	request := cryptowalletrest.BalancesPostRequest{
+		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -181,12 +181,12 @@ func TestService_BalancesPost_ErrorHandling(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesGet(t.Context(), request)
+	response, err := svc.BalancesPost(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
 	require.True(t, ok)
 	require.Len(t, responseBody.Results, 2)
 
@@ -231,8 +231,8 @@ func TestService_BalancesPost_DefaultFiatSymbol(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesGetRequest{
-		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
+	request := cryptowalletrest.BalancesPostRequest{
+		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -241,12 +241,12 @@ func TestService_BalancesPost_DefaultFiatSymbol(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesGet(t.Context(), request)
+	response, err := svc.BalancesPost(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
 	require.True(t, ok)
 	require.Len(t, responseBody.Results, 1)
 
@@ -266,16 +266,16 @@ func TestService_BalancesPost_EmptyRequests(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesGetRequest{
-		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{},
+	request := cryptowalletrest.BalancesPostRequest{
+		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{},
 	}
 
-	response, err := svc.BalancesGet(t.Context(), request)
+	response, err := svc.BalancesPost(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
 	require.True(t, ok)
 	assert.Empty(t, responseBody.Results)
 }
@@ -299,8 +299,8 @@ func TestService_BalancesPost_BatchOperationError(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesGetRequest{
-		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
+	request := cryptowalletrest.BalancesPostRequest{
+		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -309,7 +309,7 @@ func TestService_BalancesPost_BatchOperationError(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesGet(t.Context(), request)
+	response, err := svc.BalancesPost(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 501, response.Code)

@@ -18,8 +18,8 @@ func New(adapter ports.Provider) Service {
 	return Service{adapter: adapter}
 }
 
-func (s Service) BalancesGet(
-	_ context.Context, request cryptowalletrest.BalancesGetRequest,
+func (s Service) BalancesPost(
+	_ context.Context, request cryptowalletrest.BalancesPostRequest,
 ) (cryptowalletrest.ImplResponse, error) {
 	// Convert OpenAPI request to internal format
 	balanceRequests := make([]domain.BalanceRequest, len(request.Requests))
@@ -43,9 +43,9 @@ func (s Service) BalancesGet(
 	}
 
 	// Convert results to OpenAPI format
-	balances := make([]cryptowalletrest.BalancesGet200ResponseResultsInner, len(results))
+	balances := make([]cryptowalletrest.BalancesPost200ResponseResultsInner, len(results))
 	for i, result := range results {
-		balance := cryptowalletrest.BalancesGet200ResponseResultsInner{
+		balance := cryptowalletrest.BalancesPost200ResponseResultsInner{
 			CryptoSymbol:  result.CryptoSymbol,
 			Address:       result.Address,
 			CryptoBalance: result.CryptoBalance,
@@ -61,7 +61,7 @@ func (s Service) BalancesGet(
 		balances[i] = balance
 	}
 
-	return cryptowalletrest.Response(http.StatusOK, cryptowalletrest.BalancesGet200Response{
+	return cryptowalletrest.Response(http.StatusOK, cryptowalletrest.BalancesPost200Response{
 		Results:   balances,
 		Timestamp: time.Now(),
 	}), nil

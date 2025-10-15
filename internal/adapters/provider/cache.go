@@ -53,7 +53,6 @@ func (c *Cache[T]) Set(key string, value T, ttl time.Duration) {
 	}
 }
 
-//nolint:ireturn
 func (c *Cache[T]) Get(key string) (T, bool) {
 	c.mutex.RLock()
 	defer c.mutex.RUnlock()

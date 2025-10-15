@@ -42,16 +42,16 @@ func (m *MockDefaultAPIRouter) EXPECT() *MockDefaultAPIRouterMockRecorder {
 	return m.recorder
 }
 
-// BalancesGet mocks base method.
-func (m *MockDefaultAPIRouter) BalancesGet(arg0 http.ResponseWriter, arg1 *http.Request) {
+// BalancesPost mocks base method.
+func (m *MockDefaultAPIRouter) BalancesPost(arg0 http.ResponseWriter, arg1 *http.Request) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "BalancesGet", arg0, arg1)
+	m.ctrl.Call(m, "BalancesPost", arg0, arg1)
 }
 
-// BalancesGet indicates an expected call of BalancesGet.
-func (mr *MockDefaultAPIRouterMockRecorder) BalancesGet(arg0, arg1 any) *gomock.Call {
+// BalancesPost indicates an expected call of BalancesPost.
+func (mr *MockDefaultAPIRouterMockRecorder) BalancesPost(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BalancesGet", reflect.TypeOf((*MockDefaultAPIRouter)(nil).BalancesGet), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BalancesPost", reflect.TypeOf((*MockDefaultAPIRouter)(nil).BalancesPost), arg0, arg1)
 }
 
 // BroadcastPost mocks base method.
@@ -114,19 +114,19 @@ func (m *MockDefaultAPIServicer) EXPECT() *MockDefaultAPIServicerMockRecorder {
 	return m.recorder
 }
 
-// BalancesGet mocks base method.
-func (m *MockDefaultAPIServicer) BalancesGet(arg0 context.Context, arg1 cryptowalletrest.BalancesGetRequest) (cryptowalletrest.ImplResponse, error) {
+// BalancesPost mocks base method.
+func (m *MockDefaultAPIServicer) BalancesPost(arg0 context.Context, arg1 cryptowalletrest.BalancesPostRequest) (cryptowalletrest.ImplResponse, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BalancesGet", arg0, arg1)
+	ret := m.ctrl.Call(m, "BalancesPost", arg0, arg1)
 	ret0, _ := ret[0].(cryptowalletrest.ImplResponse)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// BalancesGet indicates an expected call of BalancesGet.
-func (mr *MockDefaultAPIServicerMockRecorder) BalancesGet(arg0, arg1 any) *gomock.Call {
+// BalancesPost indicates an expected call of BalancesPost.
+func (mr *MockDefaultAPIServicerMockRecorder) BalancesPost(arg0, arg1 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BalancesGet", reflect.TypeOf((*MockDefaultAPIServicer)(nil).BalancesGet), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BalancesPost", reflect.TypeOf((*MockDefaultAPIServicer)(nil).BalancesPost), arg0, arg1)
 }
 
 // BroadcastPost mocks base method.
