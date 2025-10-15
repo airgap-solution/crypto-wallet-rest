@@ -49,11 +49,11 @@ func NewDefaultAPIController(s DefaultAPIServicer, opts ...DefaultAPIOption) *De
 // Routes returns all the api routes for the DefaultAPIController
 func (c *DefaultAPIController) Routes() Routes {
 	return Routes{
-		"BalancesGet": Route{
-			"BalancesGet",
-			strings.ToUpper("Get"),
+		"BalancesPost": Route{
+			"BalancesPost",
+			strings.ToUpper("Post"),
 			"/balances",
-			c.BalancesGet,
+			c.BalancesPost,
 		},
 		"TransactionsGet": Route{
 			"TransactionsGet",
@@ -80,10 +80,10 @@ func (c *DefaultAPIController) Routes() Routes {
 func (c *DefaultAPIController) OrderedRoutes() []Route {
 	return []Route{
 		Route{
-			"BalancesGet",
-			strings.ToUpper("Get"),
+			"BalancesPost",
+			strings.ToUpper("Post"),
 			"/balances",
-			c.BalancesGet,
+			c.BalancesPost,
 		},
 		Route{
 			"TransactionsGet",
@@ -108,24 +108,24 @@ func (c *DefaultAPIController) OrderedRoutes() []Route {
 
 
 
-// BalancesGet - Get balances for multiple addresses and cryptocurrencies
-func (c *DefaultAPIController) BalancesGet(w http.ResponseWriter, r *http.Request) {
-	var balancesGetRequestParam BalancesGetRequest
+// BalancesPost - Get balances for multiple addresses and cryptocurrencies
+func (c *DefaultAPIController) BalancesPost(w http.ResponseWriter, r *http.Request) {
+	var balancesPostRequestParam BalancesPostRequest
 	d := json.NewDecoder(r.Body)
 	d.DisallowUnknownFields()
-	if err := d.Decode(&balancesGetRequestParam); err != nil {
+	if err := d.Decode(&balancesPostRequestParam); err != nil {
 		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
 		return
 	}
-	if err := AssertBalancesGetRequestRequired(balancesGetRequestParam); err != nil {
+	if err := AssertBalancesPostRequestRequired(balancesPostRequestParam); err != nil {
 		c.errorHandler(w, r, err, nil)
 		return
 	}
-	if err := AssertBalancesGetRequestConstraints(balancesGetRequestParam); err != nil {
+	if err := AssertBalancesPostRequestConstraints(balancesPostRequestParam); err != nil {
 		c.errorHandler(w, r, err, nil)
 		return
 	}
-	result, err := c.service.BalancesGet(r.Context(), balancesGetRequestParam)
+	result, err := c.service.BalancesPost(r.Context(), balancesPostRequestParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

@@ -15,36 +15,36 @@ import (
 	"time"
 )
 
-// checks if the BalancesGet200Response type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &BalancesGet200Response{}
+// checks if the BalancesPost200Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BalancesPost200Response{}
 
-// BalancesGet200Response struct for BalancesGet200Response
-type BalancesGet200Response struct {
-	Results []BalancesGet200ResponseResultsInner `json:"results,omitempty"`
+// BalancesPost200Response struct for BalancesPost200Response
+type BalancesPost200Response struct {
+	Results []BalancesPost200ResponseResultsInner `json:"results,omitempty"`
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 }
 
-// NewBalancesGet200Response instantiates a new BalancesGet200Response object
+// NewBalancesPost200Response instantiates a new BalancesPost200Response object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBalancesGet200Response() *BalancesGet200Response {
-	this := BalancesGet200Response{}
+func NewBalancesPost200Response() *BalancesPost200Response {
+	this := BalancesPost200Response{}
 	return &this
 }
 
-// NewBalancesGet200ResponseWithDefaults instantiates a new BalancesGet200Response object
+// NewBalancesPost200ResponseWithDefaults instantiates a new BalancesPost200Response object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewBalancesGet200ResponseWithDefaults() *BalancesGet200Response {
-	this := BalancesGet200Response{}
+func NewBalancesPost200ResponseWithDefaults() *BalancesPost200Response {
+	this := BalancesPost200Response{}
 	return &this
 }
 
 // GetResults returns the Results field value if set, zero value otherwise.
-func (o *BalancesGet200Response) GetResults() []BalancesGet200ResponseResultsInner {
+func (o *BalancesPost200Response) GetResults() []BalancesPost200ResponseResultsInner {
 	if o == nil || IsNil(o.Results) {
-		var ret []BalancesGet200ResponseResultsInner
+		var ret []BalancesPost200ResponseResultsInner
 		return ret
 	}
 	return o.Results
@@ -52,7 +52,7 @@ func (o *BalancesGet200Response) GetResults() []BalancesGet200ResponseResultsInn
 
 // GetResultsOk returns a tuple with the Results field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200Response) GetResultsOk() ([]BalancesGet200ResponseResultsInner, bool) {
+func (o *BalancesPost200Response) GetResultsOk() ([]BalancesPost200ResponseResultsInner, bool) {
 	if o == nil || IsNil(o.Results) {
 		return nil, false
 	}
@@ -60,7 +60,7 @@ func (o *BalancesGet200Response) GetResultsOk() ([]BalancesGet200ResponseResults
 }
 
 // HasResults returns a boolean if a field has been set.
-func (o *BalancesGet200Response) HasResults() bool {
+func (o *BalancesPost200Response) HasResults() bool {
 	if o != nil && !IsNil(o.Results) {
 		return true
 	}
@@ -68,13 +68,13 @@ func (o *BalancesGet200Response) HasResults() bool {
 	return false
 }
 
-// SetResults gets a reference to the given []BalancesGet200ResponseResultsInner and assigns it to the Results field.
-func (o *BalancesGet200Response) SetResults(v []BalancesGet200ResponseResultsInner) {
+// SetResults gets a reference to the given []BalancesPost200ResponseResultsInner and assigns it to the Results field.
+func (o *BalancesPost200Response) SetResults(v []BalancesPost200ResponseResultsInner) {
 	o.Results = v
 }
 
 // GetTimestamp returns the Timestamp field value if set, zero value otherwise.
-func (o *BalancesGet200Response) GetTimestamp() time.Time {
+func (o *BalancesPost200Response) GetTimestamp() time.Time {
 	if o == nil || IsNil(o.Timestamp) {
 		var ret time.Time
 		return ret
@@ -84,7 +84,7 @@ func (o *BalancesGet200Response) GetTimestamp() time.Time {
 
 // GetTimestampOk returns a tuple with the Timestamp field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200Response) GetTimestampOk() (*time.Time, bool) {
+func (o *BalancesPost200Response) GetTimestampOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.Timestamp) {
 		return nil, false
 	}
@@ -92,7 +92,7 @@ func (o *BalancesGet200Response) GetTimestampOk() (*time.Time, bool) {
 }
 
 // HasTimestamp returns a boolean if a field has been set.
-func (o *BalancesGet200Response) HasTimestamp() bool {
+func (o *BalancesPost200Response) HasTimestamp() bool {
 	if o != nil && !IsNil(o.Timestamp) {
 		return true
 	}
@@ -101,11 +101,11 @@ func (o *BalancesGet200Response) HasTimestamp() bool {
 }
 
 // SetTimestamp gets a reference to the given time.Time and assigns it to the Timestamp field.
-func (o *BalancesGet200Response) SetTimestamp(v time.Time) {
+func (o *BalancesPost200Response) SetTimestamp(v time.Time) {
 	o.Timestamp = &v
 }
 
-func (o BalancesGet200Response) MarshalJSON() ([]byte, error) {
+func (o BalancesPost200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -113,7 +113,7 @@ func (o BalancesGet200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o BalancesGet200Response) ToMap() (map[string]interface{}, error) {
+func (o BalancesPost200Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Results) {
 		toSerialize["results"] = o.Results
@@ -124,38 +124,38 @@ func (o BalancesGet200Response) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableBalancesGet200Response struct {
-	value *BalancesGet200Response
+type NullableBalancesPost200Response struct {
+	value *BalancesPost200Response
 	isSet bool
 }
 
-func (v NullableBalancesGet200Response) Get() *BalancesGet200Response {
+func (v NullableBalancesPost200Response) Get() *BalancesPost200Response {
 	return v.value
 }
 
-func (v *NullableBalancesGet200Response) Set(val *BalancesGet200Response) {
+func (v *NullableBalancesPost200Response) Set(val *BalancesPost200Response) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableBalancesGet200Response) IsSet() bool {
+func (v NullableBalancesPost200Response) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableBalancesGet200Response) Unset() {
+func (v *NullableBalancesPost200Response) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableBalancesGet200Response(val *BalancesGet200Response) *NullableBalancesGet200Response {
-	return &NullableBalancesGet200Response{value: val, isSet: true}
+func NewNullableBalancesPost200Response(val *BalancesPost200Response) *NullableBalancesPost200Response {
+	return &NullableBalancesPost200Response{value: val, isSet: true}
 }
 
-func (v NullableBalancesGet200Response) MarshalJSON() ([]byte, error) {
+func (v NullableBalancesPost200Response) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableBalancesGet200Response) UnmarshalJSON(src []byte) error {
+func (v *NullableBalancesPost200Response) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

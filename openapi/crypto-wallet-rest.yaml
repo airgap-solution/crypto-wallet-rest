@@ -8,7 +8,7 @@ info:
 
 paths:
   /balances:
-    get:
+    post:
       summary: Get balances for multiple addresses and cryptocurrencies
       requestBody:
         required: true

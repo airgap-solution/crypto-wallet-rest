@@ -22,45 +22,45 @@ import (
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
-type ApiBalancesGetRequest struct {
+type ApiBalancesPostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
-	balancesGetRequest *BalancesGetRequest
+	balancesPostRequest *BalancesPostRequest
 }
 
-func (r ApiBalancesGetRequest) BalancesGetRequest(balancesGetRequest BalancesGetRequest) ApiBalancesGetRequest {
-	r.balancesGetRequest = &balancesGetRequest
+func (r ApiBalancesPostRequest) BalancesPostRequest(balancesPostRequest BalancesPostRequest) ApiBalancesPostRequest {
+	r.balancesPostRequest = &balancesPostRequest
 	return r
 }
 
-func (r ApiBalancesGetRequest) Execute() (*BalancesGet200Response, *http.Response, error) {
-	return r.ApiService.BalancesGetExecute(r)
+func (r ApiBalancesPostRequest) Execute() (*BalancesPost200Response, *http.Response, error) {
+	return r.ApiService.BalancesPostExecute(r)
 }
 
 /*
-BalancesGet Get balances for multiple addresses and cryptocurrencies
+BalancesPost Get balances for multiple addresses and cryptocurrencies
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return ApiBalancesGetRequest
+ @return ApiBalancesPostRequest
 */
-func (a *DefaultAPIService) BalancesGet(ctx context.Context) ApiBalancesGetRequest {
-	return ApiBalancesGetRequest{
+func (a *DefaultAPIService) BalancesPost(ctx context.Context) ApiBalancesPostRequest {
+	return ApiBalancesPostRequest{
 		ApiService: a,
 		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//  @return BalancesGet200Response
-func (a *DefaultAPIService) BalancesGetExecute(r ApiBalancesGetRequest) (*BalancesGet200Response, *http.Response, error) {
+//  @return BalancesPost200Response
+func (a *DefaultAPIService) BalancesPostExecute(r ApiBalancesPostRequest) (*BalancesPost200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
+		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *BalancesGet200Response
+		localVarReturnValue  *BalancesPost200Response
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.BalancesGet")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.BalancesPost")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -70,8 +70,8 @@ func (a *DefaultAPIService) BalancesGetExecute(r ApiBalancesGetRequest) (*Balanc
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.balancesGetRequest == nil {
-		return localVarReturnValue, nil, reportError("balancesGetRequest is required and must be specified")
+	if r.balancesPostRequest == nil {
+		return localVarReturnValue, nil, reportError("balancesPostRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -92,7 +92,7 @@ func (a *DefaultAPIService) BalancesGetExecute(r ApiBalancesGetRequest) (*Balanc
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.balancesGetRequest
+	localVarPostBody = r.balancesPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

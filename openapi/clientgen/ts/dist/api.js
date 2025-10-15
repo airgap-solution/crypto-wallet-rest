@@ -34,13 +34,13 @@ export const DefaultApiAxiosParamCreator = function (configuration) {
         /**
          *
          * @summary Get balances for multiple addresses and cryptocurrencies
-         * @param {BalancesGetRequest} balancesGetRequest
+         * @param {BalancesPostRequest} balancesPostRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        balancesGet: async (balancesGetRequest, options = {}) => {
-            // verify required parameter 'balancesGetRequest' is not null or undefined
-            assertParamExists('balancesGet', 'balancesGetRequest', balancesGetRequest);
+        balancesPost: async (balancesPostRequest, options = {}) => {
+            // verify required parameter 'balancesPostRequest' is not null or undefined
+            assertParamExists('balancesPost', 'balancesPostRequest', balancesPostRequest);
             const localVarPath = `/balances`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -48,14 +48,14 @@ export const DefaultApiAxiosParamCreator = function (configuration) {
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options };
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             localVarHeaderParameter['Content-Type'] = 'application/json';
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-            localVarRequestOptions.data = serializeDataIfNeeded(balancesGetRequest, localVarRequestOptions, configuration);
+            localVarRequestOptions.data = serializeDataIfNeeded(balancesPostRequest, localVarRequestOptions, configuration);
             return {
                 url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -200,14 +200,14 @@ export const DefaultApiFp = function (configuration) {
         /**
          *
          * @summary Get balances for multiple addresses and cryptocurrencies
-         * @param {BalancesGetRequest} balancesGetRequest
+         * @param {BalancesPostRequest} balancesPostRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async balancesGet(balancesGetRequest, options) {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.balancesGet(balancesGetRequest, options);
+        async balancesPost(balancesPostRequest, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.balancesPost(balancesPostRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['DefaultApi.balancesGet']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['DefaultApi.balancesPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -267,12 +267,12 @@ export const DefaultApiFactory = function (configuration, basePath, axios) {
         /**
          *
          * @summary Get balances for multiple addresses and cryptocurrencies
-         * @param {BalancesGetRequest} balancesGetRequest
+         * @param {BalancesPostRequest} balancesPostRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        balancesGet(balancesGetRequest, options) {
-            return localVarFp.balancesGet(balancesGetRequest, options).then((request) => request(axios, basePath));
+        balancesPost(balancesPostRequest, options) {
+            return localVarFp.balancesPost(balancesPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          *
@@ -320,12 +320,12 @@ export class DefaultApi extends BaseAPI {
     /**
      *
      * @summary Get balances for multiple addresses and cryptocurrencies
-     * @param {BalancesGetRequest} balancesGetRequest
+     * @param {BalancesPostRequest} balancesPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balancesGet(balancesGetRequest, options) {
-        return DefaultApiFp(this.configuration).balancesGet(balancesGetRequest, options).then((request) => request(this.axios, this.basePath));
+    balancesPost(balancesPostRequest, options) {
+        return DefaultApiFp(this.configuration).balancesPost(balancesPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
     /**
      *

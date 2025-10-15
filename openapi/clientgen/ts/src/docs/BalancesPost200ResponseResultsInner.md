@@ -1,4 +1,4 @@
-# BalancesGet200ResponseResultsInner
+# BalancesPost200ResponseResultsInner
 
 
 ## Properties
@@ -18,9 +18,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { BalancesGet200ResponseResultsInner } from '@airgap-solution/crypto-wallet-rest';
+import { BalancesPost200ResponseResultsInner } from '@airgap-solution/crypto-wallet-rest';
 
-const instance: BalancesGet200ResponseResultsInner = {
+const instance: BalancesPost200ResponseResultsInner = {
     crypto_symbol,
     address,
     crypto_balance,

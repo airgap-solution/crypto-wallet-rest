@@ -17,7 +17,7 @@ import (
 
 
 
-type BalancesGet200ResponseResultsInner struct {
+type BalancesPost200ResponseResultsInner struct {
 
 	CryptoSymbol string `json:"crypto_symbol"`
 
@@ -40,8 +40,8 @@ type BalancesGet200ResponseResultsInner struct {
 	Error string `json:"error,omitempty"`
 }
 
-// AssertBalancesGet200ResponseResultsInnerRequired checks if the required fields are not zero-ed
-func AssertBalancesGet200ResponseResultsInnerRequired(obj BalancesGet200ResponseResultsInner) error {
+// AssertBalancesPost200ResponseResultsInnerRequired checks if the required fields are not zero-ed
+func AssertBalancesPost200ResponseResultsInnerRequired(obj BalancesPost200ResponseResultsInner) error {
 	elements := map[string]interface{}{
 		"crypto_symbol": obj.CryptoSymbol,
 		"address": obj.Address,
@@ -61,7 +61,7 @@ func AssertBalancesGet200ResponseResultsInnerRequired(obj BalancesGet200Response
 	return nil
 }
 
-// AssertBalancesGet200ResponseResultsInnerConstraints checks if the values respects the defined constraints
-func AssertBalancesGet200ResponseResultsInnerConstraints(obj BalancesGet200ResponseResultsInner) error {
+// AssertBalancesPost200ResponseResultsInnerConstraints checks if the values respects the defined constraints
+func AssertBalancesPost200ResponseResultsInnerConstraints(obj BalancesPost200ResponseResultsInner) error {
 	return nil
 }

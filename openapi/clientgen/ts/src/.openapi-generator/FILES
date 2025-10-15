@@ -6,10 +6,10 @@ api.ts
 base.ts
 common.ts
 configuration.ts
-docs/BalancesGet200Response.md
-docs/BalancesGet200ResponseResultsInner.md
-docs/BalancesGetRequest.md
-docs/BalancesGetRequestRequestsInner.md
+docs/BalancesPost200Response.md
+docs/BalancesPost200ResponseResultsInner.md
+docs/BalancesPostRequest.md
+docs/BalancesPostRequestRequestsInner.md
 docs/BroadcastPost200Response.md
 docs/BroadcastPostRequest.md
 docs/DefaultApi.md

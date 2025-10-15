@@ -13,16 +13,16 @@ package cryptowalletrest
 
 
 
-type BalancesGetRequest struct {
+type BalancesPostRequest struct {
 
-	Requests []BalancesGetRequestRequestsInner `json:"requests"`
+	Requests []BalancesPostRequestRequestsInner `json:"requests"`
 
 	// Default fiat currency symbol for all requests if not specified individually
 	FiatSymbol string `json:"fiat_symbol,omitempty"`
 }
 
-// AssertBalancesGetRequestRequired checks if the required fields are not zero-ed
-func AssertBalancesGetRequestRequired(obj BalancesGetRequest) error {
+// AssertBalancesPostRequestRequired checks if the required fields are not zero-ed
+func AssertBalancesPostRequestRequired(obj BalancesPostRequest) error {
 	elements := map[string]interface{}{
 		"requests": obj.Requests,
 	}
@@ -33,17 +33,17 @@ func AssertBalancesGetRequestRequired(obj BalancesGetRequest) error {
 	}
 
 	for _, el := range obj.Requests {
-		if err := AssertBalancesGetRequestRequestsInnerRequired(el); err != nil {
+		if err := AssertBalancesPostRequestRequestsInnerRequired(el); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-// AssertBalancesGetRequestConstraints checks if the values respects the defined constraints
-func AssertBalancesGetRequestConstraints(obj BalancesGetRequest) error {
+// AssertBalancesPostRequestConstraints checks if the values respects the defined constraints
+func AssertBalancesPostRequestConstraints(obj BalancesPostRequest) error {
 	for _, el := range obj.Requests {
-		if err := AssertBalancesGetRequestRequestsInnerConstraints(el); err != nil {
+		if err := AssertBalancesPostRequestRequestsInnerConstraints(el); err != nil {
 			return err
 		}
 	}

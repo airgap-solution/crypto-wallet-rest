@@ -13,11 +13,11 @@ import type { Configuration } from './configuration';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import type { RequestArgs } from './base';
 import { BaseAPI } from './base';
-export interface BalancesGet200Response {
-    'results'?: Array<BalancesGet200ResponseResultsInner>;
+export interface BalancesPost200Response {
+    'results'?: Array<BalancesPost200ResponseResultsInner>;
     'timestamp'?: string;
 }
-export interface BalancesGet200ResponseResultsInner {
+export interface BalancesPost200ResponseResultsInner {
     'crypto_symbol': string;
     'address': string;
     'crypto_balance': number;
@@ -34,14 +34,14 @@ export interface BalancesGet200ResponseResultsInner {
      */
     'error'?: string;
 }
-export interface BalancesGetRequest {
-    'requests': Array<BalancesGetRequestRequestsInner>;
+export interface BalancesPostRequest {
+    'requests': Array<BalancesPostRequestRequestsInner>;
     /**
      * Default fiat currency symbol for all requests if not specified individually
      */
     'fiat_symbol'?: string;
 }
-export interface BalancesGetRequestRequestsInner {
+export interface BalancesPostRequestRequestsInner {
     /**
      * The cryptocurrency symbol (BTC, ETH, etc.)
      */
@@ -117,11 +117,11 @@ export declare const DefaultApiAxiosParamCreator: (configuration?: Configuration
     /**
      *
      * @summary Get balances for multiple addresses and cryptocurrencies
-     * @param {BalancesGetRequest} balancesGetRequest
+     * @param {BalancesPostRequest} balancesPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balancesGet: (balancesGetRequest: BalancesGetRequest, options?: RawAxiosRequestConfig) => Promise<RequestArgs>;
+    balancesPost: (balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig) => Promise<RequestArgs>;
     /**
      *
      * @summary Broadcast signed transaction
@@ -161,11 +161,11 @@ export declare const DefaultApiFp: (configuration?: Configuration) => {
     /**
      *
      * @summary Get balances for multiple addresses and cryptocurrencies
-     * @param {BalancesGetRequest} balancesGetRequest
+     * @param {BalancesPostRequest} balancesPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balancesGet(balancesGetRequest: BalancesGetRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BalancesGet200Response>>;
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BalancesPost200Response>>;
     /**
      *
      * @summary Broadcast signed transaction
@@ -205,11 +205,11 @@ export declare const DefaultApiFactory: (configuration?: Configuration, basePath
     /**
      *
      * @summary Get balances for multiple addresses and cryptocurrencies
-     * @param {BalancesGetRequest} balancesGetRequest
+     * @param {BalancesPostRequest} balancesPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balancesGet(balancesGetRequest: BalancesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<BalancesGet200Response>;
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BalancesPost200Response>;
     /**
      *
      * @summary Broadcast signed transaction
@@ -249,11 +249,11 @@ export interface DefaultApiInterface {
     /**
      *
      * @summary Get balances for multiple addresses and cryptocurrencies
-     * @param {BalancesGetRequest} balancesGetRequest
+     * @param {BalancesPostRequest} balancesPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balancesGet(balancesGetRequest: BalancesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<BalancesGet200Response>;
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BalancesPost200Response>;
     /**
      *
      * @summary Broadcast signed transaction
@@ -293,11 +293,11 @@ export declare class DefaultApi extends BaseAPI implements DefaultApiInterface {
     /**
      *
      * @summary Get balances for multiple addresses and cryptocurrencies
-     * @param {BalancesGetRequest} balancesGetRequest
+     * @param {BalancesPostRequest} balancesPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    balancesGet(balancesGetRequest: BalancesGetRequest, options?: RawAxiosRequestConfig): Promise<import("axios").AxiosResponse<BalancesGet200Response, any, {}>>;
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): Promise<import("axios").AxiosResponse<BalancesPost200Response, any, {}>>;
     /**
      *
      * @summary Broadcast signed transaction

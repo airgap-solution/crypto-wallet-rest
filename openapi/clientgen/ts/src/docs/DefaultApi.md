@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**balancesGet**](#balancesget) | **GET** /balances | Get balances for multiple addresses and cryptocurrencies|
+|[**balancesPost**](#balancespost) | **POST** /balances | Get balances for multiple addresses and cryptocurrencies|
 |[**broadcastPost**](#broadcastpost) | **POST** /broadcast | Broadcast signed transaction|
 |[**transactionsGet**](#transactionsget) | **GET** /transactions | Get transaction history for an address|
 |[**unsignedTxGet**](#unsignedtxget) | **GET** /unsigned-tx | Generate an unsigned transaction|
 
-# **balancesGet**
-> BalancesGet200Response balancesGet(balancesGetRequest)
+# **balancesPost**
+> BalancesPost200Response balancesPost(balancesPostRequest)
 
 
 ### Example
@@ -19,16 +19,16 @@ All URIs are relative to *http://localhost*
 import {
     DefaultApi,
     Configuration,
-    BalancesGetRequest
+    BalancesPostRequest
 } from '@airgap-solution/crypto-wallet-rest';
 
 const configuration = new Configuration();
 const apiInstance = new DefaultApi(configuration);
 
-let balancesGetRequest: BalancesGetRequest; //
+let balancesPostRequest: BalancesPostRequest; //
 
-const { status, data } = await apiInstance.balancesGet(
-    balancesGetRequest
+const { status, data } = await apiInstance.balancesPost(
+    balancesPostRequest
 );
 ```
 
@@ -36,12 +36,12 @@ const { status, data } = await apiInstance.balancesGet(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **balancesGetRequest** | **BalancesGetRequest**|  | |
+| **balancesPostRequest** | **BalancesPostRequest**|  | |
 
 
 ### Return type
 
-**BalancesGet200Response**
+**BalancesPost200Response**
 
 ### Authorization
 

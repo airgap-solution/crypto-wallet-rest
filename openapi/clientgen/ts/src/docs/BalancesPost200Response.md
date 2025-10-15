@@ -1,19 +1,19 @@
-# BalancesGet200Response
+# BalancesPost200Response
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**results** | [**Array&lt;BalancesGet200ResponseResultsInner&gt;**](BalancesGet200ResponseResultsInner.md) |  | [optional] [default to undefined]
+**results** | [**Array&lt;BalancesPost200ResponseResultsInner&gt;**](BalancesPost200ResponseResultsInner.md) |  | [optional] [default to undefined]
 **timestamp** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { BalancesGet200Response } from '@airgap-solution/crypto-wallet-rest';
+import { BalancesPost200Response } from '@airgap-solution/crypto-wallet-rest';
 
-const instance: BalancesGet200Response = {
+const instance: BalancesPost200Response = {
     results,
     timestamp,
 };

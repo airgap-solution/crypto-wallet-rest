@@ -13,7 +13,7 @@ package cryptowalletrest
 
 
 
-type BalancesGetRequestRequestsInner struct {
+type BalancesPostRequestRequestsInner struct {
 
 	// The cryptocurrency symbol (BTC, ETH, etc.)
 	CryptoSymbol string `json:"crypto_symbol"`
@@ -25,8 +25,8 @@ type BalancesGetRequestRequestsInner struct {
 	FiatSymbol string `json:"fiat_symbol,omitempty"`
 }
 
-// AssertBalancesGetRequestRequestsInnerRequired checks if the required fields are not zero-ed
-func AssertBalancesGetRequestRequestsInnerRequired(obj BalancesGetRequestRequestsInner) error {
+// AssertBalancesPostRequestRequestsInnerRequired checks if the required fields are not zero-ed
+func AssertBalancesPostRequestRequestsInnerRequired(obj BalancesPostRequestRequestsInner) error {
 	elements := map[string]interface{}{
 		"crypto_symbol": obj.CryptoSymbol,
 		"address": obj.Address,
@@ -40,7 +40,7 @@ func AssertBalancesGetRequestRequestsInnerRequired(obj BalancesGetRequestRequest
 	return nil
 }
 
-// AssertBalancesGetRequestRequestsInnerConstraints checks if the values respects the defined constraints
-func AssertBalancesGetRequestRequestsInnerConstraints(obj BalancesGetRequestRequestsInner) error {
+// AssertBalancesPostRequestRequestsInnerConstraints checks if the values respects the defined constraints
+func AssertBalancesPostRequestRequestsInnerConstraints(obj BalancesPostRequestRequestsInner) error {
 	return nil
 }

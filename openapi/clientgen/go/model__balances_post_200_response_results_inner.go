@@ -17,11 +17,11 @@ import (
 	"fmt"
 )
 
-// checks if the BalancesGet200ResponseResultsInner type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &BalancesGet200ResponseResultsInner{}
+// checks if the BalancesPost200ResponseResultsInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BalancesPost200ResponseResultsInner{}
 
-// BalancesGet200ResponseResultsInner struct for BalancesGet200ResponseResultsInner
-type BalancesGet200ResponseResultsInner struct {
+// BalancesPost200ResponseResultsInner struct for BalancesPost200ResponseResultsInner
+type BalancesPost200ResponseResultsInner struct {
 	CryptoSymbol string `json:"crypto_symbol"`
 	Address string `json:"address"`
 	CryptoBalance float64 `json:"crypto_balance"`
@@ -35,14 +35,14 @@ type BalancesGet200ResponseResultsInner struct {
 	Error *string `json:"error,omitempty"`
 }
 
-type _BalancesGet200ResponseResultsInner BalancesGet200ResponseResultsInner
+type _BalancesPost200ResponseResultsInner BalancesPost200ResponseResultsInner
 
-// NewBalancesGet200ResponseResultsInner instantiates a new BalancesGet200ResponseResultsInner object
+// NewBalancesPost200ResponseResultsInner instantiates a new BalancesPost200ResponseResultsInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewBalancesGet200ResponseResultsInner(cryptoSymbol string, address string, cryptoBalance float64, fiatSymbol string, fiatValue float64, exchangeRate float64, change24h float64, timestamp time.Time) *BalancesGet200ResponseResultsInner {
-	this := BalancesGet200ResponseResultsInner{}
+func NewBalancesPost200ResponseResultsInner(cryptoSymbol string, address string, cryptoBalance float64, fiatSymbol string, fiatValue float64, exchangeRate float64, change24h float64, timestamp time.Time) *BalancesPost200ResponseResultsInner {
+	this := BalancesPost200ResponseResultsInner{}
 	this.CryptoSymbol = cryptoSymbol
 	this.Address = address
 	this.CryptoBalance = cryptoBalance
@@ -54,16 +54,16 @@ func NewBalancesGet200ResponseResultsInner(cryptoSymbol string, address string, 
 	return &this
 }
 
-// NewBalancesGet200ResponseResultsInnerWithDefaults instantiates a new BalancesGet200ResponseResultsInner object
+// NewBalancesPost200ResponseResultsInnerWithDefaults instantiates a new BalancesPost200ResponseResultsInner object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewBalancesGet200ResponseResultsInnerWithDefaults() *BalancesGet200ResponseResultsInner {
-	this := BalancesGet200ResponseResultsInner{}
+func NewBalancesPost200ResponseResultsInnerWithDefaults() *BalancesPost200ResponseResultsInner {
+	this := BalancesPost200ResponseResultsInner{}
 	return &this
 }
 
 // GetCryptoSymbol returns the CryptoSymbol field value
-func (o *BalancesGet200ResponseResultsInner) GetCryptoSymbol() string {
+func (o *BalancesPost200ResponseResultsInner) GetCryptoSymbol() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -74,7 +74,7 @@ func (o *BalancesGet200ResponseResultsInner) GetCryptoSymbol() string {
 
 // GetCryptoSymbolOk returns a tuple with the CryptoSymbol field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetCryptoSymbolOk() (*string, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetCryptoSymbolOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -82,12 +82,12 @@ func (o *BalancesGet200ResponseResultsInner) GetCryptoSymbolOk() (*string, bool)
 }
 
 // SetCryptoSymbol sets field value
-func (o *BalancesGet200ResponseResultsInner) SetCryptoSymbol(v string) {
+func (o *BalancesPost200ResponseResultsInner) SetCryptoSymbol(v string) {
 	o.CryptoSymbol = v
 }
 
 // GetAddress returns the Address field value
-func (o *BalancesGet200ResponseResultsInner) GetAddress() string {
+func (o *BalancesPost200ResponseResultsInner) GetAddress() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -98,7 +98,7 @@ func (o *BalancesGet200ResponseResultsInner) GetAddress() string {
 
 // GetAddressOk returns a tuple with the Address field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetAddressOk() (*string, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetAddressOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -106,12 +106,12 @@ func (o *BalancesGet200ResponseResultsInner) GetAddressOk() (*string, bool) {
 }
 
 // SetAddress sets field value
-func (o *BalancesGet200ResponseResultsInner) SetAddress(v string) {
+func (o *BalancesPost200ResponseResultsInner) SetAddress(v string) {
 	o.Address = v
 }
 
 // GetCryptoBalance returns the CryptoBalance field value
-func (o *BalancesGet200ResponseResultsInner) GetCryptoBalance() float64 {
+func (o *BalancesPost200ResponseResultsInner) GetCryptoBalance() float64 {
 	if o == nil {
 		var ret float64
 		return ret
@@ -122,7 +122,7 @@ func (o *BalancesGet200ResponseResultsInner) GetCryptoBalance() float64 {
 
 // GetCryptoBalanceOk returns a tuple with the CryptoBalance field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetCryptoBalanceOk() (*float64, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetCryptoBalanceOk() (*float64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -130,12 +130,12 @@ func (o *BalancesGet200ResponseResultsInner) GetCryptoBalanceOk() (*float64, boo
 }
 
 // SetCryptoBalance sets field value
-func (o *BalancesGet200ResponseResultsInner) SetCryptoBalance(v float64) {
+func (o *BalancesPost200ResponseResultsInner) SetCryptoBalance(v float64) {
 	o.CryptoBalance = v
 }
 
 // GetFiatSymbol returns the FiatSymbol field value
-func (o *BalancesGet200ResponseResultsInner) GetFiatSymbol() string {
+func (o *BalancesPost200ResponseResultsInner) GetFiatSymbol() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -146,7 +146,7 @@ func (o *BalancesGet200ResponseResultsInner) GetFiatSymbol() string {
 
 // GetFiatSymbolOk returns a tuple with the FiatSymbol field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetFiatSymbolOk() (*string, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetFiatSymbolOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -154,12 +154,12 @@ func (o *BalancesGet200ResponseResultsInner) GetFiatSymbolOk() (*string, bool) {
 }
 
 // SetFiatSymbol sets field value
-func (o *BalancesGet200ResponseResultsInner) SetFiatSymbol(v string) {
+func (o *BalancesPost200ResponseResultsInner) SetFiatSymbol(v string) {
 	o.FiatSymbol = v
 }
 
 // GetFiatValue returns the FiatValue field value
-func (o *BalancesGet200ResponseResultsInner) GetFiatValue() float64 {
+func (o *BalancesPost200ResponseResultsInner) GetFiatValue() float64 {
 	if o == nil {
 		var ret float64
 		return ret
@@ -170,7 +170,7 @@ func (o *BalancesGet200ResponseResultsInner) GetFiatValue() float64 {
 
 // GetFiatValueOk returns a tuple with the FiatValue field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetFiatValueOk() (*float64, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetFiatValueOk() (*float64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -178,12 +178,12 @@ func (o *BalancesGet200ResponseResultsInner) GetFiatValueOk() (*float64, bool) {
 }
 
 // SetFiatValue sets field value
-func (o *BalancesGet200ResponseResultsInner) SetFiatValue(v float64) {
+func (o *BalancesPost200ResponseResultsInner) SetFiatValue(v float64) {
 	o.FiatValue = v
 }
 
 // GetExchangeRate returns the ExchangeRate field value
-func (o *BalancesGet200ResponseResultsInner) GetExchangeRate() float64 {
+func (o *BalancesPost200ResponseResultsInner) GetExchangeRate() float64 {
 	if o == nil {
 		var ret float64
 		return ret
@@ -194,7 +194,7 @@ func (o *BalancesGet200ResponseResultsInner) GetExchangeRate() float64 {
 
 // GetExchangeRateOk returns a tuple with the ExchangeRate field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetExchangeRateOk() (*float64, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetExchangeRateOk() (*float64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -202,12 +202,12 @@ func (o *BalancesGet200ResponseResultsInner) GetExchangeRateOk() (*float64, bool
 }
 
 // SetExchangeRate sets field value
-func (o *BalancesGet200ResponseResultsInner) SetExchangeRate(v float64) {
+func (o *BalancesPost200ResponseResultsInner) SetExchangeRate(v float64) {
 	o.ExchangeRate = v
 }
 
 // GetChange24h returns the Change24h field value
-func (o *BalancesGet200ResponseResultsInner) GetChange24h() float64 {
+func (o *BalancesPost200ResponseResultsInner) GetChange24h() float64 {
 	if o == nil {
 		var ret float64
 		return ret
@@ -218,7 +218,7 @@ func (o *BalancesGet200ResponseResultsInner) GetChange24h() float64 {
 
 // GetChange24hOk returns a tuple with the Change24h field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetChange24hOk() (*float64, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetChange24hOk() (*float64, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -226,12 +226,12 @@ func (o *BalancesGet200ResponseResultsInner) GetChange24hOk() (*float64, bool) {
 }
 
 // SetChange24h sets field value
-func (o *BalancesGet200ResponseResultsInner) SetChange24h(v float64) {
+func (o *BalancesPost200ResponseResultsInner) SetChange24h(v float64) {
 	o.Change24h = v
 }
 
 // GetTimestamp returns the Timestamp field value
-func (o *BalancesGet200ResponseResultsInner) GetTimestamp() time.Time {
+func (o *BalancesPost200ResponseResultsInner) GetTimestamp() time.Time {
 	if o == nil {
 		var ret time.Time
 		return ret
@@ -242,7 +242,7 @@ func (o *BalancesGet200ResponseResultsInner) GetTimestamp() time.Time {
 
 // GetTimestampOk returns a tuple with the Timestamp field value
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetTimestampOk() (*time.Time, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetTimestampOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -250,12 +250,12 @@ func (o *BalancesGet200ResponseResultsInner) GetTimestampOk() (*time.Time, bool)
 }
 
 // SetTimestamp sets field value
-func (o *BalancesGet200ResponseResultsInner) SetTimestamp(v time.Time) {
+func (o *BalancesPost200ResponseResultsInner) SetTimestamp(v time.Time) {
 	o.Timestamp = v
 }
 
 // GetError returns the Error field value if set, zero value otherwise.
-func (o *BalancesGet200ResponseResultsInner) GetError() string {
+func (o *BalancesPost200ResponseResultsInner) GetError() string {
 	if o == nil || IsNil(o.Error) {
 		var ret string
 		return ret
@@ -265,7 +265,7 @@ func (o *BalancesGet200ResponseResultsInner) GetError() string {
 
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *BalancesGet200ResponseResultsInner) GetErrorOk() (*string, bool) {
+func (o *BalancesPost200ResponseResultsInner) GetErrorOk() (*string, bool) {
 	if o == nil || IsNil(o.Error) {
 		return nil, false
 	}
@@ -273,7 +273,7 @@ func (o *BalancesGet200ResponseResultsInner) GetErrorOk() (*string, bool) {
 }
 
 // HasError returns a boolean if a field has been set.
-func (o *BalancesGet200ResponseResultsInner) HasError() bool {
+func (o *BalancesPost200ResponseResultsInner) HasError() bool {
 	if o != nil && !IsNil(o.Error) {
 		return true
 	}
@@ -282,11 +282,11 @@ func (o *BalancesGet200ResponseResultsInner) HasError() bool {
 }
 
 // SetError gets a reference to the given string and assigns it to the Error field.
-func (o *BalancesGet200ResponseResultsInner) SetError(v string) {
+func (o *BalancesPost200ResponseResultsInner) SetError(v string) {
 	o.Error = &v
 }
 
-func (o BalancesGet200ResponseResultsInner) MarshalJSON() ([]byte, error) {
+func (o BalancesPost200ResponseResultsInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -294,7 +294,7 @@ func (o BalancesGet200ResponseResultsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o BalancesGet200ResponseResultsInner) ToMap() (map[string]interface{}, error) {
+func (o BalancesPost200ResponseResultsInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["crypto_symbol"] = o.CryptoSymbol
 	toSerialize["address"] = o.Address
@@ -310,7 +310,7 @@ func (o BalancesGet200ResponseResultsInner) ToMap() (map[string]interface{}, err
 	return toSerialize, nil
 }
 
-func (o *BalancesGet200ResponseResultsInner) UnmarshalJSON(data []byte) (err error) {
+func (o *BalancesPost200ResponseResultsInner) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -339,53 +339,53 @@ func (o *BalancesGet200ResponseResultsInner) UnmarshalJSON(data []byte) (err err
 		}
 	}
 
-	varBalancesGet200ResponseResultsInner := _BalancesGet200ResponseResultsInner{}
+	varBalancesPost200ResponseResultsInner := _BalancesPost200ResponseResultsInner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varBalancesGet200ResponseResultsInner)
+	err = decoder.Decode(&varBalancesPost200ResponseResultsInner)
 
 	if err != nil {
 		return err
 	}
 
-	*o = BalancesGet200ResponseResultsInner(varBalancesGet200ResponseResultsInner)
+	*o = BalancesPost200ResponseResultsInner(varBalancesPost200ResponseResultsInner)
 
 	return err
 }
 
-type NullableBalancesGet200ResponseResultsInner struct {
-	value *BalancesGet200ResponseResultsInner
+type NullableBalancesPost200ResponseResultsInner struct {
+	value *BalancesPost200ResponseResultsInner
 	isSet bool
 }
 
-func (v NullableBalancesGet200ResponseResultsInner) Get() *BalancesGet200ResponseResultsInner {
+func (v NullableBalancesPost200ResponseResultsInner) Get() *BalancesPost200ResponseResultsInner {
 	return v.value
 }
 
-func (v *NullableBalancesGet200ResponseResultsInner) Set(val *BalancesGet200ResponseResultsInner) {
+func (v *NullableBalancesPost200ResponseResultsInner) Set(val *BalancesPost200ResponseResultsInner) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableBalancesGet200ResponseResultsInner) IsSet() bool {
+func (v NullableBalancesPost200ResponseResultsInner) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableBalancesGet200ResponseResultsInner) Unset() {
+func (v *NullableBalancesPost200ResponseResultsInner) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableBalancesGet200ResponseResultsInner(val *BalancesGet200ResponseResultsInner) *NullableBalancesGet200ResponseResultsInner {
-	return &NullableBalancesGet200ResponseResultsInner{value: val, isSet: true}
+func NewNullableBalancesPost200ResponseResultsInner(val *BalancesPost200ResponseResultsInner) *NullableBalancesPost200ResponseResultsInner {
+	return &NullableBalancesPost200ResponseResultsInner{value: val, isSet: true}
 }
 
-func (v NullableBalancesGet200ResponseResultsInner) MarshalJSON() ([]byte, error) {
+func (v NullableBalancesPost200ResponseResultsInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableBalancesGet200ResponseResultsInner) UnmarshalJSON(src []byte) error {
+func (v *NullableBalancesPost200ResponseResultsInner) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
