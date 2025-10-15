@@ -22,6 +22,7 @@ import (
 // pass the data to a DefaultAPIServicer to perform the required actions, then write the service results to the http response.
 type DefaultAPIRouter interface { 
 	BalanceGet(http.ResponseWriter, *http.Request)
+	BalancesPost(http.ResponseWriter, *http.Request)
 	TransactionsGet(http.ResponseWriter, *http.Request)
 	UnsignedTxGet(http.ResponseWriter, *http.Request)
 	BroadcastPost(http.ResponseWriter, *http.Request)
@@ -34,6 +35,7 @@ type DefaultAPIRouter interface {
 // and updated with the logic required for the API.
 type DefaultAPIServicer interface { 
 	BalanceGet(context.Context, string, string, string) (ImplResponse, error)
+	BalancesPost(context.Context, BalancesPostRequest) (ImplResponse, error)
 	TransactionsGet(context.Context, string, string, int32, int32) (ImplResponse, error)
 	UnsignedTxGet(context.Context, string, string, string, string, float64) (ImplResponse, error)
 	BroadcastPost(context.Context, BroadcastPostRequest) (ImplResponse, error)

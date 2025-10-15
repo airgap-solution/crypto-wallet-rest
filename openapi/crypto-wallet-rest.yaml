@@ -99,6 +99,104 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /balances:
+    post:
+      summary: Get balances for multiple addresses and cryptocurrencies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      crypto_symbol:
+                        type: string
+                        description: The cryptocurrency symbol (BTC, ETH, etc.)
+                        example: "BTC"
+                      address:
+                        type: string
+                        description: The cryptocurrency address or xpub
+                        example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                      fiat_symbol:
+                        type: string
+                        description: The fiat currency symbol for conversion (USD, EUR, CAD, etc.)
+                        default: "USD"
+                        example: "USD"
+                    required:
+                      - crypto_symbol
+                      - address
+                fiat_symbol:
+                  type: string
+                  description: Default fiat currency symbol for all requests if not specified individually
+                  default: "USD"
+                  example: "USD"
+              required:
+                - requests
+      responses:
+        "200":
+          description: Batch balance response with crypto, fiat values, and 24h changes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        crypto_symbol:
+                          type: string
+                          example: "BTC"
+                        address:
+                          type: string
+                          example: "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                        crypto_balance:
+                          type: number
+                          format: double
+                          example: 0.00123456
+                        fiat_symbol:
+                          type: string
+                          example: "USD"
+                        fiat_value:
+                          type: number
+                          format: double
+                          example: 45.67
+                        exchange_rate:
+                          type: number
+                          format: double
+                          example: 37000.50
+                        change24h:
+                          type: number
+                          format: double
+                          description: Absolute change in fiat value over the last 24 hours
+                          example: 1.23
+                        timestamp:
+                          type: string
+                          format: date-time
+                          example: "2023-10-10T15:30:00Z"
+                        error:
+                          type: string
+                          nullable: true
+                          description: Error message if this specific balance fetch failed
+                          example: null
+                      required:
+                        - crypto_symbol
+                        - address
+                        - crypto_balance
+                        - fiat_symbol
+                        - fiat_value
+                        - exchange_rate
+                        - change24h
+                        - timestamp
+                  timestamp:
+                    type: string
+                    format: date-time
   /transactions:
     get:
       summary: Get transaction history for an address

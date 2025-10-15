@@ -13,102 +13,67 @@ import type { Configuration } from './configuration';
 import type { AxiosPromise, AxiosInstance, RawAxiosRequestConfig } from 'axios';
 import type { RequestArgs } from './base';
 import { BaseAPI } from './base';
-/**
- *
- * @export
- * @interface BalanceGet200Response
- */
 export interface BalanceGet200Response {
-    /**
-     *
-     * @type {string}
-     * @memberof BalanceGet200Response
-     */
     'crypto_symbol': string;
-    /**
-     *
-     * @type {string}
-     * @memberof BalanceGet200Response
-     */
     'address': string;
-    /**
-     *
-     * @type {number}
-     * @memberof BalanceGet200Response
-     */
     'crypto_balance': number;
-    /**
-     *
-     * @type {string}
-     * @memberof BalanceGet200Response
-     */
     'fiat_symbol': string;
-    /**
-     *
-     * @type {number}
-     * @memberof BalanceGet200Response
-     */
     'fiat_value': number;
-    /**
-     *
-     * @type {number}
-     * @memberof BalanceGet200Response
-     */
     'exchange_rate': number;
     /**
      * Absolute change in fiat value over the last 24 hours
-     * @type {number}
-     * @memberof BalanceGet200Response
      */
     'change24h': number;
-    /**
-     *
-     * @type {string}
-     * @memberof BalanceGet200Response
-     */
     'timestamp': string;
 }
-/**
- *
- * @export
- * @interface BroadcastPost200Response
- */
-export interface BroadcastPost200Response {
+export interface BalancesPost200Response {
+    'results'?: Array<BalancesPost200ResponseResultsInner>;
+    'timestamp'?: string;
+}
+export interface BalancesPost200ResponseResultsInner {
+    'crypto_symbol': string;
+    'address': string;
+    'crypto_balance': number;
+    'fiat_symbol': string;
+    'fiat_value': number;
+    'exchange_rate': number;
     /**
-     *
-     * @type {string}
-     * @memberof BroadcastPost200Response
+     * Absolute change in fiat value over the last 24 hours
+     */
+    'change24h': number;
+    'timestamp': string;
+    /**
+     * Error message if this specific balance fetch failed
+     */
+    'error'?: string;
+}
+export interface BalancesPostRequest {
+    'requests': Array<BalancesPostRequestRequestsInner>;
+    /**
+     * Default fiat currency symbol for all requests if not specified individually
+     */
+    'fiat_symbol'?: string;
+}
+export interface BalancesPostRequestRequestsInner {
+    /**
+     * The cryptocurrency symbol (BTC, ETH, etc.)
      */
     'crypto_symbol': string;
     /**
-     *
-     * @type {string}
-     * @memberof BroadcastPost200Response
+     * The cryptocurrency address or xpub
      */
+    'address': string;
+    /**
+     * The fiat currency symbol for conversion (USD, EUR, CAD, etc.)
+     */
+    'fiat_symbol'?: string;
+}
+export interface BroadcastPost200Response {
+    'crypto_symbol': string;
     'transaction_id': string;
-    /**
-     *
-     * @type {string}
-     * @memberof BroadcastPost200Response
-     */
     'status': BroadcastPost200ResponseStatusEnum;
-    /**
-     *
-     * @type {string}
-     * @memberof BroadcastPost200Response
-     */
     'message': string;
-    /**
-     *
-     * @type {string}
-     * @memberof BroadcastPost200Response
-     */
     'network_fee'?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof BroadcastPost200Response
-     */
     'timestamp': string;
 }
 export declare const BroadcastPost200ResponseStatusEnum: {
@@ -117,109 +82,24 @@ export declare const BroadcastPost200ResponseStatusEnum: {
     readonly Failed: "failed";
 };
 export type BroadcastPost200ResponseStatusEnum = typeof BroadcastPost200ResponseStatusEnum[keyof typeof BroadcastPost200ResponseStatusEnum];
-/**
- *
- * @export
- * @interface BroadcastPostRequest
- */
 export interface BroadcastPostRequest {
-    /**
-     *
-     * @type {string}
-     * @memberof BroadcastPostRequest
-     */
     'crypto_symbol': string;
-    /**
-     *
-     * @type {string}
-     * @memberof BroadcastPostRequest
-     */
     'signed_tx': string;
 }
-/**
- *
- * @export
- * @interface ErrorResponse
- */
 export interface ErrorResponse {
-    /**
-     *
-     * @type {string}
-     * @memberof ErrorResponse
-     */
     'error': string;
-    /**
-     *
-     * @type {string}
-     * @memberof ErrorResponse
-     */
     'message': string;
-    /**
-     *
-     * @type {string}
-     * @memberof ErrorResponse
-     */
     'timestamp': string;
 }
-/**
- *
- * @export
- * @interface Transaction
- */
 export interface Transaction {
-    /**
-     *
-     * @type {string}
-     * @memberof Transaction
-     */
     'transaction_id': string;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
     'block_height'?: number;
-    /**
-     *
-     * @type {string}
-     * @memberof Transaction
-     */
     'timestamp': string;
-    /**
-     *
-     * @type {string}
-     * @memberof Transaction
-     */
     'amount': string;
-    /**
-     *
-     * @type {string}
-     * @memberof Transaction
-     */
     'direction': TransactionDirectionEnum;
-    /**
-     *
-     * @type {number}
-     * @memberof Transaction
-     */
     'confirmations': number;
-    /**
-     *
-     * @type {string}
-     * @memberof Transaction
-     */
     'fee_amount'?: string;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof Transaction
-     */
     'from_addresses'?: Array<string>;
-    /**
-     *
-     * @type {Array<string>}
-     * @memberof Transaction
-     */
     'to_addresses'?: Array<string>;
 }
 export declare const TransactionDirectionEnum: {
@@ -227,95 +107,24 @@ export declare const TransactionDirectionEnum: {
     readonly Outgoing: "outgoing";
 };
 export type TransactionDirectionEnum = typeof TransactionDirectionEnum[keyof typeof TransactionDirectionEnum];
-/**
- *
- * @export
- * @interface TransactionsGet200Response
- */
 export interface TransactionsGet200Response {
-    /**
-     *
-     * @type {string}
-     * @memberof TransactionsGet200Response
-     */
     'crypto_symbol': string;
-    /**
-     *
-     * @type {string}
-     * @memberof TransactionsGet200Response
-     */
     'address': string;
-    /**
-     *
-     * @type {Array<Transaction>}
-     * @memberof TransactionsGet200Response
-     */
     'transactions': Array<Transaction>;
-    /**
-     *
-     * @type {number}
-     * @memberof TransactionsGet200Response
-     */
     'total_count': number;
-    /**
-     *
-     * @type {boolean}
-     * @memberof TransactionsGet200Response
-     */
     'has_more': boolean;
 }
-/**
- *
- * @export
- * @interface UnsignedTxGet200Response
- */
 export interface UnsignedTxGet200Response {
-    /**
-     *
-     * @type {string}
-     * @memberof UnsignedTxGet200Response
-     */
     'crypto_symbol': string;
-    /**
-     *
-     * @type {string}
-     * @memberof UnsignedTxGet200Response
-     */
     'from_address': string;
-    /**
-     *
-     * @type {string}
-     * @memberof UnsignedTxGet200Response
-     */
     'to_address': string;
-    /**
-     *
-     * @type {string}
-     * @memberof UnsignedTxGet200Response
-     */
     'amount': string;
-    /**
-     *
-     * @type {string}
-     * @memberof UnsignedTxGet200Response
-     */
     'fee_amount': string;
-    /**
-     *
-     * @type {string}
-     * @memberof UnsignedTxGet200Response
-     */
     'unsigned_tx': string;
-    /**
-     *
-     * @type {number}
-     * @memberof UnsignedTxGet200Response
-     */
     'tx_size_bytes'?: number;
 }
 /**
  * DefaultApi - axios parameter creator
- * @export
  */
 export declare const DefaultApiAxiosParamCreator: (configuration?: Configuration) => {
     /**
@@ -328,6 +137,14 @@ export declare const DefaultApiAxiosParamCreator: (configuration?: Configuration
      * @throws {RequiredError}
      */
     balanceGet: (cryptoSymbol: string, address: string, fiatSymbol?: string, options?: RawAxiosRequestConfig) => Promise<RequestArgs>;
+    /**
+     *
+     * @summary Get balances for multiple addresses and cryptocurrencies
+     * @param {BalancesPostRequest} balancesPostRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    balancesPost: (balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig) => Promise<RequestArgs>;
     /**
      *
      * @summary Broadcast signed transaction
@@ -362,7 +179,6 @@ export declare const DefaultApiAxiosParamCreator: (configuration?: Configuration
 };
 /**
  * DefaultApi - functional programming interface
- * @export
  */
 export declare const DefaultApiFp: (configuration?: Configuration) => {
     /**
@@ -375,6 +191,14 @@ export declare const DefaultApiFp: (configuration?: Configuration) => {
      * @throws {RequiredError}
      */
     balanceGet(cryptoSymbol: string, address: string, fiatSymbol?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BalanceGet200Response>>;
+    /**
+     *
+     * @summary Get balances for multiple addresses and cryptocurrencies
+     * @param {BalancesPostRequest} balancesPostRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BalancesPost200Response>>;
     /**
      *
      * @summary Broadcast signed transaction
@@ -409,7 +233,6 @@ export declare const DefaultApiFp: (configuration?: Configuration) => {
 };
 /**
  * DefaultApi - factory interface
- * @export
  */
 export declare const DefaultApiFactory: (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) => {
     /**
@@ -422,6 +245,14 @@ export declare const DefaultApiFactory: (configuration?: Configuration, basePath
      * @throws {RequiredError}
      */
     balanceGet(cryptoSymbol: string, address: string, fiatSymbol?: string, options?: RawAxiosRequestConfig): AxiosPromise<BalanceGet200Response>;
+    /**
+     *
+     * @summary Get balances for multiple addresses and cryptocurrencies
+     * @param {BalancesPostRequest} balancesPostRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BalancesPost200Response>;
     /**
      *
      * @summary Broadcast signed transaction
@@ -456,8 +287,6 @@ export declare const DefaultApiFactory: (configuration?: Configuration, basePath
 };
 /**
  * DefaultApi - interface
- * @export
- * @interface DefaultApi
  */
 export interface DefaultApiInterface {
     /**
@@ -468,16 +297,22 @@ export interface DefaultApiInterface {
      * @param {string} [fiatSymbol]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApiInterface
      */
     balanceGet(cryptoSymbol: string, address: string, fiatSymbol?: string, options?: RawAxiosRequestConfig): AxiosPromise<BalanceGet200Response>;
+    /**
+     *
+     * @summary Get balances for multiple addresses and cryptocurrencies
+     * @param {BalancesPostRequest} balancesPostRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BalancesPost200Response>;
     /**
      *
      * @summary Broadcast signed transaction
      * @param {BroadcastPostRequest} broadcastPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApiInterface
      */
     broadcastPost(broadcastPostRequest: BroadcastPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<BroadcastPost200Response>;
     /**
@@ -489,7 +324,6 @@ export interface DefaultApiInterface {
      * @param {number} [offset]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApiInterface
      */
     transactionsGet(cryptoSymbol: string, address: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): AxiosPromise<TransactionsGet200Response>;
     /**
@@ -502,15 +336,11 @@ export interface DefaultApiInterface {
      * @param {number} [feeRate]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApiInterface
      */
     unsignedTxGet(cryptoSymbol: string, fromAddress: string, toAddress: string, amount: string, feeRate?: number, options?: RawAxiosRequestConfig): AxiosPromise<UnsignedTxGet200Response>;
 }
 /**
  * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
  */
 export declare class DefaultApi extends BaseAPI implements DefaultApiInterface {
     /**
@@ -521,16 +351,22 @@ export declare class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {string} [fiatSymbol]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
      */
     balanceGet(cryptoSymbol: string, address: string, fiatSymbol?: string, options?: RawAxiosRequestConfig): Promise<import("axios").AxiosResponse<BalanceGet200Response, any, {}>>;
+    /**
+     *
+     * @summary Get balances for multiple addresses and cryptocurrencies
+     * @param {BalancesPostRequest} balancesPostRequest
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    balancesPost(balancesPostRequest: BalancesPostRequest, options?: RawAxiosRequestConfig): Promise<import("axios").AxiosResponse<BalancesPost200Response, any, {}>>;
     /**
      *
      * @summary Broadcast signed transaction
      * @param {BroadcastPostRequest} broadcastPostRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
      */
     broadcastPost(broadcastPostRequest: BroadcastPostRequest, options?: RawAxiosRequestConfig): Promise<import("axios").AxiosResponse<BroadcastPost200Response, any, {}>>;
     /**
@@ -542,7 +378,6 @@ export declare class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {number} [offset]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
      */
     transactionsGet(cryptoSymbol: string, address: string, limit?: number, offset?: number, options?: RawAxiosRequestConfig): Promise<import("axios").AxiosResponse<TransactionsGet200Response, any, {}>>;
     /**
@@ -555,7 +390,6 @@ export declare class DefaultApi extends BaseAPI implements DefaultApiInterface {
      * @param {number} [feeRate]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
      */
     unsignedTxGet(cryptoSymbol: string, fromAddress: string, toAddress: string, amount: string, feeRate?: number, options?: RawAxiosRequestConfig): Promise<import("axios").AxiosResponse<UnsignedTxGet200Response, any, {}>>;
 }

@@ -55,6 +55,12 @@ func (c *DefaultAPIController) Routes() Routes {
 			"/balance",
 			c.BalanceGet,
 		},
+		"BalancesPost": Route{
+			"BalancesPost",
+			strings.ToUpper("Post"),
+			"/balances",
+			c.BalancesPost,
+		},
 		"TransactionsGet": Route{
 			"TransactionsGet",
 			strings.ToUpper("Get"),
@@ -84,6 +90,12 @@ func (c *DefaultAPIController) OrderedRoutes() []Route {
 			strings.ToUpper("Get"),
 			"/balance",
 			c.BalanceGet,
+		},
+		Route{
+			"BalancesPost",
+			strings.ToUpper("Post"),
+			"/balances",
+			c.BalancesPost,
 		},
 		Route{
 			"TransactionsGet",
@@ -143,6 +155,33 @@ func (c *DefaultAPIController) BalanceGet(w http.ResponseWriter, r *http.Request
 		fiatSymbolParam = param
 	}
 	result, err := c.service.BalanceGet(r.Context(), cryptoSymbolParam, addressParam, fiatSymbolParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	_ = EncodeJSONResponse(result.Body, &result.Code, w)
+}
+
+// BalancesPost - Get balances for multiple addresses and cryptocurrencies
+func (c *DefaultAPIController) BalancesPost(w http.ResponseWriter, r *http.Request) {
+	var balancesPostRequestParam BalancesPostRequest
+	d := json.NewDecoder(r.Body)
+	d.DisallowUnknownFields()
+	if err := d.Decode(&balancesPostRequestParam); err != nil {
+		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
+		return
+	}
+	if err := AssertBalancesPostRequestRequired(balancesPostRequestParam); err != nil {
+		c.errorHandler(w, r, err, nil)
+		return
+	}
+	if err := AssertBalancesPostRequestConstraints(balancesPostRequestParam); err != nil {
+		c.errorHandler(w, r, err, nil)
+		return
+	}
+	result, err := c.service.BalancesPost(r.Context(), balancesPostRequestParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

@@ -13,21 +13,12 @@
  */
 import globalAxios from 'axios';
 export const BASE_PATH = "http://localhost".replace(/\/+$/, "");
-/**
- *
- * @export
- */
 export const COLLECTION_FORMATS = {
     csv: ",",
     ssv: " ",
     tsv: "\t",
     pipes: "|",
 };
-/**
- *
- * @export
- * @class BaseAPI
- */
 export class BaseAPI {
     constructor(configuration, basePath = BASE_PATH, axios = globalAxios) {
         this.basePath = basePath;
@@ -39,12 +30,6 @@ export class BaseAPI {
     }
 }
 ;
-/**
- *
- * @export
- * @class RequiredError
- * @extends {Error}
- */
 export class RequiredError extends Error {
     constructor(field, msg) {
         super(msg);
@@ -52,8 +37,4 @@ export class RequiredError extends Error {
         this.name = "RequiredError";
     }
 }
-/**
- *
- * @export
- */
 export const operationServerMap = {};

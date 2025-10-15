@@ -52,6 +52,7 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**balanceGet**](docs/DefaultApi.md#balanceget) | **GET** /balance | Get balance for an address
+*DefaultApi* | [**balancesPost**](docs/DefaultApi.md#balancespost) | **POST** /balances | Get balances for multiple addresses and cryptocurrencies
 *DefaultApi* | [**broadcastPost**](docs/DefaultApi.md#broadcastpost) | **POST** /broadcast | Broadcast signed transaction
 *DefaultApi* | [**transactionsGet**](docs/DefaultApi.md#transactionsget) | **GET** /transactions | Get transaction history for an address
 *DefaultApi* | [**unsignedTxGet**](docs/DefaultApi.md#unsignedtxget) | **GET** /unsigned-tx | Generate an unsigned transaction
@@ -60,6 +61,10 @@ Class | Method | HTTP request | Description
 ### Documentation For Models
 
  - [BalanceGet200Response](docs/BalanceGet200Response.md)
+ - [BalancesPost200Response](docs/BalancesPost200Response.md)
+ - [BalancesPost200ResponseResultsInner](docs/BalancesPost200ResponseResultsInner.md)
+ - [BalancesPostRequest](docs/BalancesPostRequest.md)
+ - [BalancesPostRequestRequestsInner](docs/BalancesPostRequestRequestsInner.md)
  - [BroadcastPost200Response](docs/BroadcastPost200Response.md)
  - [BroadcastPostRequest](docs/BroadcastPostRequest.md)
  - [ErrorResponse](docs/ErrorResponse.md)

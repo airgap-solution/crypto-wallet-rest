@@ -12,25 +12,16 @@
  * Do not edit the class manually.
  */
 import { RequiredError } from "./base";
-/**
- *
- * @export
- */
 export const DUMMY_BASE_URL = 'https://example.com';
 /**
  *
  * @throws {RequiredError}
- * @export
  */
 export const assertParamExists = function (functionName, paramName, paramValue) {
     if (paramValue === null || paramValue === undefined) {
         throw new RequiredError(paramName, `Required parameter ${paramName} was null or undefined when calling ${functionName}.`);
     }
 };
-/**
- *
- * @export
- */
 export const setApiKeyToObject = async function (object, keyParamName, configuration) {
     if (configuration && configuration.apiKey) {
         const localVarApiKeyValue = typeof configuration.apiKey === 'function'
@@ -39,19 +30,11 @@ export const setApiKeyToObject = async function (object, keyParamName, configura
         object[keyParamName] = localVarApiKeyValue;
     }
 };
-/**
- *
- * @export
- */
 export const setBasicAuthToObject = function (object, configuration) {
     if (configuration && (configuration.username || configuration.password)) {
         object["auth"] = { username: configuration.username, password: configuration.password };
     }
 };
-/**
- *
- * @export
- */
 export const setBearerAuthToObject = async function (object, configuration) {
     if (configuration && configuration.accessToken) {
         const accessToken = typeof configuration.accessToken === 'function'
@@ -60,10 +43,6 @@ export const setBearerAuthToObject = async function (object, configuration) {
         object["Authorization"] = "Bearer " + accessToken;
     }
 };
-/**
- *
- * @export
- */
 export const setOAuthToObject = async function (object, name, scopes, configuration) {
     if (configuration && configuration.accessToken) {
         const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
@@ -92,19 +71,11 @@ function setFlattenedQueryParams(urlSearchParams, parameter, key = "") {
         }
     }
 }
-/**
- *
- * @export
- */
 export const setSearchParams = function (url, ...objects) {
     const searchParams = new URLSearchParams(url.search);
     setFlattenedQueryParams(searchParams, objects);
     url.search = searchParams.toString();
 };
-/**
- *
- * @export
- */
 export const serializeDataIfNeeded = function (value, requestOptions, configuration) {
     const nonString = typeof value !== 'string';
     const needsSerialization = nonString && configuration && configuration.isJsonMime
@@ -114,17 +85,9 @@ export const serializeDataIfNeeded = function (value, requestOptions, configurat
         ? JSON.stringify(value !== undefined ? value : {})
         : (value || "");
 };
-/**
- *
- * @export
- */
 export const toPathString = function (url) {
     return url.pathname + url.search + url.hash;
 };
-/**
- *
- * @export
- */
 export const createRequestFunction = function (axiosArgs, globalAxios, BASE_PATH, configuration) {
     return (axios = globalAxios, basePath = BASE_PATH) => {
         const axiosRequestArgs = { ...axiosArgs.options, url: (axios.defaults.baseURL ? '' : configuration?.basePath ?? basePath) + axiosArgs.url };

@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**balanceGet**](#balanceget) | **GET** /balance | Get balance for an address|
+|[**balancesPost**](#balancespost) | **POST** /balances | Get balances for multiple addresses and cryptocurrencies|
 |[**broadcastPost**](#broadcastpost) | **POST** /broadcast | Broadcast signed transaction|
 |[**transactionsGet**](#transactionsget) | **GET** /transactions | Get transaction history for an address|
 |[**unsignedTxGet**](#unsignedtxget) | **GET** /unsigned-tx | Generate an unsigned transaction|
@@ -65,6 +66,57 @@ No authorization required
 |**400** | Bad request (invalid parameters) |  -  |
 |**404** | Cryptocurrency or address not found |  -  |
 |**500** | Internal server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **balancesPost**
+> BalancesPost200Response balancesPost(balancesPostRequest)
+
+
+### Example
+
+```typescript
+import {
+    DefaultApi,
+    Configuration,
+    BalancesPostRequest
+} from '@airgap-solution/crypto-wallet-rest';
+
+const configuration = new Configuration();
+const apiInstance = new DefaultApi(configuration);
+
+let balancesPostRequest: BalancesPostRequest; //
+
+const { status, data } = await apiInstance.balancesPost(
+    balancesPostRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **balancesPostRequest** | **BalancesPostRequest**|  | |
+
+
+### Return type
+
+**BalancesPost200Response**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Batch balance response with crypto, fiat values, and 24h changes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

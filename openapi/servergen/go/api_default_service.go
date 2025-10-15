@@ -47,6 +47,17 @@ func (s *DefaultAPIService) BalanceGet(ctx context.Context, cryptoSymbol string,
 	return Response(http.StatusNotImplemented, nil), errors.New("BalanceGet method not implemented")
 }
 
+// BalancesPost - Get balances for multiple addresses and cryptocurrencies
+func (s *DefaultAPIService) BalancesPost(ctx context.Context, balancesPostRequest BalancesPostRequest) (ImplResponse, error) {
+	// TODO - update BalancesPost with the required logic for this service method.
+	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+
+	// TODO: Uncomment the next line to return response Response(200, BalancesPost200Response{}) or use other options such as http.Ok ...
+	// return Response(200, BalancesPost200Response{}), nil
+
+	return Response(http.StatusNotImplemented, nil), errors.New("BalancesPost method not implemented")
+}
+
 // TransactionsGet - Get transaction history for an address
 func (s *DefaultAPIService) TransactionsGet(ctx context.Context, cryptoSymbol string, address string, limit int32, offset int32) (ImplResponse, error) {
 	// TODO - update TransactionsGet with the required logic for this service method.
