@@ -28,107 +28,7 @@ func TestNew(t *testing.T) {
 	assert.NotNil(t, svc)
 }
 
-func TestBalanceGet(t *testing.T) {
-	t.Parallel()
-	cryptoSymbol := "BTC"
-	address := "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
-	fiatSymbol := "USD"
-	cryptoBalance := 0.00123456
-	fiatValue := 55.67
-	exchangeRate := 45000.50
-	timestamp := time.Now()
-
-	for _, tc := range []struct {
-		name                 string
-		setupMocks           func(*internalportsmocks.MockProvider)
-		expectedError        error
-		expectedResponseBody any
-		expectedResponseCode int
-	}{
-		{
-			name: "provider returns no error",
-			setupMocks: func(mockProvider *internalportsmocks.MockProvider) {
-				balanceResult := &domain.BalanceResult{
-					CryptoSymbol:  cryptoSymbol,
-					Address:       address,
-					CryptoBalance: cryptoBalance,
-					FiatSymbol:    fiatSymbol,
-					FiatValue:     fiatValue,
-					ExchangeRate:  exchangeRate,
-					Timestamp:     timestamp,
-				}
-				mockProvider.EXPECT().GetBalance(cryptoSymbol, address, fiatSymbol).Return(balanceResult, nil)
-			},
-			expectedResponseBody: cryptowalletrest.BalanceGet200Response{
-				CryptoSymbol:  cryptoSymbol,
-				Address:       address,
-				CryptoBalance: cryptoBalance,
-				FiatSymbol:    fiatSymbol,
-				FiatValue:     fiatValue,
-				ExchangeRate:  exchangeRate,
-				Timestamp:     timestamp,
-			},
-			expectedResponseCode: 200,
-		},
-		{
-			name: "provider returns error",
-			setupMocks: func(mockProvider *internalportsmocks.MockProvider) {
-				mockProvider.EXPECT().GetBalance(cryptoSymbol, address, fiatSymbol).Return(nil, errProviderGeneric)
-			},
-			expectedResponseBody: service.Error{Message: "provider error"},
-			expectedResponseCode: 501,
-		},
-		{
-			name: "EUR fiat currency",
-			setupMocks: func(mockProvider *internalportsmocks.MockProvider) {
-				balanceResult := &domain.BalanceResult{
-					CryptoSymbol:  cryptoSymbol,
-					Address:       address,
-					CryptoBalance: cryptoBalance,
-					FiatSymbol:    "EUR",
-					FiatValue:     fiatValue,
-					ExchangeRate:  exchangeRate,
-					Timestamp:     timestamp,
-				}
-				mockProvider.EXPECT().GetBalance(cryptoSymbol, address, "EUR").Return(balanceResult, nil)
-			},
-			expectedResponseBody: cryptowalletrest.BalanceGet200Response{
-				CryptoSymbol:  cryptoSymbol,
-				Address:       address,
-				CryptoBalance: cryptoBalance,
-				FiatSymbol:    "EUR",
-				FiatValue:     fiatValue,
-				ExchangeRate:  exchangeRate,
-				Timestamp:     timestamp,
-			},
-			expectedResponseCode: 200,
-		},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			t.Parallel()
-			ctrl := gomock.NewController(t)
-			defer ctrl.Finish()
-
-			mockProvider := internalportsmocks.NewMockProvider(ctrl)
-			tc.setupMocks(mockProvider)
-
-			svc := service.New(mockProvider)
-
-			fiat := fiatSymbol
-			if tc.name == "EUR fiat currency" {
-				fiat = "EUR"
-			}
-
-			response, err := svc.BalanceGet(t.Context(), cryptoSymbol, address, fiat)
-
-			require.NoError(t, err)
-			assert.Equal(t, tc.expectedResponseCode, response.Code)
-			assert.Equal(t, tc.expectedResponseBody, response.Body)
-		})
-	}
-}
-
-func TestService_BalancesPost_BasicFunctionality(t *testing.T) {
+func TestService_BalancesGet_BasicFunctionality(t *testing.T) {
 	t.Parallel()
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
@@ -176,8 +76,8 @@ func TestService_BalancesPost_BasicFunctionality(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesPostRequest{
-		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
+	request := cryptowalletrest.BalancesGetRequest{
+		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -191,12 +91,12 @@ func TestService_BalancesPost_BasicFunctionality(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesPost(t.Context(), request)
+	response, err := svc.BalancesGet(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
 	require.True(t, ok)
 	require.Len(t, responseBody.Results, 2)
 
@@ -266,8 +166,8 @@ func TestService_BalancesPost_ErrorHandling(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesPostRequest{
-		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
+	request := cryptowalletrest.BalancesGetRequest{
+		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -281,12 +181,12 @@ func TestService_BalancesPost_ErrorHandling(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesPost(t.Context(), request)
+	response, err := svc.BalancesGet(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
 	require.True(t, ok)
 	require.Len(t, responseBody.Results, 2)
 
@@ -331,8 +231,8 @@ func TestService_BalancesPost_DefaultFiatSymbol(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesPostRequest{
-		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
+	request := cryptowalletrest.BalancesGetRequest{
+		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -341,12 +241,12 @@ func TestService_BalancesPost_DefaultFiatSymbol(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesPost(t.Context(), request)
+	response, err := svc.BalancesGet(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
 	require.True(t, ok)
 	require.Len(t, responseBody.Results, 1)
 
@@ -366,16 +266,16 @@ func TestService_BalancesPost_EmptyRequests(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesPostRequest{
-		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{},
+	request := cryptowalletrest.BalancesGetRequest{
+		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{},
 	}
 
-	response, err := svc.BalancesPost(t.Context(), request)
+	response, err := svc.BalancesGet(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 200, response.Code)
 
-	responseBody, ok := response.Body.(cryptowalletrest.BalancesPost200Response)
+	responseBody, ok := response.Body.(cryptowalletrest.BalancesGet200Response)
 	require.True(t, ok)
 	assert.Empty(t, responseBody.Results)
 }
@@ -399,8 +299,8 @@ func TestService_BalancesPost_BatchOperationError(t *testing.T) {
 
 	svc := service.New(mockProvider)
 
-	request := cryptowalletrest.BalancesPostRequest{
-		Requests: []cryptowalletrest.BalancesPostRequestRequestsInner{
+	request := cryptowalletrest.BalancesGetRequest{
+		Requests: []cryptowalletrest.BalancesGetRequestRequestsInner{
 			{
 				CryptoSymbol: "BTC",
 				Address:      "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa",
@@ -409,7 +309,7 @@ func TestService_BalancesPost_BatchOperationError(t *testing.T) {
 		},
 	}
 
-	response, err := svc.BalancesPost(t.Context(), request)
+	response, err := svc.BalancesGet(t.Context(), request)
 
 	require.NoError(t, err)
 	assert.Equal(t, 501, response.Code)

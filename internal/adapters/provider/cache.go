@@ -53,7 +53,7 @@ func (c *Cache[T]) Set(key string, value T, ttl time.Duration) {
 	}
 }
 
-//nolint:ireturn // Generic type T is constrained by caller, acceptable for cache
+//nolint:ireturn
 func (c *Cache[T]) Get(key string) (T, bool) {
 	c.mutex.RLock()
 	defer c.mutex.RUnlock()

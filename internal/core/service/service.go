@@ -18,28 +18,8 @@ func New(adapter ports.Provider) Service {
 	return Service{adapter: adapter}
 }
 
-func (s Service) BalanceGet(
-	_ context.Context, cryptoSymbol string, address string, fiatSymbol string,
-) (cryptowalletrest.ImplResponse, error) {
-	balanceResult, err := s.adapter.GetBalance(cryptoSymbol, address, fiatSymbol)
-	if err != nil {
-		return handleError(err)
-	}
-
-	return cryptowalletrest.Response(http.StatusOK, cryptowalletrest.BalanceGet200Response{
-		CryptoSymbol:  balanceResult.CryptoSymbol,
-		Address:       balanceResult.Address,
-		CryptoBalance: balanceResult.CryptoBalance,
-		FiatSymbol:    balanceResult.FiatSymbol,
-		FiatValue:     balanceResult.FiatValue,
-		ExchangeRate:  balanceResult.ExchangeRate,
-		Timestamp:     balanceResult.Timestamp,
-		Change24h:     balanceResult.Change24h,
-	}), nil
-}
-
-func (s Service) BalancesPost(
-	_ context.Context, request cryptowalletrest.BalancesPostRequest,
+func (s Service) BalancesGet(
+	_ context.Context, request cryptowalletrest.BalancesGetRequest,
 ) (cryptowalletrest.ImplResponse, error) {
 	// Convert OpenAPI request to internal format
 	balanceRequests := make([]domain.BalanceRequest, len(request.Requests))
@@ -63,9 +43,9 @@ func (s Service) BalancesPost(
 	}
 
 	// Convert results to OpenAPI format
-	balances := make([]cryptowalletrest.BalancesPost200ResponseResultsInner, len(results))
+	balances := make([]cryptowalletrest.BalancesGet200ResponseResultsInner, len(results))
 	for i, result := range results {
-		balance := cryptowalletrest.BalancesPost200ResponseResultsInner{
+		balance := cryptowalletrest.BalancesGet200ResponseResultsInner{
 			CryptoSymbol:  result.CryptoSymbol,
 			Address:       result.Address,
 			CryptoBalance: result.CryptoBalance,
@@ -81,7 +61,7 @@ func (s Service) BalancesPost(
 		balances[i] = balance
 	}
 
-	return cryptowalletrest.Response(http.StatusOK, cryptowalletrest.BalancesPost200Response{
+	return cryptowalletrest.Response(http.StatusOK, cryptowalletrest.BalancesGet200Response{
 		Results:   balances,
 		Timestamp: time.Now(),
 	}), nil

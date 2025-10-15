@@ -4,7 +4,7 @@ go 1.25.1
 
 require (
 	github.com/airgap-solution/cmc-rest/openapi v1.0.1
-	github.com/airgap-solution/crypto-wallet-rest/openapi v1.0.3
+	github.com/airgap-solution/crypto-wallet-rest/openapi v1.0.4
 	github.com/btcsuite/btcd v0.24.2
 	github.com/btcsuite/btcd/btcec/v2 v2.3.5
 	github.com/btcsuite/btcd/btcutil v1.1.6
