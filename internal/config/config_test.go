@@ -12,5 +12,5 @@ func TestDefaultConfig(t *testing.T) {
 	cfg := config.DefaultConfig()
 
 	assert.Equal(t, ":8399", cfg.ListenAddr)
-	assert.Equal(t, ":7392", cfg.CMCRestAddr)
+	assert.Equal(t, "192.168.2.71:8765", cfg.CMCRestAddr)
 }

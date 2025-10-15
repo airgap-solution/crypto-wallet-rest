@@ -16,7 +16,6 @@ import (
 )
 
 const (
-	// HD key depth constants.
 	AccountDepth  = 3
 	ChainDepth    = 4
 	ExternalChain = 0
@@ -24,16 +23,9 @@ const (
 )
 
 var (
-	// ErrIndexOutOfRange indicates that an index is out of range for uint32 conversion.
 	ErrIndexOutOfRange = errors.New("index out of range for uint32")
 
-	// LitecoinMainNetParams - Litecoin mainnet parameters.
-	// Using Bitcoin mainnet params as a base since btcutil doesn't have native Litecoin support.
-	// In production, you'd want to use a proper Litecoin library or define proper Litecoin params.
 	LitecoinMainNetParams = &chaincfg.MainNetParams
-
-	// LitecoinTestNetParams - Litecoin testnet parameters.
-	// Using Bitcoin testnet3 params as a base since btcutil doesn't have native Litecoin support.
 	LitecoinTestNetParams = &chaincfg.TestNet3Params
 )
 
@@ -131,8 +123,6 @@ func deriveAddresses(root *hd.ExtendedKey, count int, isTestnet bool) ([]btcutil
 			return nil, fmt.Errorf("get public key for child %d: %w", i, err)
 		}
 
-		// For Litecoin, we'll use P2WPKH (SegWit) addresses similar to Bitcoin
-		// In a production environment, you'd want to use proper Litecoin address generation
 		addr, err := makeLitecoinAddress(pub, isTestnet)
 		if err != nil {
 			return nil, fmt.Errorf("make litecoin address for child %d: %w", i, err)
@@ -145,9 +135,6 @@ func deriveAddresses(root *hd.ExtendedKey, count int, isTestnet bool) ([]btcutil
 }
 
 func makeLitecoinAddress(pub *btcec.PublicKey, isTestnet bool) (*btcutil.AddressWitnessPubKeyHash, error) {
-	// Generate a P2WPKH address (SegWit v0)
-	// Note: This uses Bitcoin params as a placeholder
-	// In production, you'd use proper Litecoin parameters
 	params := LitecoinMainNetParams
 	if isTestnet {
 		params = LitecoinTestNetParams

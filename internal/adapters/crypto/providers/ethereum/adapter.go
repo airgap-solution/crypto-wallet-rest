@@ -13,22 +13,16 @@ import (
 )
 
 var (
-	// ErrInvalidEthereumAddress indicates an invalid Ethereum address format.
 	ErrInvalidEthereumAddress = errors.New("invalid Ethereum address format")
 )
 
 const (
-	// Retry constants.
-	MaxRetryAttempts = 3
-	RetryDelay       = 2 * time.Second
-	ReconnectDelay   = 5 * time.Second
-
-	// Timeout constants.
+	MaxRetryAttempts  = 3
+	RetryDelay        = 2 * time.Second
+	ReconnectDelay    = 5 * time.Second
 	BalanceTimeout    = 10 * time.Second
 	ConnectionTimeout = 5 * time.Second
-
-	// Wei to ETH conversion factor.
-	WeiPerEther = 1e18
+	WeiPerEther       = 1e18
 )
 
 type Adapter struct {
@@ -66,7 +60,6 @@ func (a *Adapter) GetBalance(address string) (float64, error) {
 		cancel()
 
 		if err == nil {
-			// Convert Wei to ETH
 			balanceFloat := new(big.Float)
 			balanceFloat.SetString(balance.String())
 			weiPerEth := new(big.Float)
@@ -94,7 +87,6 @@ func (a *Adapter) connectWithRetry() {
 	for {
 		client, err := ethclient.Dial(a.rpcURL)
 		if err == nil {
-			// Test the connection
 			ctx, cancel := context.WithTimeout(context.Background(), ConnectionTimeout)
 			_, err = client.NetworkID(ctx)
 			cancel()
@@ -107,7 +99,6 @@ func (a *Adapter) connectWithRetry() {
 				a.mu.Unlock()
 				return
 			}
-			client.Close()
 		}
 
 		log.Printf("[ethereum] connection failed: %v, retrying in %v...", err, ReconnectDelay)

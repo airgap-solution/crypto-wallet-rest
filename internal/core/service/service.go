@@ -3,7 +3,9 @@ package service
 import (
 	"context"
 	"net/http"
+	"time"
 
+	"github.com/airgap-solution/crypto-wallet-rest/internal/core/domain"
 	"github.com/airgap-solution/crypto-wallet-rest/internal/ports"
 	cryptowalletrest "github.com/airgap-solution/crypto-wallet-rest/openapi/servergen/go"
 )
@@ -33,6 +35,55 @@ func (s Service) BalanceGet(
 		ExchangeRate:  balanceResult.ExchangeRate,
 		Timestamp:     balanceResult.Timestamp,
 		Change24h:     balanceResult.Change24h,
+	}), nil
+}
+
+func (s Service) BalancesPost(
+	_ context.Context, request cryptowalletrest.BalancesPostRequest,
+) (cryptowalletrest.ImplResponse, error) {
+	// Convert OpenAPI request to internal format
+	balanceRequests := make([]domain.BalanceRequest, len(request.Requests))
+	for i, req := range request.Requests {
+		fiatSymbol := req.FiatSymbol
+		if fiatSymbol == "" {
+			fiatSymbol = "USD"
+		}
+		balanceRequests[i] = domain.BalanceRequest{
+			CryptoSymbol: req.CryptoSymbol,
+			Address:      req.Address,
+			FiatSymbol:   fiatSymbol,
+		}
+	}
+
+	// Get all balances using batch method
+	results, err := s.adapter.GetBatchBalances(balanceRequests)
+
+	if err != nil {
+		return handleError(err)
+	}
+
+	// Convert results to OpenAPI format
+	balances := make([]cryptowalletrest.BalancesPost200ResponseResultsInner, len(results))
+	for i, result := range results {
+		balance := cryptowalletrest.BalancesPost200ResponseResultsInner{
+			CryptoSymbol:  result.CryptoSymbol,
+			Address:       result.Address,
+			CryptoBalance: result.CryptoBalance,
+			FiatSymbol:    result.FiatSymbol,
+			FiatValue:     result.FiatValue,
+			ExchangeRate:  result.ExchangeRate,
+			Change24h:     result.Change24h,
+			Timestamp:     result.Timestamp,
+		}
+		if result.Error != nil {
+			balance.Error = *result.Error
+		}
+		balances[i] = balance
+	}
+
+	return cryptowalletrest.Response(http.StatusOK, cryptowalletrest.BalancesPost200Response{
+		Results:   balances,
+		Timestamp: time.Now(),
 	}), nil
 }
 

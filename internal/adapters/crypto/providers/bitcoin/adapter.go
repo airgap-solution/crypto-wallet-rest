@@ -12,14 +12,11 @@ import (
 )
 
 const (
-	// Address derivation constants.
 	DefaultExternalCount = 10
 	DefaultChangeCount   = 10
-
-	// Retry constants.
-	MaxRetryAttempts = 3
-	RetryDelay       = 2 * time.Second
-	ReconnectDelay   = 5 * time.Second
+	MaxRetryAttempts     = 3
+	RetryDelay           = 2 * time.Second
+	ReconnectDelay       = 5 * time.Second
 )
 
 type Adapter struct {
@@ -47,7 +44,6 @@ func (a *Adapter) GetBalance(xpub string) (float64, error) {
 		if err != nil {
 			return 0, err
 		}
-		// Fix: assign the result of append to the same slice
 		combined := make([]btcutil.Address, 0, len(external)+len(change))
 		combined = append(combined, external...)
 		combined = append(combined, change...)

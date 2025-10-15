@@ -12,26 +12,18 @@ import (
 )
 
 var (
-	// ErrInvalidLitecoinAddress indicates an invalid Litecoin address format.
 	ErrInvalidLitecoinAddress = errors.New("invalid Litecoin address format")
 )
 
 const (
-	// Address derivation constants.
 	DefaultExternalCount = 10
 	DefaultChangeCount   = 10
-
-	// Retry constants.
-	MaxRetryAttempts = 3
-	RetryDelay       = 2 * time.Second
-	ReconnectDelay   = 5 * time.Second
-
-	// Timeout constants.
-	BalanceTimeout    = 10 * time.Second
-	ConnectionTimeout = 5 * time.Second
-
-	// Litecoin conversion constants.
-	SatoshiPerLTC = 1e8
+	MaxRetryAttempts     = 3
+	RetryDelay           = 2 * time.Second
+	ReconnectDelay       = 5 * time.Second
+	BalanceTimeout       = 10 * time.Second
+	ConnectionTimeout    = 5 * time.Second
+	SatoshiPerLTC        = 1e8
 )
 
 type Adapter struct {

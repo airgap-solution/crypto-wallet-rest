@@ -12,7 +12,7 @@ package internalportsmocks
 import (
 	reflect "reflect"
 
-	ports "github.com/airgap-solution/crypto-wallet-rest/internal/ports"
+	domain "github.com/airgap-solution/crypto-wallet-rest/internal/core/domain"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -41,10 +41,10 @@ func (m *MockProvider) EXPECT() *MockProviderMockRecorder {
 }
 
 // GetBalance mocks base method.
-func (m *MockProvider) GetBalance(symbol, address, fiatSymbol string) (*ports.BalanceResult, error) {
+func (m *MockProvider) GetBalance(symbol, address, fiatSymbol string) (*domain.BalanceResult, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetBalance", symbol, address, fiatSymbol)
-	ret0, _ := ret[0].(*ports.BalanceResult)
+	ret0, _ := ret[0].(*domain.BalanceResult)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -53,6 +53,36 @@ func (m *MockProvider) GetBalance(symbol, address, fiatSymbol string) (*ports.Ba
 func (mr *MockProviderMockRecorder) GetBalance(symbol, address, fiatSymbol any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalance", reflect.TypeOf((*MockProvider)(nil).GetBalance), symbol, address, fiatSymbol)
+}
+
+// GetBalances mocks base method.
+func (m *MockProvider) GetBalances(requests []domain.BalanceRequest) ([]*domain.BalanceResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBalances", requests)
+	ret0, _ := ret[0].([]*domain.BalanceResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBalances indicates an expected call of GetBalances.
+func (mr *MockProviderMockRecorder) GetBalances(requests any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBalances", reflect.TypeOf((*MockProvider)(nil).GetBalances), requests)
+}
+
+// GetBatchBalances mocks base method.
+func (m *MockProvider) GetBatchBalances(requests []domain.BalanceRequest) ([]*domain.BalanceResult, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetBatchBalances", requests)
+	ret0, _ := ret[0].([]*domain.BalanceResult)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetBatchBalances indicates an expected call of GetBatchBalances.
+func (mr *MockProviderMockRecorder) GetBatchBalances(requests any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBatchBalances", reflect.TypeOf((*MockProvider)(nil).GetBatchBalances), requests)
 }
 
 // MockCryptoProvider is a mock of CryptoProvider interface.

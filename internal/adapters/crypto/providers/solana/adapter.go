@@ -12,22 +12,16 @@ import (
 )
 
 var (
-	// ErrInvalidSolanaAddress indicates an invalid Solana address format.
 	ErrInvalidSolanaAddress = errors.New("invalid Solana address format")
 )
 
 const (
-	// Retry constants.
-	MaxRetryAttempts = 3
-	RetryDelay       = 2 * time.Second
-	ReconnectDelay   = 5 * time.Second
-
-	// Timeout constants.
+	MaxRetryAttempts  = 3
+	RetryDelay        = 2 * time.Second
+	ReconnectDelay    = 5 * time.Second
 	BalanceTimeout    = 10 * time.Second
 	ConnectionTimeout = 5 * time.Second
-
-	// Lamports to SOL conversion factor.
-	LamportsPerSol = 1e9
+	LamportsPerSol    = 1e9
 )
 
 type Adapter struct {
@@ -64,7 +58,6 @@ func (a *Adapter) GetBalance(address string) (float64, error) {
 		cancel()
 
 		if err == nil {
-			// Convert lamports to SOL
 			solBalance := float64(balance.Value) / LamportsPerSol
 			return solBalance, nil
 		}
@@ -86,7 +79,6 @@ func (a *Adapter) connectWithRetry() {
 	for {
 		client := rpc.New(a.rpcURL)
 
-		// Test the connection
 		ctx, cancel := context.WithTimeout(context.Background(), ConnectionTimeout)
 		_, err := client.GetVersion(ctx)
 		cancel()

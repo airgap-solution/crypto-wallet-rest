@@ -17,10 +17,7 @@ import (
 )
 
 const (
-	// Bitcoin conversion constants.
 	SatoshiPerBTC = 1e8
-
-	// HD key depth constants.
 	AccountDepth  = 3
 	ChainDepth    = 4
 	ExternalChain = 0
@@ -28,13 +25,8 @@ const (
 )
 
 var (
-	// ErrIndexOutOfRange indicates that an index is out of range for uint32 conversion.
-	ErrIndexOutOfRange = errors.New("index out of range for uint32")
-
-	// BitcoinMainNetParams - Bitcoin mainnet parameters.
+	ErrIndexOutOfRange   = errors.New("index out of range for uint32")
 	BitcoinMainNetParams = &chaincfg.MainNetParams
-
-	// BitcoinTestNetParams - Bitcoin testnet parameters.
 	BitcoinTestNetParams = &chaincfg.TestNet3Params
 )
 
