@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy to"
+        required: true
+        default: "production"
+      build_number:
+        description: "Optional build number override"
+        required: false
+        default: ""
+
+jobs:
+  deploy:
+    name: Deploy to CD Server
+    uses: RestartFU/cd/.github/workflows/deploy.yml@master
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      env_vars: |
+        BUILD_NUMBER=${{ github.event.inputs.build_number || github.run_number }}
+      include_github_secrets: true
+    secrets:
+      CD_SERVER_HOST: ${{ secrets.CD_SERVER_HOST }}
+      CD_API_KEY: ${{ secrets.CD_API_KEY }}
