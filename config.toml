@@ -1,5 +1,5 @@
 listen_addr = ':8399'
-cmc_rest_addr = ':8765'
+cmc_rest_addr = 'localhost:8765'
 
 
 [crypto.kaspa]
